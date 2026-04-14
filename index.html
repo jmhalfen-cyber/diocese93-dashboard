@@ -230,6 +230,12 @@
     .filter-tab{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border-2);background:transparent;color:var(--text-secondary);transition:all .15s}
     .filter-tab.active{background:var(--primary-dim);color:var(--primary);border-color:rgba(14,165,233,.3)}
     .filter-tab:hover:not(.active){background:var(--surface-2);color:var(--text-primary)}
+    /* Couleurs par type doc */
+    .filter-tab.ft-tous.active{background:var(--primary-dim);color:var(--primary);border-color:rgba(14,165,233,.3)}
+    .filter-tab.ft-facture.active{background:var(--primary-dim);color:var(--primary);border-color:rgba(14,165,233,.3)}
+    .filter-tab.ft-devis.active{background:var(--warning-dim);color:var(--warning);border-color:rgba(245,158,11,.3)}
+    .filter-tab.ft-bc.active{background:var(--success-dim);color:var(--success);border-color:rgba(16,185,129,.3)}
+    .filter-tab.ft-justif.active{background:var(--purple-dim);color:var(--purple);border-color:rgba(139,92,246,.3)}
 
     .city-tag{cursor:pointer;transition:all .15s;border-radius:3px;padding:0 2px;}
     .city-tag:hover{background:var(--primary-dim);color:var(--primary);}
@@ -1016,11 +1022,11 @@
 
       <!-- Filtres type -->
       <div class="filter-tabs">
-        <button class="filter-tab active" onclick="filterDocs(this,'tous')">Tous (14)</button>
-        <button class="filter-tab" onclick="filterDocs(this,'Facture')">Factures (36)</button>
-        <button class="filter-tab" onclick="filterDocs(this,'Devis')">Devis (9)</button>
-        <button class="filter-tab" onclick="filterDocs(this,'BC')">Bons de commande (9)</button>
-        <button class="filter-tab" onclick="filterDocs(this,'Justificatif')">Justificatifs (2)</button>
+        <button class="filter-tab ft-tous active" onclick="filterDocs(this,'tous')">Tous (14)</button>
+        <button class="filter-tab ft-facture" onclick="filterDocs(this,'Facture')">Factures</button>
+        <button class="filter-tab ft-devis" onclick="filterDocs(this,'Devis')">Devis</button>
+        <button class="filter-tab ft-bc" onclick="filterDocs(this,'BC')">Bons de commande</button>
+        <button class="filter-tab ft-justif" onclick="filterDocs(this,'Justificatif')">Justificatifs</button>
       </div>
 
       <div class="card">
@@ -1092,7 +1098,7 @@
                 <div class="text-bold">BC - NetPro Nettoyage - Mars</div>
                 <div class="text-xs" style="margin-top:2px;">↗ Diocèse 93 - Nettoyage mensuel</div>
               </td>
-              <td><span class="badge muted">BC</span></td>
+              <td><span class="badge success">BC</span></td>
               <td>NetPro Nettoyage</td>
               <td class="text-xs">Diocèse 93</td>
               <td style="font-weight:700;">2 400 €</td>
@@ -1155,7 +1161,7 @@
                 <div class="text-bold">Contrôle maintenance - Sécurité - Services</div>
                 <div class="text-xs" style="margin-top:2px;">↗ Diocèse 93 - Conformité passée</div>
               </td>
-              <td><span class="badge muted">Justificatif</span></td>
+              <td><span class="badge purple">Justificatif</span></td>
               <td>Sécurité - Services</td>
               <td class="text-xs">Diocèse 93</td>
               <td style="font-weight:700;">7 100 €</td>
