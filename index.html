@@ -270,6 +270,12 @@
       Flux financiers
     </button>
 
+    <button class="nav-item" onclick="navigate('travaux')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M6 20V10l6-6 6 6v10"/><path d="M9 20v-5h6v5"/></svg>
+      Base travaux
+      <span class="nav-badge warning">7</span>
+    </button>
+
     <button class="nav-item" onclick="navigate('documents')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       Base documentaire
@@ -517,10 +523,6 @@
 
     <!-- ════ TAB: PRESTATAIRES ════════════════════════════════════ -->
     <div class="tab-panel" id="tab-prestataires">
-      <div class="section-header">
-        <h1>Base Prestataires</h1>
-        <p>Scoring IA - Historique interventions - Drill-down par prestataire - Filtre par ville</p>
-      </div>
 
       <div class="grid-4">
         <div class="kpi-card primary">
@@ -693,9 +695,6 @@
 
     <!-- ════ TAB: FLUX FINANCIERS ════════════════════════════════ -->
     <div class="tab-panel" id="tab-finances">
-      <div class="section-header">
-        <p style="margin-top:0;">Graflex - Ecarts - Recettes - Dépenses - Diocèse de Saint-Denis</p>
-      </div>
 
       <div class="grid-4">
         <div class="kpi-card success">
@@ -802,11 +801,175 @@
       </div>
     </div>
 
+    <!-- ════ TAB: BASE TRAVAUX ══════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-travaux">
+
+      <div class="grid-3">
+        <div class="kpi-card warning">
+          <div class="kpi-icon warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="kpi-value">107 900 €</div>
+          <div class="kpi-label">Budget total chantiers</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-icon danger">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg>
+          </div>
+          <div class="kpi-value">60 705 €</div>
+          <div class="kpi-label">Consommé</div>
+          <div class="kpi-trend flat">56% du budget</div>
+        </div>
+        <div class="kpi-card primary">
+          <div class="kpi-icon primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M6 20V10l6-6 6 6v10"/></svg>
+          </div>
+          <div class="kpi-value">7</div>
+          <div class="kpi-label">Chantiers actifs</div>
+          <div class="kpi-trend flat">3 UP concernées</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Chantiers en cours - synchronisé As-Tech</h3>
+          <span class="text-xs">As-Tech - n8n sync</span>
+        </div>
+        <div style="overflow-x:auto;">
+        <table class="data-table" style="min-width:800px;">
+          <thead>
+            <tr>
+              <th style="min-width:220px;">Chantier</th>
+              <th>UP</th>
+              <th>Prestataire</th>
+              <th style="min-width:140px;">Avancement</th>
+              <th>Statut</th>
+              <th>Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="text-bold">Rénovation intérieure - Église Saint-Joseph</div>
+                <div class="text-xs">Couverture toiture - travaux en cours</div>
+              </td>
+              <td class="text-xs">Neuilly-sur-Marne</td>
+              <td class="text-xs">Couverture de France</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:65%"></div></div>
+                  <span class="text-xs" style="flex-shrink:0;">65%</span>
+                </div>
+              </td>
+              <td><span class="badge warning">En cours</span></td>
+              <td style="font-weight:700;color:var(--warning);">49 000 €</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold">Mise aux normes électriques - Presbytère Noisy 2</div>
+                <div class="text-xs">Installation tableau électrique</div>
+              </td>
+              <td class="text-xs">Noisy-le-Grand</td>
+              <td class="text-xs">EURL Électricité 93</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:40%"></div></div>
+                  <span class="text-xs" style="flex-shrink:0;">40%</span>
+                </div>
+              </td>
+              <td><span class="badge warning">En cours</span></td>
+              <td style="font-weight:700;">40 000 €</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold">Ravalement - Presbytère Bondy</div>
+                <div class="text-xs">Façade extérieure - enduit</div>
+              </td>
+              <td class="text-xs">Bondy - Clichy</td>
+              <td class="text-xs">SAS BTP Rénovation 93</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:40%"></div></div>
+                  <span class="text-xs" style="flex-shrink:0;">40%</span>
+                </div>
+              </td>
+              <td><span class="badge warning">En cours</span></td>
+              <td style="font-weight:700;">5 500 €</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold">Sébastien MC - Église Noisy Centre</div>
+                <div class="text-xs">Plomberie - sanitaires</div>
+              </td>
+              <td class="text-xs">Noisy-le-Grand</td>
+              <td class="text-xs">Plomberie Chrétien &amp; Fils</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div>
+                  <span class="text-xs" style="flex-shrink:0;">100%</span>
+                </div>
+              </td>
+              <td><span class="badge success">Terminé</span></td>
+              <td style="font-weight:700;color:var(--success);">3 500 €</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold">Rénovation intérieure - Salle paroissiale</div>
+                <div class="text-xs">Peinture - sols</div>
+              </td>
+              <td class="text-xs">Neuilly-sur-Marne</td>
+              <td class="text-xs">SAS BTP Rénovation 93</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:25%"></div></div>
+                  <span class="text-xs" style="flex-shrink:0;">25%</span>
+                </div>
+              </td>
+              <td><span class="badge muted">Planifié</span></td>
+              <td style="font-weight:700;">12 000 €</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold">Diagnostic structurel - Presbytère NSM 3</div>
+                <div class="text-xs">Expertise fondations</div>
+              </td>
+              <td class="text-xs">Neuilly-sur-Marne</td>
+              <td class="text-xs">Cabinet Ingénierie 93</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:50%"></div></div>
+                  <span class="text-xs" style="flex-shrink:0;">50%</span>
+                </div>
+              </td>
+              <td><span class="badge warning">En cours</span></td>
+              <td style="font-weight:700;">3 000 €</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold">Contrôle maintenance - Sécurité</div>
+                <div class="text-xs">Conformité - vérification annuelle</div>
+              </td>
+              <td class="text-xs">Diocèse 93</td>
+              <td class="text-xs">Sécurité-Services</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div>
+                  <span class="text-xs" style="flex-shrink:0;">100%</span>
+                </div>
+              </td>
+              <td><span class="badge success">Terminé</span></td>
+              <td style="font-weight:700;color:var(--success);">7 000 €</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
     <!-- ════ TAB: DOCUMENTS ════════════════════════════════════════ -->
     <div class="tab-panel" id="tab-documents">
       <div class="section-header">
-        <h1>Base documentaire</h1>
-        <p>Factu - Factures - Bons de commandes - Justificatifs - Vie données</p>
+        <p>Factu - Factures - Bons de commandes - Justificatifs</p>
       </div>
 
       <div class="grid-4">
@@ -1030,8 +1193,7 @@
     <!-- ════ TAB: ALERTES / SAISIE NSM ══════════════════════════ -->
     <div class="tab-panel" id="tab-alertes">
       <div class="section-header">
-        <h1>Saisie - NSM</h1>
-        <p>Personne en charge de la saisie - Neuilly-sur-Marne - Vue Saisie Hebdo - Presbytere NSM 1 &amp; 2 - Visite semaine 30/03/2026</p>
+        <p>Personne en charge de la saisie - Neuilly-sur-Marne - S13</p>
       </div>
 
       <div class="grid-2">
@@ -1204,149 +1366,87 @@
 
     <!-- ════ TAB: ECOSYSTEME SI ═══════════════════════════════════ -->
     <div class="tab-panel" id="tab-ecosysteme">
-      <div class="section-header">
-        <h1>Ecosysteme d'Integration SI</h1>
-        <p>Architecture de la solution - Complementarite Briques - Donnees - Topo - IA - Dashboard SI</p>
-      </div>
 
-      <!-- Vision -->
-      <div style="background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(14,165,233,.08));border:1px solid rgba(139,92,246,.2);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:24px;">
-        <div class="row between" style="margin-bottom:8px;">
-          <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Vision - "Zeendoc Voila, mieux piloter"</div>
-          <div style="display:flex;gap:8px;">
-            <span class="badge purple">ROI cible: ~25% taches manuelles</span>
-            <span class="badge primary">Pilote NSM</span>
-            <span class="badge muted">93 paroisses IDF</span>
+      <div class="grid-3">
+
+        <!-- Bloc 1 : Architecture de données -->
+        <div class="card" style="border-top:3px solid var(--primary);">
+          <div class="card-header" style="margin-bottom:14px;">
+            <h3>Architecture de données</h3>
+            <span class="badge primary">4 sources</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="eco-card green" style="padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--success);margin-bottom:4px;">Enoria</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Guildes, paroisses, activités - 200+ colonnes temps réel</div>
+            </div>
+            <div class="eco-card blue" style="padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--primary);margin-bottom:4px;">Zeendoc</div>
+              <div style="font-size:12px;color:var(--text-secondary);">GED - factures fournisseurs - circuit validation multi-niveaux</div>
+            </div>
+            <div class="eco-card cyan" style="padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#06B6D4;margin-bottom:4px;">As-Tech</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Patrimoine - chantiers multi-sites - prestataires</div>
+            </div>
+            <div class="eco-card yellow" style="padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#EAB308;margin-bottom:4px;">Sage Comptabilité</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Source de vérité financière - Export FEC - Audit</div>
+            </div>
           </div>
         </div>
-        <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
-          La vision de l'ecosysteme permet que chaque action SI s'appuie sur une memoire SI de pilotage, aggreant les donnees d'Envoie, Zeendoc, Sage et As-Tech en temps reel. Detecte et alerte les economes adjoint avec des recommandations prescriptives au management des dioceses IDF.
-        </p>
-      </div>
 
-      <!-- Architecture flux bout en bout -->
-      <div class="card" style="margin-bottom:16px;">
-        <div class="card-header"><h3>Architecture de donnees - Flux de bout en bout</h3></div>
-        <div class="grid-4" style="margin-bottom:0;">
-          <div class="eco-card green">
-            <div class="eco-tag" style="background:var(--success-dim);color:var(--success);">Source</div>
-            <h4>Envoie</h4>
-            <ul>
-              <li>Donnees transactionnelles: guildes, paroisses, activites</li>
-              <li>200+ colonnes en temps reel</li>
-              <li>Activite et revenus - groupes</li>
-              <li>Participation et activites - paroisses</li>
-              <li>Comptes projets paroissiaux</li>
-            </ul>
+        <!-- Bloc 2 : Orchestration -->
+        <div class="card" style="border-top:3px solid #F97316;">
+          <div class="card-header" style="margin-bottom:14px;">
+            <h3>Orchestration</h3>
+            <span class="badge warning">Automatisé</span>
           </div>
-          <div class="eco-card blue">
-            <div class="eco-tag" style="background:var(--primary-dim);color:var(--primary);">Documents</div>
-            <h4>Zeendoc</h4>
-            <ul>
-              <li>Gestion documentaire electronique</li>
-              <li>Factures fournisseurs</li>
-              <li>Circuit validation multi-niveaux</li>
-              <li>Stockage factures fournisseurs</li>
-              <li>AP-INT'VC Zeendoc</li>
-            </ul>
-          </div>
-          <div class="eco-card cyan">
-            <div class="eco-tag" style="background:rgba(6,182,212,.15);color:#06B6D4;">Patrimoine</div>
-            <h4>As-Tech</h4>
-            <ul>
-              <li>Gestion patrimoine - entretien technique</li>
-              <li>Sites (presbyteres, salles, eglises)</li>
-              <li>Chantiers multi-sites</li>
-              <li>Prestataires (13/14 initial)</li>
-              <li>Verification chantiers</li>
-            </ul>
-          </div>
-          <div class="eco-card yellow">
-            <div class="eco-tag" style="background:rgba(234,179,8,.15);color:#EAB308;">Comptabilite</div>
-            <h4>Sage Comptabilite</h4>
-            <ul>
-              <li>Source de verite financiere</li>
-              <li>Comptabilite paroisses transversale</li>
-              <li>Rapports financiers</li>
-              <li>Recuperations financieres</li>
-              <li>Export FEC / Audit</li>
-            </ul>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="eco-card orange" style="padding:14px 16px;">
+              <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:8px;">n8n</div>
+              <ul style="margin-left:14px;">
+                <li style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">Connecteur de flux entre tous les outils</li>
+                <li style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">Alertes automatiques temps réel</li>
+                <li style="font-size:12px;color:var(--text-secondary);">Mise en cohérence des données</li>
+              </ul>
+            </div>
+            <div class="eco-card purple" style="padding:14px 16px;">
+              <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:8px;">Bascule BDD</div>
+              <ul style="margin-left:14px;">
+                <li style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">Agrège données des 4 sources</li>
+                <li style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">Scoring prestataires automatique</li>
+                <li style="font-size:12px;color:var(--text-secondary);">Base RAG pour analyse IA</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Orchestration -->
-      <div class="card" style="margin-bottom:16px;">
-        <div class="card-header"><h3>Orchestration et Intelligence</h3></div>
-        <div class="grid-3" style="margin-bottom:0;">
-          <div class="eco-card orange">
-            <div class="eco-tag" style="background:rgba(249,115,22,.15);color:#F97316;">Orchestration</div>
-            <h4>n8n</h4>
-            <ul>
-              <li>Connecteur de flux entre tous les outils</li>
-              <li>Mecanisme des alertes automatiques</li>
-              <li>Alertes temps reel</li>
-              <li>Alertes qualite</li>
-              <li>Mise en coherence des outils</li>
-            </ul>
+        <!-- Bloc 3 : IA & Pilotage -->
+        <div class="card" style="border-top:3px solid var(--purple);">
+          <div class="card-header" style="margin-bottom:14px;">
+            <h3>IA &amp; Pilotage</h3>
+            <span class="badge purple">ROI ~25%</span>
           </div>
-          <div class="eco-card green">
-            <div class="eco-tag" style="background:var(--success-dim);color:var(--success);">Excellent</div>
-            <h4>Sage Comptabilite</h4>
-            <ul>
-              <li>Comptabilite paroisses - management transversal</li>
-              <li>Source de verite financiere</li>
-              <li>Rapports financiers</li>
-              <li>Recuperations financieres</li>
-              <li>Export FEC / Audit</li>
-            </ul>
-          </div>
-          <div class="eco-card purple">
-            <div class="eco-tag" style="background:var(--purple-dim);color:var(--purple);">Base de donnees</div>
-            <h4>Bascule (BDD)</h4>
-            <ul>
-              <li>Aggrege donnees de toutes les solutions</li>
-              <li>Prestataires, devis, chantiers, factures</li>
-              <li>Scoring automatique</li>
-              <li>RAG - AI INT'VC solutions</li>
-            </ul>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="eco-card red" style="padding:14px 16px;">
+              <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:8px;">Mistral IA</div>
+              <ul style="margin-left:14px;">
+                <li style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">Détection anomalies sur-facturation</li>
+                <li style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">Scoring prestataires &lt; 2.5/5</li>
+                <li style="font-size:12px;color:var(--text-secondary);">Recommandations prescriptives</li>
+              </ul>
+            </div>
+            <div style="padding:14px 16px;background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(14,165,233,.08));border:1px solid rgba(139,92,246,.2);border-radius:var(--radius);">
+              <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">Dashboard Diocèse 93</div>
+              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Pilote NSM - alertes temps réel - KPIs financiers - base documentaire</div>
+              <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+                <span class="badge purple">ROI ~25% tâches manuelles</span>
+                <span class="badge primary">Pilote NSM</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- IA et Pilotage -->
-      <div class="card">
-        <div class="card-header"><h3>IA et Pilotage</h3></div>
-        <div class="grid-2" style="margin-bottom:0;">
-          <div class="eco-card red">
-            <div class="eco-tag" style="background:var(--danger-dim);color:var(--danger);">Analyse IA</div>
-            <h4>Mistral IA (Analyse)</h4>
-            <ul>
-              <li>Analyse les patterns de facturation</li>
-              <li>Detection anomalies: sur-facturation, ecarts personnels</li>
-              <li>Recommandations prescriptives</li>
-              <li>Detection presta Score &lt; 2.5/5</li>
-              <li>Detection travaux budget &gt; 90%</li>
-              <li>Alertes score maintenance NSM</li>
-              <li>Anomalies qualite multi-sites</li>
-            </ul>
-          </div>
-          <div class="eco-card red">
-            <div class="eco-tag" style="background:var(--danger-dim);color:var(--danger);">Dashboard</div>
-            <h4>Dashboard Diocese 93</h4>
-            <ul>
-              <li>Scoring economie adjoint: alertes temps reel</li>
-              <li>KPIs financiers - base prestataires</li>
-              <li>Suivi chantiers - base documentaire</li>
-              <li>Suivi documents NSM</li>
-              <li>Scoring automatique - KPI dates</li>
-              <li>Documents: 287 items</li>
-              <li>Prestataires: 13 items</li>
-              <li>En construction: Flux Perplexity IDF</li>
-            </ul>
-            <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Complementarite des outils - Pas de remplacement</div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1357,14 +1457,15 @@
 <script>
   // ── Navigation ──────────────────────────────────────────────
   const TITLES = {
-    overview:     ['Vue économe',         'Tableau de bord - Semaine 13 - 30 mars 2026 - Diocèse de Saint-Denis'],
-    prestataires: ['Prestataires',        'Base prestataires - Scoring IA - Historique interventions'],
-    finances:     ['Flux financiers',     'Graflex - Écarts - Recettes - Dépenses - Diocèse de Saint-Denis'],
-    documents:    ['Base documentaire',   'Factu - Factures - Bons de commandes - Justificatifs'],
-    alertes:      ['Saisie - NSM',        'Personne en charge de la saisie - Neuilly-sur-Marne - S13'],
-    ecosysteme:   ['Ecosystème SI',       'Architecture de la solution - Complémentarité Briques - IA - Dashboard SI'],
+    overview:     ['Vue économe',       'Tableau de bord - Semaine 13 - 30 mars 2026 - Diocèse de Saint-Denis'],
+    prestataires: ['Prestataires',      'Base prestataires - Scoring IA - Historique interventions'],
+    finances:     ['Flux financiers',   'Graflex - Écarts - Recettes - Dépenses - Diocèse de Saint-Denis'],
+    travaux:      ['Base travaux',      'Chantiers - Planning - Avancement - Statut - synchronisé As-Tech'],
+    documents:    ['Base documentaire', 'Factu - Factures - Bons de commandes - Justificatifs'],
+    alertes:      ['Saisie - NSM',      'Personne en charge de la saisie - Neuilly-sur-Marne - S13'],
+    ecosysteme:   ['Ecosystème SI',     'Architecture de la solution - Complémentarité Briques - IA - Dashboard SI'],
   };
-  const ORDER = ['overview','prestataires','finances','documents','alertes','ecosysteme'];
+  const ORDER = ['overview','prestataires','finances','travaux','documents','alertes','ecosysteme'];
 
   function navigate(tab) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
