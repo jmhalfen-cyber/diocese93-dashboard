@@ -234,9 +234,23 @@
     .city-tag{cursor:pointer;transition:all .15s;border-radius:3px;padding:0 2px;}
     .city-tag:hover{background:var(--primary-dim);color:var(--primary);}
     @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-2-1{grid-template-columns:1fr}}
+
+    /* TOAST */
+    #toast{position:fixed;bottom:28px;right:28px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:12px 18px;font-size:13px;color:var(--text-primary);box-shadow:0 8px 32px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;transform:translateY(20px);opacity:0;transition:all .25s;z-index:999;pointer-events:none;max-width:340px;}
+    #toast.show{transform:translateY(0);opacity:1;}
+    #toast .toast-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    #toast .toast-icon.primary{background:var(--primary-dim);color:var(--primary);}
+    #toast .toast-icon.success{background:var(--success-dim);color:var(--success);}
   </style>
 </head>
 <body>
+<div id="toast">
+  <div class="toast-icon primary" id="toast-icon">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20 12s-3 5-8 5-8-5-8-5 3-5 8-5 8 5 8 5"/></svg>
+  </div>
+  <div id="toast-msg">Ouverture en cours...</div>
+</div>
+
 <div class="app">
 
 <!-- ═══ SIDEBAR ══════════════════════════════════════════════════ -->
@@ -968,9 +982,6 @@
 
     <!-- ════ TAB: DOCUMENTS ════════════════════════════════════════ -->
     <div class="tab-panel" id="tab-documents">
-      <div class="section-header">
-        <p>Factu - Factures - Bons de commandes - Justificatifs</p>
-      </div>
 
       <div class="grid-4">
         <div class="kpi-card primary">
@@ -1005,11 +1016,11 @@
 
       <!-- Filtres type -->
       <div class="filter-tabs">
-        <button class="filter-tab active">Factu</button>
-        <button class="filter-tab">Devis</button>
-        <button class="filter-tab">BC</button>
-        <button class="filter-tab">Facture</button>
-        <button class="filter-tab">Justificatif</button>
+        <button class="filter-tab active" onclick="filterDocs(this,'tous')">Tous (14)</button>
+        <button class="filter-tab" onclick="filterDocs(this,'Facture')">Factures (36)</button>
+        <button class="filter-tab" onclick="filterDocs(this,'Devis')">Devis (9)</button>
+        <button class="filter-tab" onclick="filterDocs(this,'BC')">Bons de commande (9)</button>
+        <button class="filter-tab" onclick="filterDocs(this,'Justificatif')">Justificatifs (2)</button>
       </div>
 
       <div class="card">
@@ -1033,7 +1044,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="background:rgba(239,68,68,.04);">
+            <tr style="background:rgba(239,68,68,.04);" data-type="Facture">
               <td>
                 <div class="text-bold">Facture - SARL Chauffage XP - Chaudière NSM</div>
                 <div class="text-xs" style="margin-top:2px;">↗ NSM - Remplacement chaudière</div>
@@ -1045,21 +1056,17 @@
               <td style="font-weight:700;color:var(--danger);">1 800 €</td>
               <td class="text-xs">2026-02-24</td>
               <td><span class="badge danger" style="gap:3px;"><span>⊕</span> Litige</span></td>
-              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0847</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
-                    Voir
-                  </button>
-                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    PDF
-                  </button>
-                </div>
-              </td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0847')">ZD-2026-0847</span></td>
+              <td><div style="display:flex;gap:6px;">
+                <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0847','Facture - SARL Chauffage XP')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                  Voir</button>
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0847','Facture-ChauffageXP')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  PDF</button>
+              </div></td>
             </tr>
-            <tr>
+            <tr data-type="Devis">
               <td>
                 <div class="text-bold">Devis - EURL Électricité 93 - Tableau NSM</div>
                 <div class="text-xs" style="margin-top:2px;">↗ NSM - Mise aux normes électriques</div>
@@ -1070,21 +1077,17 @@
               <td style="font-weight:700;color:var(--warning);">10 500 €</td>
               <td class="text-xs">2026-02-15</td>
               <td><span class="badge warning">En alerte</span></td>
-              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0052</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
-                    Voir
-                  </button>
-                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    PDF
-                  </button>
-                </div>
-              </td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0052')">ZD-2026-0052</span></td>
+              <td><div style="display:flex;gap:6px;">
+                <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0052','Devis - EURL Électricité 93')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                  Voir</button>
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0052','Devis-Electricite93')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  PDF</button>
+              </div></td>
             </tr>
-            <tr>
+            <tr data-type="BC">
               <td>
                 <div class="text-bold">BC - NetPro Nettoyage - Mars</div>
                 <div class="text-xs" style="margin-top:2px;">↗ Diocèse 93 - Nettoyage mensuel</div>
@@ -1095,21 +1098,17 @@
               <td style="font-weight:700;">2 400 €</td>
               <td class="text-xs">2026-03-01</td>
               <td><span class="badge success">Validé</span></td>
-              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0061</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
-                    Voir
-                  </button>
-                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    PDF
-                  </button>
-                </div>
-              </td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0061')">ZD-2026-0061</span></td>
+              <td><div style="display:flex;gap:6px;">
+                <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0061','BC - NetPro Nettoyage - Mars')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                  Voir</button>
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0061','BC-NetPro-Mars')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  PDF</button>
+              </div></td>
             </tr>
-            <tr>
+            <tr data-type="Facture">
               <td>
                 <div class="text-bold">Facture - SAS BTP Rénovation - Façade BCP</div>
                 <div class="text-xs" style="margin-top:2px;">↗ Bondy - Clichy - Ravalement façade</div>
@@ -1120,21 +1119,17 @@
               <td style="font-weight:700;">5 500 €</td>
               <td class="text-xs">2026-03-10</td>
               <td><span class="badge warning">En cours</span></td>
-              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0068</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
-                    Voir
-                  </button>
-                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    PDF
-                  </button>
-                </div>
-              </td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0068')">ZD-2026-0068</span></td>
+              <td><div style="display:flex;gap:6px;">
+                <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0068','Facture - SAS BTP - Façade')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                  Voir</button>
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0068','Facture-BTP-Facade')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  PDF</button>
+              </div></td>
             </tr>
-            <tr>
+            <tr data-type="Facture">
               <td>
                 <div class="text-bold">Facture - Couverture IDF - Toiture NSM</div>
                 <div class="text-xs" style="margin-top:2px;">↗ NSM - Rénovation toiture Église Saint-Joseph</div>
@@ -1145,21 +1140,17 @@
               <td style="font-weight:700;color:var(--success);">28 500 €</td>
               <td class="text-xs">2026-03-28</td>
               <td><span class="badge success">Validé</span></td>
-              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-1078</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
-                    Voir
-                  </button>
-                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    PDF
-                  </button>
-                </div>
-              </td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-1078')">ZD-2026-1078</span></td>
+              <td><div style="display:flex;gap:6px;">
+                <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-1078','Facture - Couverture IDF - Toiture')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                  Voir</button>
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-1078','Facture-Couverture-NSM')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  PDF</button>
+              </div></td>
             </tr>
-            <tr>
+            <tr data-type="Justificatif">
               <td>
                 <div class="text-bold">Contrôle maintenance - Sécurité - Services</div>
                 <div class="text-xs" style="margin-top:2px;">↗ Diocèse 93 - Conformité passée</div>
@@ -1170,19 +1161,15 @@
               <td style="font-weight:700;">7 100 €</td>
               <td class="text-xs">2026-03-20</td>
               <td><span class="badge success">Conformité passée</span></td>
-              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0074</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
-                    Voir
-                  </button>
-                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    PDF
-                  </button>
-                </div>
-              </td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0074')">ZD-2026-0074</span></td>
+              <td><div style="display:flex;gap:6px;">
+                <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0074','Contrôle maintenance - Sécurité')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                  Voir</button>
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0074','Justif-Securite')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  PDF</button>
+              </div></td>
             </tr>
           </tbody>
         </table>
@@ -1192,9 +1179,6 @@
 
     <!-- ════ TAB: ALERTES / SAISIE NSM ══════════════════════════ -->
     <div class="tab-panel" id="tab-alertes">
-      <div class="section-header">
-        <p>Personne en charge de la saisie - Neuilly-sur-Marne - S13</p>
-      </div>
 
       <div class="grid-2">
         <!-- Alertes prioritaires completes -->
@@ -1596,6 +1580,35 @@
         <div style="flex:1;height:${hD}px;background:${isActive?'var(--warning)':'var(--danger)'};opacity:${isActive?1:.45};border-radius:2px 2px 0 0;transition:all .3s;"></div>
       `;
       chart.appendChild(col);
+    });
+  }
+
+  // ── Toast ────────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg, type = 'primary') {
+    const t = document.getElementById('toast');
+    const icon = document.getElementById('toast-icon');
+    document.getElementById('toast-msg').textContent = msg;
+    icon.className = 'toast-icon ' + type;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ── Actions documents ────────────────────────────────────────
+  function viewDoc(ref, name) {
+    showToast('Zeendoc - ' + (name || ref) + ' [' + ref + ']', 'primary');
+  }
+  function dlPDF(ref, filename) {
+    showToast('Téléchargement : ' + filename + '.pdf (' + ref + ')', 'success');
+  }
+
+  // ── Filtre documents ─────────────────────────────────────────
+  function filterDocs(btn, type) {
+    document.querySelectorAll('#tab-documents .filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#tab-documents tbody tr').forEach(row => {
+      row.style.display = (type === 'tous' || row.dataset.type === type) ? '' : 'none';
     });
   }
 
