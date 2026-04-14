@@ -231,6 +231,8 @@
     .filter-tab.active{background:var(--primary-dim);color:var(--primary);border-color:rgba(14,165,233,.3)}
     .filter-tab:hover:not(.active){background:var(--surface-2);color:var(--text-primary)}
 
+    .city-tag{cursor:pointer;transition:all .15s;border-radius:3px;padding:0 2px;}
+    .city-tag:hover{background:var(--primary-dim);color:var(--primary);}
     @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-2-1{grid-template-columns:1fr}}
   </style>
 </head>
@@ -253,7 +255,7 @@
 
     <button class="nav-item active" onclick="navigate('overview')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Vue Economie Adjoint
+      Vue économe
       <span class="nav-badge danger">7</span>
     </button>
 
@@ -265,12 +267,12 @@
 
     <button class="nav-item" onclick="navigate('finances')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      Flux Financiers
+      Flux financiers
     </button>
 
     <button class="nav-item" onclick="navigate('documents')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Base Documentaire
+      Base documentaire
       <span class="nav-badge primary">14</span>
     </button>
 
@@ -303,7 +305,7 @@
 <div class="main">
   <div class="topbar">
     <div>
-      <div class="topbar-title" id="topbar-title">Vue Economie Adjoint</div>
+      <div class="topbar-title" id="topbar-title">Vue économe</div>
       <div class="topbar-subtitle" id="topbar-sub">Tableau de bord - Semaine 13 - 30 mars 2026 - Diocese de Saint-Denis</div>
     </div>
     <div class="topbar-spacer"></div>
@@ -409,6 +411,37 @@
               <span class="badge danger">Critique</span>
               <span>3 sites concernes</span>
               <span class="alert-nav-link" onclick="event.stopPropagation();navigate('prestataires')">Voir prestataire →</span>
+            </div>
+          </div>
+
+          <div class="alert-card primary" onclick="navigate('finances')" style="cursor:pointer;">
+            <div class="row between">
+              <div class="alert-title">INFO - Assurance doublon détectée</div>
+              <span style="font-size:12px;font-weight:700;color:var(--primary);">1 200 €</span>
+            </div>
+            <div class="alert-desc">Double contrat assurance multirisques - économie potentielle de 1 200 €/an.</div>
+            <div class="alert-meta">
+              <span class="badge primary">Info</span>
+              <span>Bondy - Clichy-sous-Bois</span>
+              <span class="alert-nav-link" onclick="event.stopPropagation();navigate('finances')">Résilier contrat redondant →</span>
+            </div>
+          </div>
+
+          <div class="alert-card warning" onclick="navigate('alertes')" style="cursor:pointer;">
+            <div class="row between">
+              <div>
+                <div class="alert-title">Quête faible vs activité paroissiale - anomalie Enoria</div>
+                <div style="margin-top:4px;display:flex;gap:6px;align-items:center;">
+                  <span style="font-size:10px;font-weight:700;background:rgba(249,115,22,.2);color:#F97316;padding:2px 7px;border-radius:3px;">ENORIA</span>
+                  <span style="font-size:10px;font-weight:600;background:rgba(139,92,246,.15);color:var(--purple);padding:2px 8px;border-radius:20px;border:1px solid rgba(139,92,246,.3);">⚡ Enoria × Sage</span>
+                  <span style="font-size:11px;color:var(--text-muted);">Noisy-le-Grand</span>
+                </div>
+              </div>
+              <span style="font-size:12px;font-weight:700;color:var(--warning);">680 €</span>
+            </div>
+            <div class="alert-desc" style="margin-top:6px;">Enoria enregistre 6 messes + 1 baptême le week-end du 05/04 (NLG 2). Quête collectée : 210 €. Moyenne attendue pour cette activité : 890 €. Écart : -680 €.</div>
+            <div class="alert-meta">
+              <span class="alert-nav-link" onclick="event.stopPropagation();navigate('alertes')">Vérifier saisies - Personne en charge NLG →</span>
             </div>
           </div>
 
@@ -529,9 +562,9 @@
         <button class="filter-tab">Bons (3)</button>
       </div>
       <div class="filter-tabs" style="margin-bottom:20px;">
-        <button class="filter-tab">Bondy - Clichy-sous-Bois (3)</button>
-        <button class="filter-tab">Neuilly-sur-Marne (5)</button>
-        <button class="filter-tab">Noisy-le-Grand (6)</button>
+        <button class="filter-tab city-tab" onclick="filterCity(this,'bondy')">Bondy - Clichy-sous-Bois (3)</button>
+        <button class="filter-tab city-tab" onclick="filterCity(this,'neuilly')">Neuilly-sur-Marne (5)</button>
+        <button class="filter-tab city-tab" onclick="filterCity(this,'noisy')">Noisy-le-Grand (6)</button>
       </div>
 
       <!-- SARL ChauffageXP - Blackliste -->
@@ -590,51 +623,67 @@
       <div class="card">
         <div class="card-header"><h3>Autres prestataires</h3></div>
 
-        <div class="prest-row">
+        <div class="prest-row" data-cities="bondy neuilly">
           <div class="prest-avatar bad" style="font-size:12px;">2.8</div>
           <div>
             <div class="prest-name">SAS BTP Renovation 93 <span class="badge warning" style="margin-left:6px;">En alerte</span></div>
-            <div class="prest-meta">Gros oeuvre / Facades - 4 avis - 2 sites - Bondy-Clichy-sous-Bois, Neuilly-sur-Marne</div>
+            <div class="prest-meta">Gros oeuvre / Facades - 4 avis - 2 sites -
+              <span class="city-tag" data-city="bondy">Bondy-Clichy-sous-Bois</span>,
+              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>
+            </div>
           </div>
           <div class="prest-spacer"></div>
           <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--warning);">8 500 €</div><div class="text-xs">Dernier: 2026-03-10</div></div>
         </div>
 
-        <div class="prest-row">
+        <div class="prest-row" data-cities="noisy">
           <div class="prest-avatar warn" style="font-size:12px;">3.5</div>
           <div>
             <div class="prest-name">EURL Electricite 93 <span class="badge warning" style="margin-left:6px;">Surveiller</span></div>
-            <div class="prest-meta">Electricite - 3 avis - 1 site - Noisy-le-Grand</div>
+            <div class="prest-meta">Electricite - 3 avis - 1 site -
+              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>
+            </div>
           </div>
           <div class="prest-spacer"></div>
           <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--warning);">2 200 €</div><div class="text-xs">Dernier: 2026-03-05</div></div>
         </div>
 
-        <div class="prest-row">
+        <div class="prest-row" data-cities="neuilly noisy bondy">
           <div class="prest-avatar good" style="font-size:12px;">4.6</div>
           <div>
             <div class="prest-name">NetPro Nettoyage <span class="badge success" style="margin-left:6px;">Excellent</span></div>
-            <div class="prest-meta">Nettoyage / Entretien - 12 avis - 7 sites - Neuilly-sur-Marne, Noisy-le-Grand, Bondy-Clichy-sous-Bois</div>
+            <div class="prest-meta">Nettoyage / Entretien - 12 avis - 7 sites -
+              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>,
+              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>,
+              <span class="city-tag" data-city="bondy">Bondy-Clichy-sous-Bois</span>
+            </div>
           </div>
           <div class="prest-spacer"></div>
           <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--success);">9 200 €</div><div class="text-xs">Dernier: 2026-03-29</div></div>
         </div>
 
-        <div class="prest-row">
+        <div class="prest-row" data-cities="neuilly noisy bondy">
           <div class="prest-avatar good" style="font-size:12px;">4.3</div>
           <div>
             <div class="prest-name">Plomberie Chretien &amp; Fils <span class="badge success" style="margin-left:6px;">Bon</span></div>
-            <div class="prest-meta">Plomberie / Sanitaires - 8 avis - 5 sites - Neuilly-sur-Marne, Noisy-le-Grand, Bondy-Clichy-sous-Bois</div>
+            <div class="prest-meta">Plomberie / Sanitaires - 8 avis - 5 sites -
+              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>,
+              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>,
+              <span class="city-tag" data-city="bondy">Bondy-Clichy-sous-Bois</span>
+            </div>
           </div>
           <div class="prest-spacer"></div>
           <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--success);">12 000 €</div><div class="text-xs">Dernier: 2026-03-25</div></div>
         </div>
 
-        <div class="prest-row">
+        <div class="prest-row" data-cities="neuilly noisy">
           <div class="prest-avatar good" style="font-size:12px;">4.8</div>
           <div>
             <div class="prest-name">DioceseTech Informatique <span class="badge success" style="margin-left:6px;">Excellent</span></div>
-            <div class="prest-meta">IT / Reseaux - 6 avis - 3 sites - Neuilly-sur-Marne, Noisy-le-Grand</div>
+            <div class="prest-meta">IT / Reseaux - 6 avis - 3 sites -
+              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>,
+              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>
+            </div>
           </div>
           <div class="prest-spacer"></div>
           <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--success);">4 500 €</div><div class="text-xs">Dernier: 2026-03-15</div></div>
@@ -645,8 +694,7 @@
     <!-- ════ TAB: FLUX FINANCIERS ════════════════════════════════ -->
     <div class="tab-panel" id="tab-finances">
       <div class="section-header">
-        <h1>Flux Financiers</h1>
-        <p>Graflex - Ecarts - Recettes - Depenses - Diocese de Saint-Denis</p>
+        <p style="margin-top:0;">Graflex - Ecarts - Recettes - Dépenses - Diocèse de Saint-Denis</p>
       </div>
 
       <div class="grid-4">
@@ -682,103 +730,73 @@
         </div>
       </div>
 
-      <!-- Graphique historique simplifie -->
+      <!-- Sélecteur de semaine -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+        <span class="text-xs" style="margin-right:4px;">Semaine :</span>
+        <div id="week-selector" style="display:flex;gap:6px;">
+          <button class="filter-tab" onclick="setWeek('S10')">S10</button>
+          <button class="filter-tab" onclick="setWeek('S11')">S11</button>
+          <button class="filter-tab" onclick="setWeek('S12')">S12</button>
+          <button class="filter-tab active" onclick="setWeek('S13')">S13</button>
+          <button class="filter-tab" onclick="setWeek('S14')">S14</button>
+          <button class="filter-tab" onclick="setWeek('S15')">S15</button>
+        </div>
+      </div>
+
+      <!-- Graphique historique -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header">
-          <h3>Historique des Flux - S48 2025 / S13 2026</h3>
-          <span class="text-xs">Recettes vs Depenses</span>
+          <h3>Historique des flux - S48 2025 / <span id="chart-week-label">S13</span> 2026</h3>
+          <span class="text-xs">Recettes vs Dépenses</span>
         </div>
-        <div style="position:relative;height:100px;display:flex;align-items:flex-end;gap:3px;padding:0 4px;">
-          <!-- Simplified sparkline bars -->
-          <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center;">
-            <div style="width:100%;background:var(--success);opacity:.7;border-radius:2px 2px 0 0;height:45px;"></div>
-            <div style="width:100%;background:var(--danger);opacity:.5;border-radius:2px 2px 0 0;height:40px;margin-top:-2px;position:absolute;bottom:0;left:0;right:0;pointer-events:none;display:none;"></div>
-          </div>
-          <!-- Simplified visual representation -->
-          <div style="width:100%;height:100px;display:flex;align-items:flex-end;gap:2px;">
-            <div style="flex:1;height:52px;background:var(--success);opacity:.6;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:56px;background:var(--success);opacity:.65;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:48px;background:var(--success);opacity:.6;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:60px;background:var(--success);opacity:.7;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:55px;background:var(--success);opacity:.65;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:50px;background:var(--success);opacity:.6;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:58px;background:var(--success);opacity:.7;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:62px;background:var(--success);opacity:.75;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:54px;background:var(--success);opacity:.65;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:65px;background:var(--primary);opacity:.8;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:68px;background:var(--primary);opacity:.85;border-radius:2px 2px 0 0;"></div>
-            <div style="flex:1;height:70px;background:var(--warning);opacity:.8;border-radius:2px 2px 0 0;border:1px solid var(--warning);"></div>
-          </div>
+        <div style="height:100px;display:flex;align-items:flex-end;gap:3px;padding:0 4px;" id="flux-chart">
+          <!-- Barres générées par JS -->
         </div>
         <div class="row mt-8 text-xs" style="gap:16px;">
           <span><span style="color:var(--success);">■</span> Recettes</span>
-          <span><span style="color:var(--danger);">■</span> Depenses</span>
-          <span><span style="color:var(--warning);">■</span> S13 actuelle (ecart: -2 000 €)</span>
-          <span style="margin-left:auto;">S48 2025 → S13 2026</span>
+          <span><span style="color:var(--danger);">■</span> Dépenses</span>
+          <span id="chart-ecart-label" style="color:var(--warning);">■ S13 - Écart : -2 000 €</span>
+          <span style="margin-left:auto;">S48 2025 → <span id="chart-week-label2">S13</span> 2026</span>
         </div>
       </div>
 
       <div class="grid-2">
-        <!-- Flux par UP -->
         <div class="card">
-          <div class="card-header"><h3>Flux par UP - S13</h3></div>
+          <div class="card-header"><h3>Flux par UP - <span class="week-label">S13</span></h3></div>
           <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px;">
             <div>
-              <div class="row between text-sm"><span class="text-bold">Neuilly-sur-Marne</span><span style="color:var(--success);font-weight:600;">23 100 €</span></div>
-              <div class="progress-bar mt-4"><div class="progress-fill success" style="width:71%"></div></div>
-              <div class="text-xs mt-4">Depenses: 24 200 € - Ecart: -1 100 €</div>
+              <div class="row between text-sm"><span class="text-bold">Neuilly-sur-Marne</span><span id="up-nsm-rec" style="color:var(--success);font-weight:600;">23 100 €</span></div>
+              <div class="progress-bar mt-4"><div class="progress-fill success" id="bar-nsm" style="width:71%"></div></div>
+              <div class="text-xs mt-4" id="up-nsm-detail">Dépenses: 24 200 € - Écart: -1 100 €</div>
             </div>
             <div>
-              <div class="row between text-sm"><span class="text-bold">Noisy-le-Grand</span><span style="color:var(--success);font-weight:600;">25 500 €</span></div>
-              <div class="progress-bar mt-4"><div class="progress-fill primary" style="width:79%"></div></div>
-              <div class="text-xs mt-4">Depenses: 25 800 € - Ecart: -300 €</div>
+              <div class="row between text-sm"><span class="text-bold">Noisy-le-Grand</span><span id="up-nlg-rec" style="color:var(--success);font-weight:600;">25 500 €</span></div>
+              <div class="progress-bar mt-4"><div class="progress-fill primary" id="bar-nlg" style="width:79%"></div></div>
+              <div class="text-xs mt-4" id="up-nlg-detail">Dépenses: 25 800 € - Écart: -300 €</div>
             </div>
             <div>
-              <div class="row between text-sm"><span class="text-bold">Bondy - Clichy-sous-Bois</span><span style="color:var(--warning);font-weight:600;">16 400 €</span></div>
-              <div class="progress-bar mt-4"><div class="progress-fill warning" style="width:50%"></div></div>
-              <div class="text-xs mt-4">Depenses: 17 000 € - Ecart: -600 €</div>
+              <div class="row between text-sm"><span class="text-bold">Bondy - Clichy-sous-Bois</span><span id="up-bcb-rec" style="color:var(--warning);font-weight:600;">16 400 €</span></div>
+              <div class="progress-bar mt-4"><div class="progress-fill warning" id="bar-bcb" style="width:50%"></div></div>
+              <div class="text-xs mt-4" id="up-bcb-detail">Dépenses: 17 000 € - Écart: -600 €</div>
             </div>
           </div>
         </div>
 
-        <!-- Detail financier par UP -->
         <div class="card">
-          <div class="card-header"><h3>Detail financier par UP - S13</h3></div>
+          <div class="card-header"><h3>Détail financier par UP - <span class="week-label">S13</span></h3></div>
           <table class="up-table">
-            <thead>
-              <tr><th>UP</th><th>Entrant</th><th>Sortant</th><th>Ecart</th></tr>
-            </thead>
+            <thead><tr><th>UP</th><th>Entrant</th><th>Sortant</th><th>Écart</th></tr></thead>
             <tbody>
-              <tr>
-                <td>Neuilly-sur-Marne</td>
-                <td style="color:var(--success);">23 100 €</td>
-                <td>24 200 €</td>
-                <td style="color:var(--danger);">-1 100 €</td>
-              </tr>
-              <tr>
-                <td>Noisy-le-Grand</td>
-                <td style="color:var(--success);">25 500 €</td>
-                <td>25 800 €</td>
-                <td style="color:var(--danger);">-300 €</td>
-              </tr>
-              <tr>
-                <td>Bondy - Clichy</td>
-                <td style="color:var(--success);">16 400 €</td>
-                <td>17 000 €</td>
-                <td style="color:var(--danger);">-600 €</td>
-              </tr>
-              <tr>
-                <td>Total Diocese</td>
-                <td style="color:var(--success);">65 000 €</td>
-                <td>67 000 €</td>
-                <td style="color:var(--danger);">-2 000 €</td>
-              </tr>
+              <tr><td>Neuilly-sur-Marne</td><td id="t-nsm-r" style="color:var(--success);">23 100 €</td><td id="t-nsm-d">24 200 €</td><td id="t-nsm-e" style="color:var(--danger);">-1 100 €</td></tr>
+              <tr><td>Noisy-le-Grand</td><td id="t-nlg-r" style="color:var(--success);">25 500 €</td><td id="t-nlg-d">25 800 €</td><td id="t-nlg-e" style="color:var(--danger);">-300 €</td></tr>
+              <tr><td>Bondy - Clichy</td><td id="t-bcb-r" style="color:var(--success);">16 400 €</td><td id="t-bcb-d">17 000 €</td><td id="t-bcb-e" style="color:var(--danger);">-600 €</td></tr>
+              <tr><td>Total diocèse</td><td id="t-tot-r" style="color:var(--success);">65 000 €</td><td id="t-tot-d">67 000 €</td><td id="t-tot-e" style="color:var(--danger);">-2 000 €</td></tr>
             </tbody>
           </table>
           <div class="divider"></div>
           <div class="text-xs" style="line-height:1.6;">
-            Source: <span style="color:var(--primary);">Sage Comptabilite</span> - n8n sync<br>
-            3 factures impayees - <span class="alert-nav-link" onclick="navigate('documents')" style="display:inline;">Voir documents →</span>
+            Source : <span style="color:var(--primary);">Sage Comptabilité</span> - n8n sync<br>
+            <span id="impayees-count">3</span> factures impayées - <span class="alert-nav-link" onclick="navigate('documents')" style="display:inline;">Voir documents →</span>
           </div>
         </div>
       </div>
@@ -787,8 +805,8 @@
     <!-- ════ TAB: DOCUMENTS ════════════════════════════════════════ -->
     <div class="tab-panel" id="tab-documents">
       <div class="section-header">
-        <h1>Base Documentaire</h1>
-        <p>Factu - Factures - Bons de commandes - Justificatifs - Vie Donnees</p>
+        <h1>Base documentaire</h1>
+        <p>Factu - Factures - Bons de commandes - Justificatifs - Vie données</p>
       </div>
 
       <div class="grid-4">
@@ -833,96 +851,179 @@
 
       <div class="card">
         <div class="card-header">
-          <h3>Documents recents</h3>
-          <span class="text-xs">Zeendoc connecte - sync automatique via n8n</span>
+          <h3>Documents récents</h3>
+          <span class="text-xs">Zeendoc connecté - sync automatique via n8n</span>
         </div>
-        <table class="data-table">
+        <div style="overflow-x:auto;">
+        <table class="data-table" style="min-width:900px;">
           <thead>
             <tr>
-              <th>Document</th>
-              <th>Prestataire</th>
+              <th style="min-width:200px;">Document</th>
+              <th>Type</th>
+              <th>Fournisseur</th>
               <th>UP</th>
               <th>Montant</th>
               <th>Date</th>
               <th>Statut</th>
-              <th>Zeendoc Ref</th>
+              <th>Zeendoc réf.</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><span class="text-bold">Facture - SARL ChauffageXP - Chaudiere NSM</span></td>
-              <td><span style="color:var(--danger);">SARL Chauffage XP</span></td>
+            <tr style="background:rgba(239,68,68,.04);">
+              <td>
+                <div class="text-bold">Facture - SARL Chauffage XP - Chaudière NSM</div>
+                <div class="text-xs" style="margin-top:2px;">↗ NSM - Remplacement chaudière</div>
+                <div style="font-size:11px;color:var(--danger);margin-top:3px;font-weight:500;">En litige - non-conformité constatée</div>
+              </td>
+              <td><span class="badge primary">Facture</span></td>
+              <td style="color:var(--danger);">SARL Chauffage XP</td>
               <td class="text-xs">Neuilly-sur-Marne</td>
-              <td style="font-weight:700;color:var(--danger);">1 900 €</td>
+              <td style="font-weight:700;color:var(--danger);">1 800 €</td>
               <td class="text-xs">2026-02-24</td>
-              <td><span class="badge danger">Litige</span></td>
-              <td class="text-xs">ZD-2026-0047</td>
+              <td><span class="badge danger" style="gap:3px;"><span>⊕</span> Litige</span></td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0847</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                    Voir
+                  </button>
+                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    PDF
+                  </button>
+                </div>
+              </td>
             </tr>
             <tr>
-              <td><span class="text-bold">Devis - EURL Electricite 93 - Facture NSM</span></td>
-              <td>EURL Electricite 93</td>
-              <td class="text-xs">Noisy-le-Grand</td>
+              <td>
+                <div class="text-bold">Devis - EURL Électricité 93 - Tableau NSM</div>
+                <div class="text-xs" style="margin-top:2px;">↗ NSM - Mise aux normes électriques</div>
+              </td>
+              <td><span class="badge warning">Devis</span></td>
+              <td>EURL Électricité 93</td>
+              <td class="text-xs">Neuilly-sur-Marne</td>
               <td style="font-weight:700;color:var(--warning);">10 500 €</td>
               <td class="text-xs">2026-02-15</td>
               <td><span class="badge warning">En alerte</span></td>
-              <td class="text-xs">ZD-2026-0052</td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0052</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                    Voir
+                  </button>
+                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    PDF
+                  </button>
+                </div>
+              </td>
             </tr>
             <tr>
-              <td><span class="text-bold">BC - NetPro Nettoyage - Mars</span></td>
+              <td>
+                <div class="text-bold">BC - NetPro Nettoyage - Mars</div>
+                <div class="text-xs" style="margin-top:2px;">↗ Diocèse 93 - Nettoyage mensuel</div>
+              </td>
+              <td><span class="badge muted">BC</span></td>
               <td>NetPro Nettoyage</td>
-              <td class="text-xs">Diocese 93</td>
+              <td class="text-xs">Diocèse 93</td>
               <td style="font-weight:700;">2 400 €</td>
               <td class="text-xs">2026-03-01</td>
-              <td><span class="badge success">Valide</span></td>
-              <td class="text-xs">ZD-2026-0061</td>
+              <td><span class="badge success">Validé</span></td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0061</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                    Voir
+                  </button>
+                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    PDF
+                  </button>
+                </div>
+              </td>
             </tr>
             <tr>
-              <td><span class="text-bold">Facture - SAS BTP Renovation - Facade BCP</span></td>
-              <td>SAS BTP Renovation 93</td>
+              <td>
+                <div class="text-bold">Facture - SAS BTP Rénovation - Façade BCP</div>
+                <div class="text-xs" style="margin-top:2px;">↗ Bondy - Clichy - Ravalement façade</div>
+              </td>
+              <td><span class="badge primary">Facture</span></td>
+              <td>SAS BTP Rénovation 93</td>
               <td class="text-xs">Bondy - Clichy</td>
               <td style="font-weight:700;">5 500 €</td>
               <td class="text-xs">2026-03-10</td>
               <td><span class="badge warning">En cours</span></td>
-              <td class="text-xs">ZD-2026-0068</td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0068</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                    Voir
+                  </button>
+                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    PDF
+                  </button>
+                </div>
+              </td>
             </tr>
             <tr>
-              <td><span class="text-bold">Facture - Couverture IDF - Toiture NSM</span></td>
+              <td>
+                <div class="text-bold">Facture - Couverture IDF - Toiture NSM</div>
+                <div class="text-xs" style="margin-top:2px;">↗ NSM - Rénovation toiture Église Saint-Joseph</div>
+              </td>
+              <td><span class="badge primary">Facture</span></td>
               <td>Couverture de France</td>
               <td class="text-xs">Neuilly-sur-Marne</td>
               <td style="font-weight:700;color:var(--success);">28 500 €</td>
               <td class="text-xs">2026-03-28</td>
-              <td><span class="badge success">Valide</span></td>
-              <td class="text-xs">ZD-2026-1078</td>
+              <td><span class="badge success">Validé</span></td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-1078</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                    Voir
+                  </button>
+                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    PDF
+                  </button>
+                </div>
+              </td>
             </tr>
             <tr>
-              <td><span class="text-bold">Devis - Plomberie Chretien - Chaudiere NSM 1</span></td>
-              <td>Plomberie Chretien &amp; Fils</td>
-              <td class="text-xs">Neuilly-sur-Marne</td>
-              <td style="font-weight:700;">22 000 €</td>
-              <td class="text-xs">2026-03-18</td>
-              <td><span class="badge success">Valide</span></td>
-              <td class="text-xs">ZD-2026-0081</td>
-            </tr>
-            <tr>
-              <td><span class="text-bold">Controle maintenance - Securite - Services</span></td>
-              <td>Securite - Services</td>
-              <td class="text-xs">Diocese 93</td>
+              <td>
+                <div class="text-bold">Contrôle maintenance - Sécurité - Services</div>
+                <div class="text-xs" style="margin-top:2px;">↗ Diocèse 93 - Conformité passée</div>
+              </td>
+              <td><span class="badge muted">Justificatif</span></td>
+              <td>Sécurité - Services</td>
+              <td class="text-xs">Diocèse 93</td>
               <td style="font-weight:700;">7 100 €</td>
               <td class="text-xs">2026-03-20</td>
-              <td><span class="badge success">Conformite passee</span></td>
-              <td class="text-xs">ZD-2026-0074</td>
-            </tr>
-            <tr>
-              <td><span class="text-bold">BC - DioceseTech - Reseau Wifi NSM</span></td>
-              <td>DioceseTech Informatique</td>
-              <td class="text-xs">Neuilly-sur-Marne</td>
-              <td style="font-weight:700;">2 800 €</td>
-              <td class="text-xs">2026-03-18</td>
-              <td><span class="badge success">Valide</span></td>
-              <td class="text-xs">ZD-2026-0066</td>
+              <td><span class="badge success">Conformité passée</span></td>
+              <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">ZD-2026-0074</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
+                    Voir
+                  </button>
+                  <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    PDF
+                  </button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
 
@@ -1254,27 +1355,159 @@
 </div><!-- /app -->
 
 <script>
+  // ── Navigation ──────────────────────────────────────────────
   const TITLES = {
-    overview:      ['Vue Economie Adjoint',         'Tableau de bord - Semaine 13 - 30 mars 2026 - Diocese de Saint-Denis'],
-    prestataires:  ['Prestataires',                  'Base Prestataires - Scoring IA - Historique interventions'],
-    finances:      ['Flux Financiers',               'Graflex - Ecarts - Recettes - Depenses - Diocese de Saint-Denis'],
-    documents:     ['Base Documentaire',             'Factu - Factures - Bons de commandes - Justificatifs'],
-    alertes:       ['Saisie - NSM',                  'Personne en charge de la saisie - Neuilly-sur-Marne - S13'],
-    ecosysteme:    ['Ecosysteme SI',                 'Architecture de la solution - Complementarite Briques - IA - Dashboard SI'],
+    overview:     ['Vue économe',         'Tableau de bord - Semaine 13 - 30 mars 2026 - Diocèse de Saint-Denis'],
+    prestataires: ['Prestataires',        'Base prestataires - Scoring IA - Historique interventions'],
+    finances:     ['Flux financiers',     'Graflex - Écarts - Recettes - Dépenses - Diocèse de Saint-Denis'],
+    documents:    ['Base documentaire',   'Factu - Factures - Bons de commandes - Justificatifs'],
+    alertes:      ['Saisie - NSM',        'Personne en charge de la saisie - Neuilly-sur-Marne - S13'],
+    ecosysteme:   ['Ecosystème SI',       'Architecture de la solution - Complémentarité Briques - IA - Dashboard SI'],
   };
+  const ORDER = ['overview','prestataires','finances','documents','alertes','ecosysteme'];
 
   function navigate(tab) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
-    const order = ['overview','prestataires','finances','documents','alertes','ecosysteme'];
-    const idx = order.indexOf(tab);
+    const idx = ORDER.indexOf(tab);
     if (idx >= 0) document.querySelectorAll('.nav-item')[idx].classList.add('active');
     const [title, sub] = TITLES[tab] || [tab, ''];
     document.getElementById('topbar-title').textContent = title;
     document.getElementById('topbar-sub').textContent = sub;
     document.querySelector('.content').scrollTop = 0;
   }
+
+  // ── Filtres ville prestataires ───────────────────────────────
+  function filterCity(btn, city) {
+    // Toggle : si déjà actif, on revient à "Tous"
+    const isActive = btn.classList.contains('active');
+    document.querySelectorAll('.city-tab').forEach(b => b.classList.remove('active'));
+    const activeCity = isActive ? null : city;
+    if (!isActive) btn.classList.add('active');
+
+    // Highlight city tags
+    document.querySelectorAll('.city-tag').forEach(tag => {
+      tag.style.background = '';
+      tag.style.color = '';
+      tag.style.borderRadius = '';
+      tag.style.padding = '';
+      tag.style.fontWeight = '';
+    });
+    if (activeCity) {
+      document.querySelectorAll(`.city-tag[data-city="${activeCity}"]`).forEach(tag => {
+        tag.style.background = 'var(--primary-dim)';
+        tag.style.color = 'var(--primary)';
+        tag.style.borderRadius = '4px';
+        tag.style.padding = '1px 5px';
+        tag.style.fontWeight = '600';
+      });
+    }
+
+    // Filtre les lignes prestataires
+    document.querySelectorAll('.prest-row[data-cities]').forEach(row => {
+      const cities = row.dataset.cities || '';
+      if (!activeCity || cities.includes(activeCity)) {
+        row.style.opacity = '1';
+        row.style.transition = 'opacity .2s';
+      } else {
+        row.style.opacity = '0.25';
+        row.style.transition = 'opacity .2s';
+      }
+    });
+  }
+
+  // ── Flux financiers dynamique ────────────────────────────────
+  const WEEKS = {
+    S10: { rec: 58000, dep: 60000, imp: 2, nsm:[20100,21300], nlg:[22300,23000], bcb:[15600,15700] },
+    S11: { rec: 61000, dep: 63500, imp: 3, nsm:[21500,22500], nlg:[23800,24200], bcb:[15700,16800] },
+    S12: { rec: 63000, dep: 65000, imp: 2, nsm:[22000,23100], nlg:[24200,24800], bcb:[16800,17100] },
+    S13: { rec: 65000, dep: 67000, imp: 3, nsm:[23100,24200], nlg:[25500,25800], bcb:[16400,17000] },
+    S14: { rec: 62000, dep: 63000, imp: 2, nsm:[21800,22400], nlg:[24000,24300], bcb:[16200,16300] },
+    S15: { rec: 67000, dep: 68500, imp: 2, nsm:[23500,24000], nlg:[26000,26200], bcb:[17500,18300] },
+  };
+  const WEEK_ORDER = ['S10','S11','S12','S13','S14','S15'];
+  let currentWeek = 'S13';
+
+  function fmt(n) { return n.toLocaleString('fr-FR') + ' €'; }
+  function ecart(a,b) { const e=a-b; return (e>=0?'+':'')+e.toLocaleString('fr-FR')+' €'; }
+
+  function setWeek(w) {
+    currentWeek = w;
+    // Boutons sélecteur
+    document.querySelectorAll('#week-selector .filter-tab').forEach((btn,i) => {
+      btn.classList.toggle('active', WEEK_ORDER[i] === w);
+    });
+    // Labels semaine
+    document.querySelectorAll('.week-label').forEach(el => el.textContent = w);
+    const el = id => document.getElementById(id);
+    if (el('chart-week-label')) el('chart-week-label').textContent = w;
+    if (el('chart-week-label2')) el('chart-week-label2').textContent = w;
+
+    const d = WEEKS[w];
+    // KPIs
+    el('kpi-rec').textContent = fmt(d.rec);
+    el('kpi-dep').textContent = fmt(d.dep);
+    const e = d.rec - d.dep;
+    el('kpi-ecart').textContent = fmt(e);
+    el('kpi-ecart').style.color = e >= 0 ? 'var(--success)' : 'var(--danger)';
+    el('impayees-count').textContent = d.imp;
+
+    // UP bars & table
+    const [nsmR, nsmD] = d.nsm, [nlgR, nlgD] = d.nlg, [bcbR, bcbD] = d.bcb;
+    const totR = nsmR+nlgR+bcbR, totD = nsmD+nlgD+bcbD;
+    const maxR = Math.max(nsmR,nlgR,bcbR);
+
+    el('up-nsm-rec').textContent = fmt(nsmR);
+    el('up-nsm-detail').textContent = 'Dépenses: '+fmt(nsmD)+' - Écart: '+ecart(nsmR,nsmD);
+    el('bar-nsm').style.width = Math.round(nsmR/maxR*90)+'%';
+    el('up-nlg-rec').textContent = fmt(nlgR);
+    el('up-nlg-detail').textContent = 'Dépenses: '+fmt(nlgD)+' - Écart: '+ecart(nlgR,nlgD);
+    el('bar-nlg').style.width = Math.round(nlgR/maxR*90)+'%';
+    el('up-bcb-rec').textContent = fmt(bcbR);
+    el('up-bcb-detail').textContent = 'Dépenses: '+fmt(bcbD)+' - Écart: '+ecart(bcbR,bcbD);
+    el('bar-bcb').style.width = Math.round(bcbR/maxR*90)+'%';
+
+    el('t-nsm-r').textContent = fmt(nsmR); el('t-nsm-d').textContent = fmt(nsmD); el('t-nsm-e').textContent = ecart(nsmR,nsmD);
+    el('t-nlg-r').textContent = fmt(nlgR); el('t-nlg-d').textContent = fmt(nlgD); el('t-nlg-e').textContent = ecart(nlgR,nlgD);
+    el('t-bcb-r').textContent = fmt(bcbR); el('t-bcb-d').textContent = fmt(bcbD); el('t-bcb-e').textContent = ecart(bcbR,bcbD);
+    el('t-tot-r').textContent = fmt(totR); el('t-tot-d').textContent = fmt(totD); el('t-tot-e').textContent = ecart(totR,totD);
+
+    // Chart
+    renderChart(w);
+    el('chart-ecart-label').textContent = '■ '+w+' - Écart : '+ecart(d.rec,d.dep);
+  }
+
+  function renderChart(activeWeek) {
+    const chart = document.getElementById('flux-chart');
+    if (!chart) return;
+    chart.innerHTML = '';
+    const maxVal = 68500;
+    WEEK_ORDER.forEach(w => {
+      const d = WEEKS[w];
+      const isActive = w === activeWeek;
+      const hR = Math.round((d.rec/maxVal)*90);
+      const hD = Math.round((d.dep/maxVal)*90);
+      const col = document.createElement('div');
+      col.style.cssText = 'flex:1;display:flex;align-items:flex-end;gap:1px;';
+      col.innerHTML = `
+        <div style="flex:1;height:${hR}px;background:${isActive?'var(--primary)':'var(--success)'};opacity:${isActive?1:.6};border-radius:2px 2px 0 0;transition:all .3s;"></div>
+        <div style="flex:1;height:${hD}px;background:${isActive?'var(--warning)':'var(--danger)'};opacity:${isActive?1:.45};border-radius:2px 2px 0 0;transition:all .3s;"></div>
+      `;
+      chart.appendChild(col);
+    });
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    renderChart('S13');
+    // Ajouter id aux KPI flux (après rendu)
+    // Les KPI sont dans le tab-finances, on les patche via les premiers elements
+    const cards = document.querySelectorAll('#tab-finances .kpi-value');
+    if (cards[0]) cards[0].id = 'kpi-rec';
+    if (cards[1]) cards[1].id = 'kpi-dep';
+    if (cards[2]) cards[2].id = 'kpi-ecart';
+  });
 </script>
 </body>
 </html>
