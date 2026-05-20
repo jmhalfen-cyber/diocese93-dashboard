@@ -377,7 +377,7 @@
           </div>
           <div class="kpi-value">10</div>
           <div class="kpi-label">Contacts à gérer</div>
-          <div class="kpi-trend flat">Voir les 29 items</div>
+          <div class="kpi-trend flat" onclick="openInfoModal('contacts')" style="cursor:pointer;color:var(--primary);">Voir les 29 contacts →</div>
         </div>
         <div class="kpi-card danger">
           <div class="kpi-icon danger">
@@ -403,6 +403,7 @@
           </div>
           <div class="kpi-value">8</div>
           <div class="kpi-label">Contrats en cours</div>
+          <div class="kpi-trend flat" onclick="openInfoModal('contrats')" style="cursor:pointer;color:var(--primary);">Voir les 8 contrats →</div>
         </div>
         <div class="kpi-card warning">
           <div class="kpi-icon warning">
@@ -410,7 +411,8 @@
           </div>
           <div class="kpi-value">14</div>
           <div class="kpi-label">Documents en attente</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">2 litiges · 2 échéances</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">2 litiges · 2 échéances</div>
+          <div class="kpi-trend flat" onclick="openInfoModal('docs-attente')" style="cursor:pointer;color:var(--primary);">Voir les 14 documents →</div>
         </div>
       </div>
 
@@ -425,16 +427,16 @@
             </button>
           </div>
 
-          <div class="alert-card danger" onclick="navigate('alertes')">
+          <div class="alert-card danger" onclick="openInfoModal('detail-ecart')">
             <div class="row between">
               <div class="alert-title">CRITIQUE - Écart bascule non résolu - 6 jours</div>
               <span style="font-size:12px;font-weight:700;color:var(--danger);">1 540 €</span>
             </div>
-            <div class="alert-desc">Audit de sur-facturation a reprendre. Facturation manuelle basculee depuis 0.5%. Notification transmise.</div>
+            <div class="alert-desc">Audit de sur-facturation à reprendre. Facturation manuelle basculée depuis 0,5 %. Notification transmise.</div>
             <div class="alert-meta">
               <span class="badge danger">Critique</span>
               <span>Neuilly-sur-Marne</span>
-              <span class="alert-nav-link" onclick="event.stopPropagation();navigate('alertes')">Voir detail →</span>
+              <span class="alert-nav-link" onclick="event.stopPropagation();openInfoModal('detail-ecart')">Voir détail →</span>
             </div>
           </div>
 
@@ -451,20 +453,20 @@
             </div>
           </div>
 
-          <div class="alert-card primary" onclick="navigate('finances')" style="cursor:pointer;">
+          <div class="alert-card primary" onclick="openInfoModal('detail-assurance')" style="cursor:pointer;">
             <div class="row between">
               <div class="alert-title">INFO - Assurance doublon détectée</div>
               <span style="font-size:12px;font-weight:700;color:var(--primary);">1 200 €</span>
             </div>
-            <div class="alert-desc">Double contrat assurance multirisques - économie potentielle de 1 200 €/an.</div>
+            <div class="alert-desc">Double contrat assurance multirisques — économie potentielle de 1 200 €/an.</div>
             <div class="alert-meta">
               <span class="badge primary">Info</span>
-              <span>Bondy - Clichy-sous-Bois</span>
-              <span class="alert-nav-link" onclick="event.stopPropagation();navigate('finances')">Résilier contrat redondant →</span>
+              <span>Bondy – Clichy-sous-Bois</span>
+              <span class="alert-nav-link" onclick="event.stopPropagation();openInfoModal('detail-assurance')">Voir comparatif et résilier →</span>
             </div>
           </div>
 
-          <div class="alert-card warning" onclick="navigate('alertes')" style="cursor:pointer;">
+          <div class="alert-card warning" onclick="openInfoModal('detail-quete')" style="cursor:pointer;">
             <div class="row between">
               <div>
                 <div class="alert-title">Quête faible vs activité paroissiale - anomalie Enoria</div>
@@ -478,20 +480,20 @@
             </div>
             <div class="alert-desc" style="margin-top:6px;">Enoria enregistre 6 messes + 1 baptême le week-end du 05/04 (NLG 2). Quête collectée : 210 €. Moyenne attendue pour cette activité : 890 €. Écart : -680 €.</div>
             <div class="alert-meta">
-              <span class="alert-nav-link" onclick="event.stopPropagation();navigate('alertes')">Vérifier saisies - Personne en charge NLG →</span>
+              <span class="alert-nav-link" onclick="event.stopPropagation();openInfoModal('detail-quete')">Vérifier saisies NLG2 →</span>
             </div>
           </div>
 
-          <div class="alert-card warning" onclick="navigate('alertes')">
+          <div class="alert-card warning" onclick="openInfoModal('detail-maintenance')">
             <div class="row between">
               <div class="alert-title">URGENT - Contrôle maintenance - Entretien 30 jours</div>
               <span style="font-size:12px;font-weight:700;color:var(--warning);">28 500 €</span>
             </div>
-            <div class="alert-desc">Revision chaudiere biomasse planifiee. Devis en attente de validation econome sous 24h.</div>
+            <div class="alert-desc">Révision chaudière biomasse planifiée. Devis reçu — validation économe requise sous 24h.</div>
             <div class="alert-meta">
               <span class="badge warning">Urgent</span>
-              <span>Neuilly-sur-Marne</span>
-              <span class="alert-nav-link" onclick="event.stopPropagation();navigate('alertes')">Voir detail →</span>
+              <span>Presbytère NSM1</span>
+              <span class="alert-nav-link" onclick="event.stopPropagation();openInfoModal('detail-maintenance')">Voir devis et valider →</span>
             </div>
           </div>
         </div>
@@ -519,7 +521,7 @@
                   <div style="font-weight:700;color:var(--text-primary);">Neuilly-sur-Marne</div>
                   <div style="font-size:11px;color:var(--text-muted);">NSM</div>
                 </td>
-                <td><span style="color:var(--danger);font-weight:700;">3</span><div style="font-size:10px;color:var(--text-muted);">8j</div></td>
+                <td><span style="color:var(--danger);font-weight:700;cursor:pointer;text-decoration:underline;" onclick="openInfoModal('alertes-nsm')">3</span><div style="font-size:10px;color:var(--text-muted);">8j</div></td>
                 <td><span style="color:var(--warning);font-weight:700;">1</span></td>
                 <td style="color:var(--success);font-weight:600;">22 000 €</td>
                 <td style="font-weight:600;">20 000 €</td>
@@ -530,7 +532,7 @@
                   <div style="font-weight:700;color:var(--text-primary);">Noisy-le-Grand</div>
                   <div style="font-size:11px;color:var(--text-muted);">NLG</div>
                 </td>
-                <td><span style="color:var(--danger);font-weight:700;">3</span><div style="font-size:10px;color:var(--text-muted);">5j</div></td>
+                <td><span style="color:var(--danger);font-weight:700;cursor:pointer;text-decoration:underline;" onclick="openInfoModal('alertes-nlg')">3</span><div style="font-size:10px;color:var(--text-muted);">5j</div></td>
                 <td><span style="color:var(--warning);font-weight:700;">2</span></td>
                 <td style="color:var(--success);font-weight:600;">25 000 €</td>
                 <td style="font-weight:600;">22 000 €</td>
@@ -541,7 +543,7 @@
                   <div style="font-weight:700;color:var(--text-primary);">Bondy – Clichy-sous-Bois</div>
                   <div style="font-size:11px;color:var(--text-muted);">BCB</div>
                 </td>
-                <td><span style="color:var(--warning);font-weight:700;">1</span></td>
+                <td><span style="color:var(--warning);font-weight:700;cursor:pointer;text-decoration:underline;" onclick="openInfoModal('alertes-bcb')">1</span></td>
                 <td><span style="color:var(--success);font-weight:700;">0</span></td>
                 <td style="color:var(--success);font-weight:600;">18 000 €</td>
                 <td style="color:var(--danger);font-weight:600;">25 000 €</td>
@@ -1451,6 +1453,22 @@
   </div>
 </div>
 
+<!-- ════ MODAL GÉNÉRIQUE INFO ═══════════════════════════════════ -->
+<div id="info-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;" onclick="closeInfoModal(event)">
+  <div id="info-modal-box" style="background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);width:min(820px,95vw);position:relative;" onclick="event.stopPropagation()">
+    <div id="info-modal-header" style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border);">
+      <div>
+        <div id="info-modal-title" style="font-size:16px;font-weight:700;color:var(--text-primary);"></div>
+        <div id="info-modal-sub" style="font-size:12px;color:var(--text-muted);margin-top:3px;"></div>
+      </div>
+      <button onclick="closeInfoModal()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="info-modal-body" style="padding:20px 24px 24px;max-height:70vh;overflow-y:auto;"></div>
+  </div>
+</div>
+
 <script>
   // ── Navigation ──────────────────────────────────────────────
   const TITLES = {
@@ -1869,6 +1887,374 @@
     if (typeof Chart !== 'undefined') initCharts();
     else document.addEventListener('chartjs-ready', initCharts);
   });
+
+  // ── Modal générique ─────────────────────────────────────────
+  function openInfoModal(key) {
+    const d = MODAL_DATA[key];
+    if (!d) return;
+    document.getElementById('info-modal-title').textContent = d.title;
+    document.getElementById('info-modal-sub').textContent = d.sub || '';
+    document.getElementById('info-modal-body').innerHTML = d.html;
+    const m = document.getElementById('info-modal');
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeInfoModal(e) {
+    if (e && e.target !== document.getElementById('info-modal')) return;
+    document.getElementById('info-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  // Fermeture sans argument (bouton ×)
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#info-modal button')?.addEventListener('click', () => {
+      document.getElementById('info-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ── Données des modals ──────────────────────────────────────
+  const MODAL_DATA = {
+
+    // ─── 29 CONTACTS À GÉRER ────────────────────────────────
+    contacts: {
+      title: 'Contacts à gérer',
+      sub: '29 contacts — dont 10 actions urgentes',
+      html: `
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="border-bottom:2px solid var(--border-2);">
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Nom</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Rôle</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">UP</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Action requise</th>
+            <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Priorité</th>
+          </tr></thead>
+          <tbody>
+            ${[
+              ['Marie Leclercq','Coordonnatrice NSM','NSM','Validation saisie S12 manquante','danger'],
+              ['Pierre Moreau','Trésorier NLG','NLG','Relance facture impayée 40 000 €','danger'],
+              ['Sœur Anne-Marie','Responsable NSM1','NSM','Signature devis chaudière biomasse','danger'],
+              ['Jean-Baptiste Cabot','Économe BCB','BCB','Rapport mensuel Q1 manquant','warning'],
+              ['Fatima Oumari','Comptable diocèse','Diocèse','Clôture exercice Q1 2026','warning'],
+              ['Bruno Sallet','Gestionnaire immobilier','BCB','État des lieux presbytère BCB2','warning'],
+              ['Thomas Raynaud','Prestataire As-Tech','Multi-sites','Mise à jour planning 3 chantiers','warning'],
+              ['Claire Dubuisson','Responsable Zeendoc','Diocèse','Archivage 28 documents Q4 2025','warning'],
+              ['Michel Fouché','Architecte diocèse','NSM','Remise rapport diagnostic NSM3','warning'],
+              ['Agnès Bertrand','Responsable RH','Diocèse','Renouvellement 3 contrats prestataires','warning'],
+              ['Joseph Ngandu','Diacre NLG','NLG','Transmission quêtes NLG2 — mars 2026','primary'],
+              ['Isabelle Garnier','Comptable NLG','NLG','Justificatif quête 05/04 manquant','primary'],
+              ['François Lacoste','Plomberie Chrétien','NSM','Transmission PV réception travaux','primary'],
+              ['Martine Vidal','Assureur diocèse','Diocèse','Résiliation contrat AXA doublon','primary'],
+              ['Robert Delmas','Bureau des travaux','NLG','Bon de commande électricité NLG3','primary'],
+              ['Nathalie Foissy','Responsable NSM2','NSM','Saisie Enoria — messes manquantes','primary'],
+              ['Alain Bonnet','Contrôleur de gestion','Diocèse','Analyse écart S11-S13','primary'],
+              ['Sophie Mercier','Responsable liturgie','BCB','État quêtes Pâques 2026','primary'],
+              ['Henri Dupré','Président CAS NLG','NLG','Approbation budget travaux','primary'],
+              ['Laurence Pommier','Secrétaire diocèse','Diocèse','Classement dossiers administratifs','muted'],
+              ['Christophe Bellec','Électricité 93','NLG','Facture finale NLG3 attendue','muted'],
+              ['Patricia Aumont','Responsable CAS NSM','NSM','Rapport audit mensuel','muted'],
+              ['Emmanuel Kokou','Trésorier BCB','BCB','Réconciliation bancaire mars 2026','muted'],
+              ['Delphine Morin','Responsable archives','Diocèse','Numérisation contrats 2024','muted'],
+              ['Marc Tisserand','Coordonnateur SI','Diocèse','Accès Zeendoc — 3 nouveaux agents','muted'],
+              ['Anne-Claire Roux','Doyenné NLG','NLG','Transmission PV réunion doyenné','muted'],
+              ['Gérard Fontaine','Gestionnaire baux','NLG','Renouvellement bail presbytère NLG1','muted'],
+              ['Sylvie Beaumont','Responsable formation','Diocèse','Formation Enoria — 5 agents','muted'],
+              ['Laurent Charpentier','Cabinet Ingénierie 93','NSM','Remise rapport structurel NSM3','muted'],
+            ].map(([nom,role,up,action,prio]) => `
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 10px;font-weight:600;color:var(--text-primary);">${nom}</td>
+                <td style="padding:7px 10px;color:var(--text-secondary);">${role}</td>
+                <td style="padding:7px 10px;"><span style="font-size:11px;background:var(--surface-2);padding:2px 7px;border-radius:10px;">${up}</span></td>
+                <td style="padding:7px 10px;color:var(--text-secondary);">${action}</td>
+                <td style="padding:7px 10px;text-align:center;"><span class="badge ${prio}">${prio==='danger'?'Urgent':prio==='warning'?'À traiter':prio==='primary'?'En cours':'OK'}</span></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`
+    },
+
+    // ─── 8 CONTRATS EN COURS ────────────────────────────────
+    contrats: {
+      title: 'Contrats en cours',
+      sub: '8 contrats actifs — 1 doublon détecté · 1 renouvellement urgent',
+      html: `
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="border-bottom:2px solid var(--border-2);">
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Intitulé</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Prestataire</th>
+            <th style="text-align:right;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Montant/an</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">UP</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Échéance</th>
+            <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Statut</th>
+          </tr></thead>
+          <tbody>
+            ${[
+              ['Maintenance SSI','Sécurité-Services 93','4 200 €','Multi-sites','Déc 2026','success','Actif'],
+              ['Entretien chaudières','Plomberie Chrétien & Fils','3 600 €','NSM','Mars 2027','success','Actif'],
+              ['Nettoyage locaux','Net & Propre 93','8 400 €','NSM + NLG','Juin 2026','warning','Renouvellement'],
+              ['Assurance multirisques','MAIF Diocèse','12 000 €','Diocèse 93','Jan 2027','success','Actif'],
+              ['Assurance multirisques','AXA Pro','11 200 €','BCB + NLG','Jan 2027','danger','⚠ Doublon'],
+              ['Maintenance élévateurs','Schindler Île-de-France','2 800 €','NSM','Sep 2026','success','Actif'],
+              ['Téléphonie-internet','Orange Pro','1 440 €','Multi-sites','Avr 2026','danger','Urgent — expire'],
+              ['GED Zeendoc','Zeendoc SAS','3 960 €','Diocèse 93','Nov 2026','success','Actif'],
+            ].map(([titre,prest,mnt,up,ech,prio,statut]) => `
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 10px;font-weight:600;color:var(--text-primary);">${titre}</td>
+                <td style="padding:7px 10px;color:var(--text-secondary);">${prest}</td>
+                <td style="padding:7px 10px;text-align:right;font-weight:600;">${mnt}</td>
+                <td style="padding:7px 10px;"><span style="font-size:11px;background:var(--surface-2);padding:2px 7px;border-radius:10px;">${up}</span></td>
+                <td style="padding:7px 10px;color:var(--text-secondary);">${ech}</td>
+                <td style="padding:7px 10px;text-align:center;"><span class="badge ${prio}">${statut}</span></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`
+    },
+
+    // ─── 14 DOCUMENTS EN ATTENTE ────────────────────────────
+    'docs-attente': {
+      title: 'Documents en attente',
+      sub: '14 documents — 2 litiges · 2 échéances dépassées',
+      html: `
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="border-bottom:2px solid var(--border-2);">
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Document</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Type</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Fournisseur</th>
+            <th style="text-align:right;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Montant</th>
+            <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">En attente</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;">Action</th>
+          </tr></thead>
+          <tbody>
+            ${[
+              ['Facture chaudière NSM1','Facture','Plomberie Chrétien & Fils','22 000 €','12 j','warning','Validation'],
+              ['Devis diagnostic NSM3','Devis','Cabinet Ingénierie 93','3 800 €','8 j','warning','Signature'],
+              ['Devis ravalement BCB','Devis','SAS BTP Rénovation 93','5 500 €','15 j','warning','Relance envoyée'],
+              ['Facture tableau élec. NLG3','Facture','EURL Électricité 93','40 000 €','3 j','primary','Vérification'],
+              ['BC toiture NSM','BC','Couverture de France','28 500 €','5 j','primary','Approbation'],
+              ['Justificatif quêtes NLG2','Justificatif','Paroisse NLG2','—','18 j','danger','Urgent'],
+              ['Facture nettoyage mars','Facture','Net & Propre 93','700 €','22 j','danger','⚠ Litige'],
+              ['Devis peinture NSM1','Devis','SAS BTP Rénovation 93','12 000 €','32 j','danger','⚠ Litige'],
+              ['Facture contrôle sécurité','Facture','Sécurité-Services 93','7 000 €','2 j','primary','Validation'],
+              ['BC électricité NLG2','BC','EURL Électricité 93','8 500 €','7 j','warning','Approbation'],
+              ['Facture acompte toiture','Facture','Couverture de France','14 250 €','10 j','primary','Vérification'],
+              ['Contrat AXA renouvellement','Contrat','AXA Pro','11 200 €','25 j','danger','⚠ Doublon — à résilier'],
+              ['Devis mission BCB1','Devis','Cabinet Ingénierie 93','2 400 €','14 j','warning','Décision requise'],
+              ['Facture salle paroissiale','Facture','SAS BTP Rénovation 93','4 200 €','6 j','primary','Validation'],
+            ].map(([doc,type,fourn,mnt,attente,prio,action]) => `
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 10px;font-weight:600;color:var(--text-primary);">${doc}</td>
+                <td style="padding:7px 10px;"><span style="font-size:11px;background:var(--surface-2);padding:2px 7px;border-radius:10px;">${type}</span></td>
+                <td style="padding:7px 10px;color:var(--text-secondary);">${fourn}</td>
+                <td style="padding:7px 10px;text-align:right;font-weight:600;">${mnt}</td>
+                <td style="padding:7px 10px;text-align:center;color:var(--text-muted);">${attente}</td>
+                <td style="padding:7px 10px;"><span class="badge ${prio}">${action}</span></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`
+    },
+
+    // ─── ALERTES NSM (3) ────────────────────────────────────
+    'alertes-nsm': {
+      title: 'Alertes — Neuilly-sur-Marne',
+      sub: '3 alertes actives · dernière mise à jour il y a 2h',
+      html: `
+        <div class="alert-card danger" style="cursor:default;">
+          <div class="row between"><div class="alert-title">CRITIQUE — Écart bascule non résolu — 6 jours</div><span style="font-weight:700;color:var(--danger);">2 500 €</span></div>
+          <div class="alert-desc" style="margin-top:6px;">Facturation manuelle basculée depuis 0,5 %. Écart total constaté : 2 500 €. Audit de sur-facturation à reprendre. Notification Mairie départementale transmise le 24/03/2026. Responsable : Marie Leclercq.</div>
+          <div class="alert-meta"><span class="badge danger">Critique</span><span>NSM1 — Neuilly-sur-Marne</span><span>Depuis le 24/03/2026</span></div>
+        </div>
+        <div class="alert-card warning" style="cursor:default;">
+          <div class="row between"><div class="alert-title">URGENT — Révision chaudière biomasse — Presbytère NSM1</div><span style="font-weight:700;color:var(--warning);">28 500 €</span></div>
+          <div class="alert-desc" style="margin-top:6px;">Devis Plomberie Chrétien & Fils reçu le 18/03/2026, non signé. Délai contractuel dépassé de 12 jours. Validation économe requise sous 24h. Risque d'annulation du prestataire.</div>
+          <div class="alert-meta"><span class="badge warning">Urgent</span><span>Presbytère NSM1</span><span>Devis ZD-2026-0091</span></div>
+        </div>
+        <div class="alert-card primary" style="cursor:default;">
+          <div class="row between"><div class="alert-title">INFO — Diagnostic structurel NSM3 en retard</div><span style="font-weight:700;color:var(--primary);">3 800 €</span></div>
+          <div class="alert-desc" style="margin-top:6px;">Rapport Cabinet Ingénierie 93 attendu pour le 05/04/2026, non remis à ce jour. Relance envoyée le 12/04. Risque décalage planning travaux fondations.</div>
+          <div class="alert-meta"><span class="badge primary">Info</span><span>Presbytère NSM3</span><span>Retard : 5 jours</span></div>
+        </div>`
+    },
+
+    // ─── ALERTES NLG (3) ────────────────────────────────────
+    'alertes-nlg': {
+      title: 'Alertes — Noisy-le-Grand',
+      sub: '3 alertes actives · dernière mise à jour il y a 3h',
+      html: `
+        <div class="alert-card danger" style="cursor:default;">
+          <div class="row between"><div class="alert-title">CRITIQUE — Devis électricité NLG3 sans validation — 15 jours</div><span style="font-weight:700;color:var(--danger);">40 000 €</span></div>
+          <div class="alert-desc" style="margin-top:6px;">Devis EURL Électricité 93 ref. ZD-2026-0042 transmis le 30/03/2026. Aucune signature reçue à ce jour. Risque de pénalités contractuelles à partir du 15/04. Validation urgente requise par l'économe adjoint.</div>
+          <div class="alert-meta"><span class="badge danger">Critique</span><span>Presbytère NLG3</span><span>Depuis le 30/03/2026</span></div>
+        </div>
+        <div class="alert-card warning" style="cursor:default;">
+          <div class="row between"><div class="alert-title">URGENT — Quête faible vs activité — anomalie Enoria</div><span style="font-weight:700;color:var(--warning);">680 €</span></div>
+          <div class="alert-desc" style="margin-top:6px;">Enoria enregistre 6 messes + 1 baptême le week-end du 05/04 (NLG2). Quête collectée : 210 €. Moyenne attendue : 890 €. Écart : -680 €. Vérification croisée Enoria × Sage demandée. Responsable NLG2 : Isabelle Garnier.</div>
+          <div class="alert-meta"><span class="badge warning">Urgent</span><span>Paroisse NLG2</span><span>W-E 05-06/04/2026</span></div>
+        </div>
+        <div class="alert-card primary" style="cursor:default;">
+          <div class="row between"><div class="alert-title">INFO — Contrat téléphonie Orange Pro à renouveler</div><span style="font-weight:700;color:var(--primary);">1 440 €</span></div>
+          <div class="alert-desc" style="margin-top:6px;">Contrat Orange Pro (téléphonie + internet multi-sites) expire le 30/04/2026. Renouvellement ou mise en concurrence à décider avant le 20/04. Contact : Marc Tisserand — coordonnateur SI.</div>
+          <div class="alert-meta"><span class="badge primary">Info</span><span>Multi-sites</span><span>Échéance : 30/04/2026</span></div>
+        </div>`
+    },
+
+    // ─── ALERTES BCB (1) ────────────────────────────────────
+    'alertes-bcb': {
+      title: 'Alertes — Bondy – Clichy-sous-Bois',
+      sub: '1 alerte active · dernière mise à jour il y a 1h',
+      html: `
+        <div class="alert-card primary" style="cursor:default;">
+          <div class="row between"><div class="alert-title">INFO — Assurance doublon détectée — économie potentielle 1 200 €/an</div><span style="font-weight:700;color:var(--primary);">1 200 €/an</span></div>
+          <div class="alert-desc" style="margin-top:6px;">Deux contrats d'assurance multirisques actifs simultanément sur BCB + NLG : MAIF Diocèse (12 000 €/an) et AXA Pro (11 200 €/an). Les garanties se recoupent à 95 %. Résiliation AXA Pro recommandée avant Jan 2027. Contact assureur : Martine Vidal.</div>
+          <div class="alert-meta"><span class="badge primary">Info</span><span>BCB + NLG</span><span>Détecté le 15/04/2026</span></div>
+        </div>
+        <div style="margin-top:16px;padding:12px 16px;background:var(--surface-2);border-radius:var(--radius-sm);">
+          <div style="font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Comparatif contrats assurance</div>
+          <table style="width:100%;font-size:12px;border-collapse:collapse;">
+            <tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:5px 8px;color:var(--text-muted);font-weight:500;">Contrat</th><th style="text-align:right;padding:5px 8px;color:var(--text-muted);font-weight:500;">Prime/an</th><th style="text-align:left;padding:5px 8px;color:var(--text-muted);font-weight:500;">Couverture</th><th style="text-align:center;padding:5px 8px;color:var(--text-muted);font-weight:500;">Recommandation</th></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px;font-weight:600;">MAIF Diocèse</td><td style="padding:6px 8px;text-align:right;">12 000 €</td><td style="padding:6px 8px;">Tous sites</td><td style="padding:6px 8px;text-align:center;"><span class="badge success">Conserver</span></td></tr>
+            <tr><td style="padding:6px 8px;font-weight:600;">AXA Pro</td><td style="padding:6px 8px;text-align:right;">11 200 €</td><td style="padding:6px 8px;">BCB + NLG</td><td style="padding:6px 8px;text-align:center;"><span class="badge danger">Résilier</span></td></tr>
+          </table>
+        </div>`
+    },
+
+    // ─── DÉTAIL ÉCART BASCULE ────────────────────────────────
+    'detail-ecart': {
+      title: 'Écart bascule — Audit en cours',
+      sub: 'NSM1 · Neuilly-sur-Marne · Depuis le 24/03/2026',
+      html: `
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Écart constaté</div>
+            <div style="font-size:22px;font-weight:700;color:var(--danger);">2 500 €</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Période</div>
+            <div style="font-size:14px;font-weight:600;">S10 → S13 2026</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Jours ouverts</div>
+            <div style="font-size:14px;font-weight:600;color:var(--warning);">6 jours</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Historique des saisies — NSM1</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+          <thead><tr style="border-bottom:2px solid var(--border-2);">
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;">Semaine</th>
+            <th style="text-align:right;padding:6px 10px;color:var(--text-muted);font-size:11px;">Attendu</th>
+            <th style="text-align:right;padding:6px 10px;color:var(--text-muted);font-size:11px;">Saisi</th>
+            <th style="text-align:right;padding:6px 10px;color:var(--text-muted);font-size:11px;">Écart</th>
+            <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-size:11px;">Statut</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;">S10 — 04/03/2026</td><td style="padding:6px 10px;text-align:right;">8 200 €</td><td style="padding:6px 10px;text-align:right;">8 200 €</td><td style="padding:6px 10px;text-align:right;color:var(--success);">0 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge success">OK</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;">S11 — 11/03/2026</td><td style="padding:6px 10px;text-align:right;">7 900 €</td><td style="padding:6px 10px;text-align:right;">7 900 €</td><td style="padding:6px 10px;text-align:right;color:var(--success);">0 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge success">OK</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(239,68,68,.04);"><td style="padding:6px 10px;font-weight:600;">S12 — 18/03/2026</td><td style="padding:6px 10px;text-align:right;">8 500 €</td><td style="padding:6px 10px;text-align:right;color:var(--warning);">7 200 €</td><td style="padding:6px 10px;text-align:right;color:var(--warning);">-1 300 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge warning">Écart</span></td></tr>
+            <tr style="background:rgba(239,68,68,.06);"><td style="padding:6px 10px;font-weight:600;">S13 — 25/03/2026</td><td style="padding:6px 10px;text-align:right;">9 000 €</td><td style="padding:6px 10px;text-align:right;color:var(--danger);">7 800 €</td><td style="padding:6px 10px;text-align:right;color:var(--danger);">-1 200 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge danger">Critique</span></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 16px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius-sm);">
+          <div style="font-size:12px;font-weight:600;color:var(--danger);margin-bottom:4px;">Actions requises</div>
+          <div style="font-size:12px;color:var(--text-secondary);">1. Audit de sur-facturation à reprendre avec Marie Leclercq (coordonnatrice NSM).<br>2. Rapprochement bancaire S12-S13 à fournir avant vendredi.<br>3. Notification Mairie départementale transmise le 24/03/2026.</div>
+        </div>`
+    },
+
+    // ─── DÉTAIL ASSURANCE DOUBLON ────────────────────────────
+    'detail-assurance': {
+      title: 'Assurance doublon — Résiliation AXA Pro',
+      sub: 'Bondy – Clichy-sous-Bois · Économie potentielle 1 200 €/an',
+      html: `
+        <div style="padding:12px 16px;background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.2);border-radius:var(--radius-sm);margin-bottom:16px;">
+          <div style="font-size:12px;font-weight:600;color:var(--primary);">Situation détectée le 15/04/2026 par rapprochement automatique Sage × MAIF</div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Deux contrats d'assurance multirisques couvrent les mêmes biens. Résiliation AXA Pro recommandée avant Jan 2027 pour éviter un doublé de cotisation annuelle.</div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+          <thead><tr style="border-bottom:2px solid var(--border-2);">
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;">Critère</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;">MAIF Diocèse</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;">AXA Pro</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Prime annuelle</td><td style="padding:6px 10px;font-weight:600;">12 000 €</td><td style="padding:6px 10px;font-weight:600;color:var(--warning);">11 200 €</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Sites couverts</td><td style="padding:6px 10px;">Tous (Diocèse 93)</td><td style="padding:6px 10px;">BCB + NLG uniquement</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Recouvrement</td><td style="padding:6px 10px;color:var(--success);">100 %</td><td style="padding:6px 10px;color:var(--danger);">95 % (doublon)</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Échéance</td><td style="padding:6px 10px;">Jan 2027</td><td style="padding:6px 10px;">Jan 2027</td></tr>
+            <tr><td style="padding:6px 10px;color:var(--text-muted);">Recommandation</td><td style="padding:6px 10px;"><span class="badge success">Conserver</span></td><td style="padding:6px 10px;"><span class="badge danger">Résilier avant Nov 2026</span></td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:12px;color:var(--text-secondary);">Contact pour résiliation : <strong>Martine Vidal</strong> — assureur diocèse · <span style="color:var(--primary);">m.vidal@diocese93.fr</span></div>`
+    },
+
+    // ─── DÉTAIL MAINTENANCE ──────────────────────────────────
+    'detail-maintenance': {
+      title: 'Contrôle maintenance — Chaudière biomasse NSM1',
+      sub: 'Presbytère NSM1 · Plomberie Chrétien & Fils · Devis en attente',
+      html: `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Montant devis</div>
+            <div style="font-size:22px;font-weight:700;color:var(--warning);">28 500 €</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Délai validation</div>
+            <div style="font-size:14px;font-weight:600;color:var(--danger);">Dépassé — 12 jours</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Détail de l'intervention</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Référence devis</td><td style="padding:6px 10px;font-weight:600;">ZD-2026-0091</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Nature</td><td style="padding:6px 10px;">Révision chaudière biomasse + remplacement brûleur</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Prestataire</td><td style="padding:6px 10px;">Plomberie Chrétien & Fils — SIRET 481 234 567 00028</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Reçu le</td><td style="padding:6px 10px;">18/03/2026</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text-muted);">Délai contractuel</td><td style="padding:6px 10px;">Validation sous 30 jours (18/04/2026)</td></tr>
+          <tr><td style="padding:6px 10px;color:var(--text-muted);">Risque</td><td style="padding:6px 10px;color:var(--danger);font-weight:600;">Annulation prestataire si non signé avant 22/04/2026</td></tr>
+        </table>
+        <div style="padding:12px 16px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:var(--radius-sm);">
+          <div style="font-size:12px;font-weight:600;color:var(--warning);margin-bottom:4px;">Action requise</div>
+          <div style="font-size:12px;color:var(--text-secondary);">Validation économe adjoint requise sous 24h. Contacter Sœur Anne-Marie (responsable NSM1) pour transmission du bon à payer.</div>
+        </div>`
+    },
+
+    // ─── DÉTAIL QUÊTE FAIBLE NLG ────────────────────────────
+    'detail-quete': {
+      title: 'Quête faible — Anomalie Enoria × Sage',
+      sub: 'Paroisse NLG2 · Week-end du 05-06/04/2026 · Écart : -680 €',
+      html: `
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Quête collectée</div>
+            <div style="font-size:22px;font-weight:700;color:var(--warning);">210 €</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Moyenne attendue</div>
+            <div style="font-size:22px;font-weight:700;color:var(--success);">890 €</div>
+          </div>
+          <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Écart</div>
+            <div style="font-size:22px;font-weight:700;color:var(--danger);">-680 €</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Activité Enoria — W-E 05-06/04/2026</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+          <thead><tr style="border-bottom:2px solid var(--border-2);">
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;">Célébration</th>
+            <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-size:11px;">Date</th>
+            <th style="text-align:right;padding:6px 10px;color:var(--text-muted);font-size:11px;">Quête</th>
+            <th style="text-align:right;padding:6px 10px;color:var(--text-muted);font-size:11px;">Attendu</th>
+            <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-size:11px;">Statut</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;">Messe dominicale 9h30</td><td style="padding:6px 10px;color:var(--text-muted);">05/04</td><td style="padding:6px 10px;text-align:right;color:var(--warning);">85 €</td><td style="padding:6px 10px;text-align:right;">180 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge warning">Faible</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;">Messe dominicale 11h</td><td style="padding:6px 10px;color:var(--text-muted);">05/04</td><td style="padding:6px 10px;text-align:right;color:var(--warning);">60 €</td><td style="padding:6px 10px;text-align:right;">200 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge warning">Faible</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;">Messe du soir 18h30</td><td style="padding:6px 10px;color:var(--text-muted);">05/04</td><td style="padding:6px 10px;text-align:right;color:var(--danger);">15 €</td><td style="padding:6px 10px;text-align:right;">120 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge danger">Critique</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;">Messe dominicale 9h30</td><td style="padding:6px 10px;color:var(--text-muted);">06/04</td><td style="padding:6px 10px;text-align:right;color:var(--warning);">30 €</td><td style="padding:6px 10px;text-align:right;">150 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge warning">Faible</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;">Baptême (famille Koumba)</td><td style="padding:6px 10px;color:var(--text-muted);">06/04</td><td style="padding:6px 10px;text-align:right;">20 €</td><td style="padding:6px 10px;text-align:right;">40 €</td><td style="padding:6px 10px;text-align:center;"><span class="badge primary">Info</span></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:12px 16px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:var(--radius-sm);">
+          <div style="font-size:12px;font-weight:600;color:var(--warning);margin-bottom:4px;">Action requise</div>
+          <div style="font-size:12px;color:var(--text-secondary);">Contacter Isabelle Garnier (comptable NLG) pour vérification croisée saisies Enoria × registre papier. Rapport attendu sous 48h.</div>
+        </div>`
+    },
+
+  }; // fin MODAL_DATA
 </script>
 </body>
 </html>
