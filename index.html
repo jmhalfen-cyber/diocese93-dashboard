@@ -328,6 +328,12 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
       Écosystème SI
     </button>
+
+    <button class="nav-item" onclick="navigate('comptabilite')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Contrôle comptable
+      <span class="nav-badge danger">4</span>
+    </button>
   </div>
 
   <div class="sidebar-footer">
@@ -785,6 +791,23 @@
           </div>
           <div class="kpi-value">3</div>
           <div class="kpi-label">Factures impayées</div>
+        </div>
+      </div>
+
+      <!-- Alerte systémique quêtes -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 18px;margin-bottom:16px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.25);border-radius:var(--radius);">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:38px;height:38px;border-radius:8px;background:rgba(239,68,68,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Quêtes — Perte estimée <span style="color:var(--danger);">~220 000 € / an</span></div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Estimation : 10% des 2,2 M€ annuels collectés · Croisement Enoria × registres locaux · Anomalie confirmée NLG2</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+          <span class="badge danger">Risque systémique</span>
+          <span class="badge purple">Croisement Enoria</span>
         </div>
       </div>
 
@@ -1469,6 +1492,70 @@
   </div>
 </div>
 
+    <!-- ════ TAB: CONTRÔLE COMPTABLE ════════════════════════════ -->
+    <div class="tab-panel" id="tab-comptabilite">
+
+      <div class="grid-4">
+        <div class="kpi-card success">
+          <div class="kpi-icon success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/></svg>
+          </div>
+          <div class="kpi-value">4</div>
+          <div class="kpi-label">Paroisses à jour</div>
+          <div class="kpi-trend up">Comptabilité S19–S21</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-icon warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="kpi-value">4</div>
+          <div class="kpi-label">En retard</div>
+          <div class="kpi-trend down">4 à 10 semaines</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-icon danger">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          </div>
+          <div class="kpi-value">4</div>
+          <div class="kpi-label">Critiques</div>
+          <div class="kpi-trend down">&gt; 3 mois de retard</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-icon warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="kpi-value">~1 an</div>
+          <div class="kpi-label">Retard max constaté</div>
+          <div class="kpi-trend down">Aulnay-sous-Bois</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Retards de remontée comptable — par unité pastorale</h3>
+          <span class="badge danger">Pilote 12 UP</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Unité pastorale</th>
+              <th>Dernière période remontée</th>
+              <th>Retard</th>
+              <th>Responsable</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody id="compta-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:16px;border:1px solid rgba(245,158,11,.2);background:rgba(245,158,11,.03);">
+        <div style="font-size:12px;font-weight:600;color:var(--warning);margin-bottom:6px;">Point d'attention — contrôle en temps utile</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">Un retard de remontée comptable empêche tout contrôle en temps utile. Lorsqu'une paroisse soumet une année entière de comptabilité le 31 mars, les anomalies — surfacturation, détournement, doublons de contrats — ne peuvent être détectées qu'après le fait accompli. Cette vue permet d'identifier les paroisses sans visibilité active et de prioriser les relances.</div>
+      </div>
+
+    </div>
+
 <!-- ════ MODAL GÉNÉRIQUE INFO ═══════════════════════════════════ -->
 <div id="info-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;" onclick="closeInfoModal(event)">
   <div id="info-modal-box" style="background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);width:min(820px,95vw);position:relative;" onclick="event.stopPropagation()">
@@ -1523,8 +1610,13 @@
       'Cartographie des outils et des flux d\'information du diocèse.',
       "Permet d'identifier les doublons, les ruptures et les leviers d'optimisation."
     ],
+    comptabilite: [
+      'Contrôle comptable',
+      'Suivi des remontées comptables par unité pastorale — retards et conformité.',
+      'Objectif : détecter les paroisses en retard de saisie et rétablir la traçabilité en temps utile.'
+    ],
   };
-  const ORDER = ['overview','prestataires','finances','travaux','documents','alertes','ecosysteme'];
+  const ORDER = ['overview','prestataires','finances','travaux','documents','alertes','ecosysteme','comptabilite'];
 
   function navigate(tab) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -2043,6 +2135,41 @@
       row.style.display = (type === 'tous' || row.dataset.type === type) ? '' : 'none';
     });
   }
+
+  // ── Contrôle comptable ───────────────────────────────────────
+  const COMPTA_DATA = [
+    { up:'NSM1 — Neuilly-sur-Marne',      periode:'S19 · 11 mai 2026',         retard:'2 sem.',    resp:'Marie Leclercq',     statut:'ajour'    },
+    { up:'NSM2 — Neuilly-sur-Marne',      periode:'S14 · 06 avr. 2026',        retard:'7 sem.',    resp:'Nathalie Foissy',    statut:'retard'   },
+    { up:'NSM3 — Neuilly-sur-Marne',      periode:'S09 · 01 mars 2026',        retard:'12 sem.',   resp:'—',                  statut:'critique' },
+    { up:'NLG1 — Noisy-le-Grand',         periode:'S20 · 18 mai 2026',         retard:'1 sem.',    resp:'Isabelle Garnier',   statut:'ajour'    },
+    { up:'NLG2 — Noisy-le-Grand',         periode:'S17 · 27 avr. 2026',        retard:'4 sem.',    resp:'—',                  statut:'retard'   },
+    { up:'NLG3 — Noisy-le-Grand',         periode:'S12 · 23 mars 2026',        retard:'9 sem.',    resp:'J. Ngandu (diacre)', statut:'retard'   },
+    { up:'BCB — Bobigny',                 periode:'S21 · 25 mai 2026',         retard:'À jour',    resp:'Sophie Mercier',     statut:'ajour'    },
+    { up:'Pantin — Saint-Germain',        periode:'T4 2025 · déc. 2025',       retard:'~22 sem.',  resp:'—',                  statut:'critique' },
+    { up:'Saint-Denis — Cathédrale',      periode:'S18 · 04 mai 2026',         retard:'3 sem.',    resp:'P. Alain Renard',    statut:'ajour'    },
+    { up:'Montreuil — ND Espérance',      periode:'T3 2025 · sept. 2025',      retard:'~35 sem.',  resp:'—',                  statut:'critique' },
+    { up:'Aubervilliers — Saint-Joseph',  periode:'S15 · 13 avr. 2026',        retard:'6 sem.',    resp:'—',                  statut:'retard'   },
+    { up:'Aulnay-sous-Bois',              periode:'Annuel 2024 · mars 2025',   retard:'~60 sem.',  resp:'—',                  statut:'critique' },
+  ];
+  (function renderCompta() {
+    const tbody = document.getElementById('compta-tbody');
+    if (!tbody) return;
+    const cfg = { ajour:['success','À jour'], retard:['warning','En retard'], critique:['danger','Critique'] };
+    const col  = { ajour:'var(--success)', retard:'var(--warning)', critique:'var(--danger)' };
+    tbody.innerHTML = COMPTA_DATA.map(r => {
+      const [cls, txt] = cfg[r.statut];
+      const respHtml = r.resp === '—'
+        ? '<span style="color:var(--danger);font-style:italic;">⚠ Non assigné</span>'
+        : r.resp;
+      return `<tr>
+        <td style="font-weight:500;color:var(--text-primary);">${r.up}</td>
+        <td>${r.periode}</td>
+        <td style="font-weight:600;color:${col[r.statut]};">${r.retard}</td>
+        <td>${respHtml}</td>
+        <td><span class="badge ${cls}">${txt}</span></td>
+      </tr>`;
+    }).join('');
+  })();
 
   // ── Init ─────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
