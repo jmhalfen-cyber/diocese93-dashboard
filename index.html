@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --bg:#0F172A; --surface:#1E293B; --surface-2:#263548;
@@ -188,6 +189,8 @@
     .prest-avatar.good{background:rgba(16,185,129,.2);border-color:var(--success);color:var(--success)}
     .prest-avatar.warn{background:rgba(245,158,11,.2);border-color:var(--warning);color:var(--warning)}
     .prest-avatar.bad{background:rgba(239,68,68,.2);border-color:var(--danger);color:var(--danger)}
+    .prest-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,background .15s;}
+    .prest-card:hover{border-color:var(--border-2);background:var(--surface-2);}
     .prest-name{font-size:13px;font-weight:600;color:var(--text-primary)}
     .prest-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
     .prest-spacer{flex:1}
@@ -269,8 +272,8 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
       Diocese 93
     </div>
-    <h2>Pilotage Patrimonial</h2>
-    <p>N. Boisard - Econome Adjoint</p>
+    <h2>Pilotage patrimonial</h2>
+    <p>N. Boisard · Économe adjoint</p>
   </div>
 
   <div class="sidebar-nav">
@@ -313,19 +316,19 @@
 
     <button class="nav-item" onclick="navigate('ecosysteme')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-      Ecosysteme SI
+      Écosystème SI
     </button>
   </div>
 
   <div class="sidebar-footer">
     <div class="status-row">
       <div class="dot green"></div>
-      <span class="status-text">Zeendoc connecte</span>
-      <span class="status-time">S13 - 30/03/2026</span>
+      <span class="status-text">Zeendoc connecté</span>
+      <span class="status-time" id="sidebar-week">S13 · 30/03/2026</span>
     </div>
-    <div style="margin-top:8px;padding:6px 10px;font-size:11px;color:var(--text-muted);">
-      N. Boisard - Econome Adjoint<br>
-      Semaine 13 - 30/03/2026
+    <div style="margin-top:8px;padding:6px 10px;font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:8px;">
+      <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--purple));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">NB</div>
+      <span>N. Boisard · Économe adjoint</span>
     </div>
   </div>
 </nav>
@@ -366,6 +369,7 @@
           </div>
           <div class="kpi-value">7</div>
           <div class="kpi-label">Alertes actives</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">2 critiques</div>
         </div>
         <div class="kpi-card warning">
           <div class="kpi-icon warning">
@@ -406,7 +410,7 @@
           </div>
           <div class="kpi-value">14</div>
           <div class="kpi-label">Documents en attente</div>
-          <div class="kpi-trend flat">3 en attente</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">2 litiges · 2 échéances</div>
         </div>
       </div>
 
@@ -495,55 +499,60 @@
         <!-- Synthese par UP -->
         <div class="card">
           <div class="card-header">
-            <h3>Synthese par Unite Pastorale</h3>
+            <h3>Synthèse par unité pastorale</h3>
+            <span class="text-xs">3 unités pilotes · pilote Neuilly-sur-Marne</span>
           </div>
           <table class="up-table">
             <thead>
               <tr>
-                <th>UP</th>
+                <th style="text-align:left;">UP</th>
                 <th>Alertes</th>
-                <th>Travaux</th>
-                <th>Presta.</th>
-                <th>Docs</th>
+                <th>Écarts</th>
+                <th>Entrants</th>
+                <th>Sortants</th>
+                <th>Statut</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Neuilly-sur-Marne</td>
-                <td><span style="color:var(--danger);font-weight:700;">3</span></td>
-                <td>3</td>
-                <td>2</td>
-                <td>5</td>
+                <td>
+                  <div style="font-weight:700;color:var(--text-primary);">Neuilly-sur-Marne</div>
+                  <div style="font-size:11px;color:var(--text-muted);">NSM</div>
+                </td>
+                <td><span style="color:var(--danger);font-weight:700;">3</span><div style="font-size:10px;color:var(--text-muted);">8j</div></td>
+                <td><span style="color:var(--warning);font-weight:700;">1</span></td>
+                <td style="color:var(--success);font-weight:600;">22 000 €</td>
+                <td style="font-weight:600;">20 000 €</td>
+                <td><span class="badge danger">Alerte</span></td>
               </tr>
               <tr>
-                <td>Noisy-le-Grand</td>
+                <td>
+                  <div style="font-weight:700;color:var(--text-primary);">Noisy-le-Grand</div>
+                  <div style="font-size:11px;color:var(--text-muted);">NLG</div>
+                </td>
+                <td><span style="color:var(--danger);font-weight:700;">3</span><div style="font-size:10px;color:var(--text-muted);">5j</div></td>
                 <td><span style="color:var(--warning);font-weight:700;">2</span></td>
-                <td>2</td>
-                <td>2</td>
-                <td>5</td>
+                <td style="color:var(--success);font-weight:600;">25 000 €</td>
+                <td style="font-weight:600;">22 000 €</td>
+                <td><span class="badge warning">Warning</span></td>
               </tr>
               <tr>
-                <td>Bondy - Clichy</td>
-                <td><span style="color:var(--warning);font-weight:700;">2</span></td>
-                <td>1</td>
-                <td>2</td>
-                <td>4</td>
+                <td>
+                  <div style="font-weight:700;color:var(--text-primary);">Bondy – Clichy-sous-Bois</div>
+                  <div style="font-size:11px;color:var(--text-muted);">BCB</div>
+                </td>
+                <td><span style="color:var(--warning);font-weight:700;">1</span></td>
+                <td><span style="color:var(--success);font-weight:700;">0</span></td>
+                <td style="color:var(--success);font-weight:600;">18 000 €</td>
+                <td style="color:var(--danger);font-weight:600;">25 000 €</td>
+                <td><span class="badge danger">Déficit</span></td>
               </tr>
-              <tr style="border-top:1px solid var(--border-2);">
-                <td>Total Diocese</td>
-                <td><span style="color:var(--danger);">7</span></td>
-                <td>6</td>
-                <td>6</td>
-                <td>14</td>
+              <tr style="border-top:2px solid var(--border-2);">
+                <td colspan="5" style="font-size:12px;color:var(--text-muted);padding-top:10px;">Solde global <span id="synthese-week-label">S13</span></td>
+                <td style="color:var(--danger);font-weight:700;font-size:14px;" id="synthese-solde">-2 000 €</td>
               </tr>
             </tbody>
           </table>
-          <div class="divider"></div>
-          <div style="font-size:11px;color:var(--text-muted);line-height:1.6;">
-            Source: <span style="color:var(--primary);">n8n</span> - Zeendoc - As-Tech<br>
-            Mistral IA - Pilote NSM<br>
-            Mise a jour: S13 - 30/03/2026
-          </div>
         </div>
       </div>
     </div>
@@ -551,173 +560,184 @@
     <!-- ════ TAB: PRESTATAIRES ════════════════════════════════════ -->
     <div class="tab-panel" id="tab-prestataires">
 
-      <div class="grid-4">
-        <div class="kpi-card primary">
-          <div class="kpi-icon primary">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-          </div>
-          <div class="kpi-value">6</div>
-          <div class="kpi-label">Total prestataires</div>
-        </div>
-        <div class="kpi-card danger">
-          <div class="kpi-icon danger">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-          </div>
-          <div class="kpi-value">2</div>
-          <div class="kpi-label">Score &lt; 3 (alerte)</div>
-        </div>
-        <div class="kpi-card success">
-          <div class="kpi-icon success">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <div class="kpi-value">39 400 €</div>
-          <div class="kpi-label">Montant facture S13</div>
-        </div>
-        <div class="kpi-card primary">
-          <div class="kpi-icon primary">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          </div>
-          <div class="kpi-value">21</div>
-          <div class="kpi-label">Sites couverts</div>
-        </div>
+  <!-- KPIs -->
+  <div class="grid-4">
+    <div class="kpi-card primary">
+      <div class="kpi-icon primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
       </div>
-
-      <!-- Filtres -->
-      <div class="filter-tabs">
-        <button class="filter-tab active">Tous (6)</button>
-        <button class="filter-tab">Blacklistes (1)</button>
-        <button class="filter-tab">En alerte (1)</button>
-        <button class="filter-tab">Surveiller (1)</button>
-        <button class="filter-tab">Bons (3)</button>
+      <div class="kpi-value">6</div>
+      <div class="kpi-label">Total prestataires</div>
+    </div>
+    <div class="kpi-card danger">
+      <div class="kpi-icon danger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
       </div>
-      <div class="filter-tabs" style="margin-bottom:20px;">
-        <button class="filter-tab city-tab" onclick="filterCity(this,'bondy')">Bondy - Clichy-sous-Bois (3)</button>
-        <button class="filter-tab city-tab" onclick="filterCity(this,'neuilly')">Neuilly-sur-Marne (5)</button>
-        <button class="filter-tab city-tab" onclick="filterCity(this,'noisy')">Noisy-le-Grand (6)</button>
+      <div class="kpi-value">2</div>
+      <div class="kpi-label">Score &lt; 3 (alerte)</div>
+    </div>
+    <div class="kpi-card success">
+      <div class="kpi-icon success">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><text x="4" y="18" font-size="16" fill="currentColor" stroke="none">€</text></svg>
       </div>
-
-      <!-- SARL ChauffageXP - Blackliste -->
-      <div class="alert-card danger" style="margin-bottom:16px;cursor:default;border-radius:var(--radius-lg);">
-        <div class="row between" style="margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div class="prest-avatar bad" style="font-size:13px;">2.2</div>
-            <div>
-              <div style="font-size:14px;font-weight:700;color:var(--text-primary);">SARL Chauffage XP</div>
-              <div style="font-size:11px;color:var(--text-muted);">CVC / Plomberie - 5 avis - 3 sites</div>
-              <div style="font-size:11px;margin-top:2px;">
-                <span style="background:rgba(239,68,68,.15);color:var(--danger);padding:1px 6px;border-radius:3px;font-weight:700;font-size:10px;">BLACKLISTE</span>
-              </div>
-            </div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-size:16px;font-weight:700;color:var(--danger);">3 000 €</div>
-            <div style="font-size:11px;color:var(--text-muted);">Dernier: 2026-05-15</div>
-            <div style="font-size:11px;color:var(--text-muted);">Neuilly-sur-Marne - Noisy-le-Grand</div>
-          </div>
-        </div>
-        <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin:10px 0 6px;text-transform:uppercase;letter-spacing:.5px;">Historique des interventions</div>
-        <table class="data-table">
-          <thead><tr><th>Intervention</th><th>Site</th><th>Date</th><th>Montant</th><th>Note</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><span class="text-bold">Remplacement chaudiere</span><div class="text-xs">Bruleur 25 ans remplace - Tuyauterie omise. Photo Zeendoc jointe.</div></td>
-              <td class="text-xs">NSM Presbytere 1 - Neuilly-sur-Marne</td>
-              <td class="text-xs">2026-02-24</td>
-              <td style="color:var(--danger);font-weight:700;">1 800 €</td>
-              <td><span class="badge danger">Litige</span></td>
-            </tr>
-            <tr>
-              <td><span class="text-bold">Tuyauterie - complement</span><div class="text-xs">Tuyauterie qui aurait du etre incluse dans le premier devis.</div></td>
-              <td class="text-xs">NLG Presbytere 2 - Noisy-le-Grand</td>
-              <td class="text-xs">2026-03-15</td>
-              <td style="color:var(--warning);font-weight:700;">1 200 €</td>
-              <td><span class="badge warning">Conteste</span></td>
-            </tr>
-            <tr>
-              <td><span class="text-bold">Entretien annuel</span><div class="text-xs">Conforme. Rapport remis.</div></td>
-              <td class="text-xs">NSM Presbytere 2 - Neuilly-sur-Marne</td>
-              <td class="text-xs">2026-01-10</td>
-              <td style="color:var(--text-secondary);">450 €</td>
-              <td><span class="badge success">Valide</span></td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="margin-top:10px;padding:10px 12px;background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.2);border-radius:var(--radius-sm);">
-          <div style="font-size:12px;font-weight:600;color:var(--primary);">Recommandation IA (Mistral)</div>
-          <div style="font-size:12px;color:var(--text-secondary);margin-top:3px;">Blacklist temporaire 6 mois. Signalement prestataires alternatifs (3 suggestions IA disponibles).</div>
-        </div>
+      <div class="kpi-value">39 400 €</div>
+      <div class="kpi-label">Montant facturé S13</div>
+    </div>
+    <div class="kpi-card primary">
+      <div class="kpi-icon primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
       </div>
+      <div class="kpi-value">21</div>
+      <div class="kpi-label">Sites couverts</div>
+    </div>
+  </div>
 
-      <!-- Autres prestataires -->
-      <div class="card">
-        <div class="card-header"><h3>Autres prestataires</h3></div>
+  <!-- Recherche + Filtres statut -->
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+    <div style="position:relative;flex:1;max-width:340px;">
+      <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="prest-search" type="text" placeholder="Rechercher un prestataire..." oninput="filterPrestataires()" style="width:100%;padding:8px 12px 8px 32px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;font-family:var(--font);">
+    </div>
+    <svg onclick="filterPrestataires()" style="cursor:pointer;color:var(--text-muted);width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+  </div>
 
-        <div class="prest-row" data-cities="bondy neuilly">
-          <div class="prest-avatar bad" style="font-size:12px;">2.8</div>
-          <div>
-            <div class="prest-name">SAS BTP Renovation 93 <span class="badge warning" style="margin-left:6px;">En alerte</span></div>
-            <div class="prest-meta">Gros oeuvre / Facades - 4 avis - 2 sites -
-              <span class="city-tag" data-city="bondy">Bondy-Clichy-sous-Bois</span>,
-              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>
-            </div>
+  <div class="filter-tabs" id="prest-status-filters">
+    <button class="filter-tab active" onclick="filterByStatus(this,'tous')">Tous (6)</button>
+    <button class="filter-tab" onclick="filterByStatus(this,'blackliste')">Blacklistés (1)</button>
+    <button class="filter-tab" onclick="filterByStatus(this,'alerte')">En alerte (1)</button>
+    <button class="filter-tab" onclick="filterByStatus(this,'surveiller')">Surveiller (1)</button>
+    <button class="filter-tab" onclick="filterByStatus(this,'bon')">Bons (3)</button>
+  </div>
+
+  <!-- Liste prestataires -->
+  <div id="prest-list">
+
+    <!-- SARL Chauffage XP -->
+    <div class="prest-card" data-status="blackliste" data-name="chauffage xp" onclick="openPrest('chauffagexp')">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="prest-avatar bad">2.2</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="prest-name">SARL Chauffage XP</span>
+            <span style="background:rgba(239,68,68,.15);color:var(--danger);padding:1px 7px;border-radius:3px;font-weight:700;font-size:10px;">BLACKLISTÉ</span>
           </div>
-          <div class="prest-spacer"></div>
-          <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--warning);">8 500 €</div><div class="text-xs">Dernier: 2026-03-10</div></div>
+          <div class="prest-meta">CVC / Plomberie · 5 avis · 3 sites · Neuilly-sur-Marne, Noisy-le-Grand</div>
         </div>
-
-        <div class="prest-row" data-cities="noisy">
-          <div class="prest-avatar warn" style="font-size:12px;">3.5</div>
-          <div>
-            <div class="prest-name">EURL Electricite 93 <span class="badge warning" style="margin-left:6px;">Surveiller</span></div>
-            <div class="prest-meta">Electricite - 3 avis - 1 site -
-              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>
-            </div>
-          </div>
-          <div class="prest-spacer"></div>
-          <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--warning);">2 200 €</div><div class="text-xs">Dernier: 2026-03-05</div></div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:700;color:var(--danger);">3 000 €</div>
+          <div class="text-xs">Dernier : 2026-03-15</div>
         </div>
-
-        <div class="prest-row" data-cities="neuilly noisy bondy">
-          <div class="prest-avatar good" style="font-size:12px;">4.6</div>
-          <div>
-            <div class="prest-name">NetPro Nettoyage <span class="badge success" style="margin-left:6px;">Excellent</span></div>
-            <div class="prest-meta">Nettoyage / Entretien - 12 avis - 7 sites -
-              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>,
-              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>,
-              <span class="city-tag" data-city="bondy">Bondy-Clichy-sous-Bois</span>
-            </div>
-          </div>
-          <div class="prest-spacer"></div>
-          <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--success);">9 200 €</div><div class="text-xs">Dernier: 2026-03-29</div></div>
-        </div>
-
-        <div class="prest-row" data-cities="neuilly noisy bondy">
-          <div class="prest-avatar good" style="font-size:12px;">4.3</div>
-          <div>
-            <div class="prest-name">Plomberie Chretien &amp; Fils <span class="badge success" style="margin-left:6px;">Bon</span></div>
-            <div class="prest-meta">Plomberie / Sanitaires - 8 avis - 5 sites -
-              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>,
-              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>,
-              <span class="city-tag" data-city="bondy">Bondy-Clichy-sous-Bois</span>
-            </div>
-          </div>
-          <div class="prest-spacer"></div>
-          <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--success);">12 000 €</div><div class="text-xs">Dernier: 2026-03-25</div></div>
-        </div>
-
-        <div class="prest-row" data-cities="neuilly noisy">
-          <div class="prest-avatar good" style="font-size:12px;">4.8</div>
-          <div>
-            <div class="prest-name">DioceseTech Informatique <span class="badge success" style="margin-left:6px;">Excellent</span></div>
-            <div class="prest-meta">IT / Reseaux - 6 avis - 3 sites -
-              <span class="city-tag" data-city="neuilly">Neuilly-sur-Marne</span>,
-              <span class="city-tag" data-city="noisy">Noisy-le-Grand</span>
-            </div>
-          </div>
-          <div class="prest-spacer"></div>
-          <div style="text-align:right;"><div style="font-size:14px;font-weight:700;color:var(--success);">4 500 €</div><div class="text-xs">Dernier: 2026-03-15</div></div>
-        </div>
+        <svg style="width:14px;height:14px;color:var(--text-muted);margin-left:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
+    </div>
+
+    <!-- SAS BTP Rénovation 93 -->
+    <div class="prest-card" data-status="alerte" data-name="btp renovation" onclick="openPrest('btp')">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="prest-avatar bad">2.8</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="prest-name">SAS BTP Rénovation 93</span>
+            <span class="badge warning">En alerte</span>
+          </div>
+          <div class="prest-meta">Gros œuvre / Façades · 4 avis · 2 sites · Bondy-Clichy-sous-Bois, Neuilly-sur-Marne</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:700;color:var(--warning);">8 500 €</div>
+          <div class="text-xs">Dernier : 2026-03-10</div>
+        </div>
+        <svg style="width:14px;height:14px;color:var(--text-muted);margin-left:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- EURL Électricité 93 -->
+    <div class="prest-card" data-status="surveiller" data-name="electricite 93" onclick="openPrest('elec')">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="prest-avatar warn">3.5</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="prest-name">EURL Électricité 93</span>
+            <span class="badge warning">Surveiller</span>
+          </div>
+          <div class="prest-meta">Électricité · 3 avis · 1 site · Noisy-le-Grand</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:700;color:var(--warning);">2 200 €</div>
+          <div class="text-xs">Dernier : 2026-03-05</div>
+        </div>
+        <svg style="width:14px;height:14px;color:var(--text-muted);margin-left:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- NetPro Nettoyage -->
+    <div class="prest-card" data-status="bon" data-name="netpro nettoyage" onclick="openPrest('netpro')">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="prest-avatar good">4.6</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="prest-name">NetPro Nettoyage</span>
+            <span class="badge success">Excellent</span>
+          </div>
+          <div class="prest-meta">Nettoyage / Entretien · 12 avis · 7 sites · Neuilly-sur-Marne, Noisy-le-Grand, Bondy-Clichy-sous-Bois</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:700;color:var(--success);">9 200 €</div>
+          <div class="text-xs">Dernier : 2026-03-29</div>
+        </div>
+        <svg style="width:14px;height:14px;color:var(--text-muted);margin-left:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- Plomberie Chrétien & Fils -->
+    <div class="prest-card" data-status="bon" data-name="plomberie chretien" onclick="openPrest('plomberie')">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="prest-avatar good">4.3</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="prest-name">Plomberie Chrétien &amp; Fils</span>
+            <span class="badge success">Bon</span>
+          </div>
+          <div class="prest-meta">Plomberie / Sanitaires · 8 avis · 5 sites · Neuilly-sur-Marne, Noisy-le-Grand, Bondy-Clichy-sous-Bois</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:700;color:var(--success);">12 000 €</div>
+          <div class="text-xs">Dernier : 2026-03-25</div>
+        </div>
+        <svg style="width:14px;height:14px;color:var(--text-muted);margin-left:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- DioceseTech Informatique -->
+    <div class="prest-card" data-status="bon" data-name="diocesetech informatique" onclick="openPrest('diocesetech')">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="prest-avatar good">4.8</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="prest-name">DioceseTech Informatique</span>
+            <span class="badge success">Excellent</span>
+          </div>
+          <div class="prest-meta">IT / Réseaux · 6 avis · 3 sites · Neuilly-sur-Marne, Noisy-le-Grand</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:700;color:var(--success);">4 500 €</div>
+          <div class="text-xs">Dernier : 2026-03-15</div>
+        </div>
+        <svg style="width:14px;height:14px;color:var(--text-muted);margin-left:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODALE DÉTAIL PRESTATAIRE -->
+  <div id="prest-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;">
+    <div style="background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);width:min(760px,95vw);max-height:85vh;overflow-y:auto;padding:28px;">
+      <div id="prest-modal-content"></div>
+      <div style="margin-top:20px;text-align:right;">
+        <button class="btn ghost" onclick="closePrest()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
     </div>
 
     <!-- ════ TAB: FLUX FINANCIERS ════════════════════════════════ -->
@@ -769,63 +789,58 @@
         </div>
       </div>
 
-      <!-- Graphique historique -->
+      <!-- Graphique historique Chart.js -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header">
-          <h3>Historique des flux - S48 2025 / <span id="chart-week-label">S13</span> 2026</h3>
-          <span class="text-xs">Recettes vs Dépenses</span>
+          <h3>Historique des flux – S48 2025 → <span id="chart-week-label">S13</span> 2026</h3>
+          <span class="text-xs">Entrants vs Sortants · toutes UP confondues</span>
         </div>
-        <div style="height:100px;display:flex;align-items:flex-end;gap:3px;padding:0 4px;" id="flux-chart">
-          <!-- Barres générées par JS -->
-        </div>
-        <div class="row mt-8 text-xs" style="gap:16px;">
-          <span><span style="color:var(--success);">■</span> Recettes</span>
-          <span><span style="color:var(--danger);">■</span> Dépenses</span>
-          <span id="chart-ecart-label" style="color:var(--warning);">■ S13 - Écart : -2 000 €</span>
-          <span style="margin-left:auto;">S48 2025 → <span id="chart-week-label2">S13</span> 2026</span>
+        <div style="position:relative;height:160px;">
+          <canvas id="fluxLineChart"></canvas>
         </div>
       </div>
 
       <div class="grid-2">
         <div class="card">
-          <div class="card-header"><h3>Flux par UP - <span class="week-label">S13</span></h3></div>
-          <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px;">
-            <div>
-              <div class="row between text-sm"><span class="text-bold">Neuilly-sur-Marne</span><span id="up-nsm-rec" style="color:var(--success);font-weight:600;">23 100 €</span></div>
-              <div class="progress-bar mt-4"><div class="progress-fill success" id="bar-nsm" style="width:71%"></div></div>
-              <div class="text-xs mt-4" id="up-nsm-detail">Dépenses: 24 200 € - Écart: -1 100 €</div>
-            </div>
-            <div>
-              <div class="row between text-sm"><span class="text-bold">Noisy-le-Grand</span><span id="up-nlg-rec" style="color:var(--success);font-weight:600;">25 500 €</span></div>
-              <div class="progress-bar mt-4"><div class="progress-fill primary" id="bar-nlg" style="width:79%"></div></div>
-              <div class="text-xs mt-4" id="up-nlg-detail">Dépenses: 25 800 € - Écart: -300 €</div>
-            </div>
-            <div>
-              <div class="row between text-sm"><span class="text-bold">Bondy - Clichy-sous-Bois</span><span id="up-bcb-rec" style="color:var(--warning);font-weight:600;">16 400 €</span></div>
-              <div class="progress-bar mt-4"><div class="progress-fill warning" id="bar-bcb" style="width:50%"></div></div>
-              <div class="text-xs mt-4" id="up-bcb-detail">Dépenses: 17 000 € - Écart: -600 €</div>
-            </div>
+          <div class="card-header">
+            <h3>Flux par UP – <span class="week-label">S13</span></h3>
+            <span class="text-xs">Entrants vs Sortants</span>
+          </div>
+          <div style="position:relative;height:180px;">
+            <canvas id="fluxBarChart"></canvas>
           </div>
         </div>
-
         <div class="card">
-          <div class="card-header"><h3>Détail financier par UP - <span class="week-label">S13</span></h3></div>
+          <div class="card-header"><h3>Détail financier par UP – <span class="week-label">S13</span></h3></div>
           <table class="up-table">
             <thead><tr><th>UP</th><th>Entrant</th><th>Sortant</th><th>Écart</th></tr></thead>
             <tbody>
               <tr><td>Neuilly-sur-Marne</td><td id="t-nsm-r" style="color:var(--success);">23 100 €</td><td id="t-nsm-d">24 200 €</td><td id="t-nsm-e" style="color:var(--danger);">-1 100 €</td></tr>
               <tr><td>Noisy-le-Grand</td><td id="t-nlg-r" style="color:var(--success);">25 500 €</td><td id="t-nlg-d">25 800 €</td><td id="t-nlg-e" style="color:var(--danger);">-300 €</td></tr>
-              <tr><td>Bondy - Clichy</td><td id="t-bcb-r" style="color:var(--success);">16 400 €</td><td id="t-bcb-d">17 000 €</td><td id="t-bcb-e" style="color:var(--danger);">-600 €</td></tr>
+              <tr><td>Bondy – Clichy</td><td id="t-bcb-r" style="color:var(--success);">16 400 €</td><td id="t-bcb-d">17 000 €</td><td id="t-bcb-e" style="color:var(--danger);">-600 €</td></tr>
               <tr><td>Total diocèse</td><td id="t-tot-r" style="color:var(--success);">65 000 €</td><td id="t-tot-d">67 000 €</td><td id="t-tot-e" style="color:var(--danger);">-2 000 €</td></tr>
             </tbody>
           </table>
-          <div class="divider"></div>
-          <div class="text-xs" style="line-height:1.6;">
-            Source : <span style="color:var(--primary);">Sage Comptabilité</span> - n8n sync<br>
-            <span id="impayees-count">3</span> factures impayées - <span class="alert-nav-link" onclick="navigate('documents')" style="display:inline;">Voir documents →</span>
-          </div>
         </div>
       </div>
+
+      <!-- HIDDEN: kept for JS compat -->
+      <div style="display:none;">
+        <div>
+          <!-- hidden compat ids -->
+          <span id="up-nsm-rec" style="display:none;"></span>
+          <span id="up-nsm-detail" style="display:none;"></span>
+          <span id="bar-nsm" style="display:none;"></span>
+          <span id="up-nlg-rec" style="display:none;"></span>
+          <span id="up-nlg-detail" style="display:none;"></span>
+          <span id="bar-nlg" style="display:none;"></span>
+          <span id="up-bcb-rec" style="display:none;"></span>
+          <span id="up-bcb-detail" style="display:none;"></span>
+          <span id="bar-bcb" style="display:none;"></span>
+          <span id="impayees-count" style="display:none;">3</span>
+          <span id="chart-ecart-label" style="display:none;"></span>
+          <span id="chart-week-label2" style="display:none;"></span>
+        </div><!-- /hidden compat -->
     </div>
 
     <!-- ════ TAB: BASE TRAVAUX ══════════════════════════════════════ -->
@@ -863,127 +878,87 @@
           <span class="text-xs">As-Tech - n8n sync</span>
         </div>
         <div style="overflow-x:auto;">
-        <table class="data-table" style="min-width:800px;">
+        <table class="data-table" style="min-width:1000px;">
           <thead>
             <tr>
-              <th style="min-width:220px;">Chantier</th>
-              <th>UP</th>
+              <th style="min-width:200px;">Chantier</th>
+              <th>UP / Site</th>
               <th>Prestataire</th>
-              <th style="min-width:140px;">Avancement</th>
+              <th style="min-width:130px;">Avancement</th>
+              <th>Planning</th>
+              <th>Docs</th>
               <th>Statut</th>
               <th>Budget</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
-                <div class="text-bold">Rénovation intérieure - Église Saint-Joseph</div>
-                <div class="text-xs">Couverture toiture - travaux en cours</div>
-              </td>
-              <td class="text-xs">Neuilly-sur-Marne</td>
+              <td><div class="text-bold">Rénovation intérieure – Église Saint-Joseph</div><div class="text-xs">Couverture toiture</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Église Saint-Joseph NSM</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2024-NSM-07</div></td>
               <td class="text-xs">Couverture de France</td>
-              <td>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:65%"></div></div>
-                  <span class="text-xs" style="flex-shrink:0;">65%</span>
-                </div>
-              </td>
+              <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:65%"></div></div><span class="text-xs">65%</span></div></td>
+              <td><div class="text-xs">Début : 2026-02-10</div><div class="text-xs">Fin : 2026-04-15</div></td>
+              <td class="text-xs"><span style="color:var(--text-muted);">📷 4 &nbsp;📄 3</span></td>
               <td><span class="badge warning">En cours</span></td>
               <td style="font-weight:700;color:var(--warning);">49 000 €</td>
             </tr>
             <tr>
-              <td>
-                <div class="text-bold">Mise aux normes électriques - Presbytère Noisy 2</div>
-                <div class="text-xs">Installation tableau électrique</div>
-              </td>
-              <td class="text-xs">Noisy-le-Grand</td>
+              <td><div class="text-bold">Mise aux normes électriques – Presbytère NLG 2</div><div class="text-xs">Installation tableau électrique</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Noisy-le-Grand</div><div class="text-xs">Presbytère Noisy-le-Grand 2</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-NLG-03</div></td>
               <td class="text-xs">EURL Électricité 93</td>
-              <td>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:40%"></div></div>
-                  <span class="text-xs" style="flex-shrink:0;">40%</span>
-                </div>
-              </td>
+              <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:40%"></div></div><span class="text-xs">40%</span></div></td>
+              <td><div class="text-xs">Début : 2026-04-20</div><div class="text-xs">Fin : 2026-05-10</div></td>
+              <td class="text-xs"><span style="color:var(--text-muted);">📄 2</span></td>
               <td><span class="badge warning">En cours</span></td>
               <td style="font-weight:700;">40 000 €</td>
             </tr>
             <tr>
-              <td>
-                <div class="text-bold">Ravalement - Presbytère Bondy</div>
-                <div class="text-xs">Façade extérieure - enduit</div>
-              </td>
-              <td class="text-xs">Bondy - Clichy</td>
+              <td><div class="text-bold">Ravalement – Presbytère Bondy</div><div class="text-xs">Façade extérieure – enduit</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Bondy – Clichy-sous-Bois</div><div class="text-xs">Presbytère Bondy 1</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-BCB-11</div></td>
               <td class="text-xs">SAS BTP Rénovation 93</td>
-              <td>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:40%"></div></div>
-                  <span class="text-xs" style="flex-shrink:0;">40%</span>
-                </div>
-              </td>
+              <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:40%"></div></div><span class="text-xs">40%</span></div></td>
+              <td><div class="text-xs">Début : 2026-01-15</div><div class="text-xs" style="color:var(--danger);">Fin : 2026-03-15 ⚠</div></td>
+              <td class="text-xs"><span style="color:var(--text-muted);">📷 6 &nbsp;📄 4</span></td>
               <td><span class="badge warning">En cours</span></td>
               <td style="font-weight:700;">5 500 €</td>
             </tr>
             <tr>
-              <td>
-                <div class="text-bold">Sébastien MC - Église Noisy Centre</div>
-                <div class="text-xs">Plomberie - sanitaires</div>
-              </td>
-              <td class="text-xs">Noisy-le-Grand</td>
+              <td><div class="text-bold">Plomberie sanitaires – Église NLG Centre</div><div class="text-xs">Plomberie – sanitaires</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Noisy-le-Grand</div><div class="text-xs">Église Noisy Centre</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2026-NSM-01</div></td>
               <td class="text-xs">Plomberie Chrétien &amp; Fils</td>
-              <td>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div>
-                  <span class="text-xs" style="flex-shrink:0;">100%</span>
-                </div>
-              </td>
+              <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div><span class="text-xs">100%</span></div></td>
+              <td><div class="text-xs">Début : 2026-05-02</div><div class="text-xs">Fin : 2026-05-30</div></td>
+              <td class="text-xs"><span style="color:var(--text-muted);">📄 1</span></td>
               <td><span class="badge success">Terminé</span></td>
               <td style="font-weight:700;color:var(--success);">3 500 €</td>
             </tr>
             <tr>
-              <td>
-                <div class="text-bold">Rénovation intérieure - Salle paroissiale</div>
-                <div class="text-xs">Peinture - sols</div>
-              </td>
-              <td class="text-xs">Neuilly-sur-Marne</td>
+              <td><div class="text-bold">Rénovation intérieure – Salle paroissiale</div><div class="text-xs">Peinture – sols</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Presbytère NSM 1</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-NLG-09</div></td>
               <td class="text-xs">SAS BTP Rénovation 93</td>
-              <td>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:25%"></div></div>
-                  <span class="text-xs" style="flex-shrink:0;">25%</span>
-                </div>
-              </td>
+              <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:25%"></div></div><span class="text-xs">25%</span></div></td>
+              <td><div class="text-xs">Début : 2026-02-01</div><div class="text-xs">Fin : 2026-02-28</div></td>
+              <td class="text-xs"><span style="color:var(--text-muted);">📷 3 &nbsp;📄 5</span></td>
               <td><span class="badge muted">Planifié</span></td>
               <td style="font-weight:700;">12 000 €</td>
             </tr>
             <tr>
-              <td>
-                <div class="text-bold">Diagnostic structurel - Presbytère NSM 3</div>
-                <div class="text-xs">Expertise fondations</div>
-              </td>
-              <td class="text-xs">Neuilly-sur-Marne</td>
+              <td><div class="text-bold">Diagnostic structurel – Presbytère NSM 3</div><div class="text-xs">Expertise fondations</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Presbytère NSM 3</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-BCB-11</div></td>
               <td class="text-xs">Cabinet Ingénierie 93</td>
-              <td>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:50%"></div></div>
-                  <span class="text-xs" style="flex-shrink:0;">50%</span>
-                </div>
-              </td>
+              <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:50%"></div></div><span class="text-xs">50%</span></div></td>
+              <td><div class="text-xs">Début : 2026-03-10</div><div class="text-xs">Fin : 2026-04-05</div></td>
+              <td class="text-xs"><span style="color:var(--text-muted);">📷 5 &nbsp;📄 2</span></td>
               <td><span class="badge warning">En cours</span></td>
               <td style="font-weight:700;">3 000 €</td>
             </tr>
             <tr>
-              <td>
-                <div class="text-bold">Contrôle maintenance - Sécurité</div>
-                <div class="text-xs">Conformité - vérification annuelle</div>
-              </td>
-              <td class="text-xs">Diocèse 93</td>
+              <td><div class="text-bold">Contrôle maintenance – Sécurité</div><div class="text-xs">Conformité – vérification annuelle</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Diocèse 93</div><div class="text-xs">Multi-sites</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2026-DIO-01</div></td>
               <td class="text-xs">Sécurité-Services</td>
-              <td>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div>
-                  <span class="text-xs" style="flex-shrink:0;">100%</span>
-                </div>
-              </td>
+              <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div><span class="text-xs">100%</span></div></td>
+              <td><div class="text-xs">Début : 2026-03-01</div><div class="text-xs">Fin : 2026-04-30</div></td>
+              <td class="text-xs"><span style="color:var(--text-muted);">📷 2 &nbsp;📄 1</span></td>
               <td><span class="badge success">Terminé</span></td>
               <td style="font-weight:700;color:var(--success);">7 000 €</td>
             </tr>
@@ -1451,13 +1426,37 @@
 </div><!-- /main -->
 </div><!-- /app -->
 
+<!-- Modale document Zeendoc -->
+<div id="doc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);width:min(580px,95vw);max-height:85vh;overflow-y:auto;padding:28px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--primary);">Zeendoc</div>
+      <div style="width:1px;height:14px;background:var(--border-2);"></div>
+      <div style="font-size:13px;color:var(--text-muted);">Diocèse de Saint-Denis</div>
+      <button onclick="closeDoc()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:18px;">×</button>
+    </div>
+    <div id="doc-modal-content"></div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn ghost" onclick="closeDoc()">Fermer</button>
+      <button class="btn ghost" onclick="showToast('Ouverture dans Zeendoc...','primary')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Ouvrir dans Zeendoc
+      </button>
+      <button class="btn primary" onclick="showToast('Téléchargement en cours...','success')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Télécharger PDF
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
   // ── Navigation ──────────────────────────────────────────────
   const TITLES = {
-    overview:     [
-      'Vue économe',
+    overview: [
+      'Vue économe adjoint',
       'Pilotage consolidé des flux, alertes et engagements du diocèse.',
-      "Permet d'identifier immédiatement les écarts critiques et d'arbitrer les actions à court terme."
+      'Tableau de bord · Semaine 13 · 30 mars 2026 · Diocèse de Saint-Denis'
     ],
     prestataires: [
       'Prestataires',
@@ -1503,6 +1502,13 @@
     document.getElementById('bandeau-l1').textContent = sub || '';
     document.getElementById('bandeau-l2').textContent = sub2 || '';
     document.querySelector('.content').scrollTop = 0;
+    if (tab === 'overview') {
+      const wd = WEEK_DATES[currentWeek];
+      if (wd) {
+        document.getElementById('bandeau-l2').textContent =
+          'Tableau de bord · Semaine ' + wd.label + ' · ' + wd.date + ' · Diocèse de Saint-Denis';
+      }
+    }
   }
 
   // ── Filtres ville prestataires ───────────────────────────────
@@ -1554,6 +1560,14 @@
     S15: { rec: 67000, dep: 68500, imp: 2, nsm:[23500,24000], nlg:[26000,26200], bcb:[17500,18300] },
   };
   const WEEK_ORDER = ['S10','S11','S12','S13','S14','S15'];
+  const WEEK_DATES = {
+    S10: { label: 'S10', date: '08 mars 2026', short: 'S10 · 08/03/2026' },
+    S11: { label: 'S11', date: '15 mars 2026', short: 'S11 · 15/03/2026' },
+    S12: { label: 'S12', date: '22 mars 2026', short: 'S12 · 22/03/2026' },
+    S13: { label: 'S13', date: '30 mars 2026', short: 'S13 · 30/03/2026' },
+    S14: { label: 'S14', date: '06 avril 2026', short: 'S14 · 06/04/2026' },
+    S15: { label: 'S15', date: '13 avril 2026', short: 'S15 · 13/04/2026' },
+  };
   let currentWeek = 'S13';
 
   function fmt(n) { return n.toLocaleString('fr-FR') + ' €'; }
@@ -1602,7 +1616,27 @@
 
     // Chart
     renderChart(w);
-    el('chart-ecart-label').textContent = '■ '+w+' - Écart : '+ecart(d.rec,d.dep);
+    if (el('chart-ecart-label')) el('chart-ecart-label').textContent = '■ '+w+' - Écart : '+ecart(d.rec,d.dep);
+    // Chart.js bar
+    updateBarChart(w);
+    // Bandeau dynamique
+    const wd = WEEK_DATES[w];
+    if (wd) {
+      const bl2 = document.getElementById('bandeau-l2');
+      if (bl2 && document.getElementById('tab-overview').classList.contains('active')) {
+        bl2.textContent = 'Tableau de bord · Semaine ' + wd.label + ' · ' + wd.date + ' · Diocèse de Saint-Denis';
+      }
+      const sl = document.getElementById('synthese-week-label');
+      if (sl) sl.textContent = w;
+      const sd = document.getElementById('synthese-solde');
+      if (sd) {
+        const solde = d.rec - d.dep;
+        sd.textContent = (solde >= 0 ? '+' : '') + solde.toLocaleString('fr-FR') + ' €';
+        sd.style.color = solde >= 0 ? 'var(--success)' : 'var(--danger)';
+      }
+      const sw = document.getElementById('sidebar-week');
+      if (sw) sw.textContent = wd.short;
+    }
   }
 
   function renderChart(activeWeek) {
@@ -1637,12 +1671,182 @@
     toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
   }
 
-  // ── Actions documents ────────────────────────────────────────
+  // ── Actions documents — Modales Zeendoc ─────────────────────
+  const DOC_DATA = {
+    'ZD-2026-0847': { ref:'ZD-2026-0847',statut:'danger',statutLabel:'Litige',nom:'Facture – SARL Chauffage XP – Chaudière NSM',fichier:'FCT_ChaufXP_240226.pdf',fournisseur:'SARL Chauffage XP',montant:'1 800,00 €',date:'2026-02-24',up:'Neuilly-sur-Marne',chantier:'NSM – Remplacement chaudière',commentaire:'En litige – non-conformité constatée. Tuyauterie omise.' },
+    'ZD-2026-0052': { ref:'ZD-2026-0052',statut:'warning',statutLabel:'En alerte',nom:'Devis – EURL Électricité 93 – Tableau NSM',fichier:'DEV_Elec93_150226.pdf',fournisseur:'EURL Électricité 93',montant:'10 500,00 €',date:'2026-02-15',up:'Neuilly-sur-Marne',chantier:'NSM – Mise aux normes électriques',commentaire:'Devis en attente de validation économe. Délai dépassé de 15 jours.' },
+    'ZD-2026-0061': { ref:'ZD-2026-0061',statut:'success',statutLabel:'Validé',nom:'BC – NetPro Nettoyage – Mars',fichier:'BC_NetPro_Mars2026.pdf',fournisseur:'NetPro Nettoyage',montant:'2 400,00 €',date:'2026-03-01',up:'Diocèse 93',chantier:'Nettoyage mensuel multi-sites',commentaire:'Bon de commande validé. Prestation conforme.' },
+    'ZD-2026-0068': { ref:'ZD-2026-0068',statut:'warning',statutLabel:'En cours',nom:'Facture – SAS BTP Rénovation – Façade BCB',fichier:'FCT_BTP_Facade_100326.pdf',fournisseur:'SAS BTP Rénovation 93',montant:'5 500,00 €',date:'2026-03-10',up:'Bondy – Clichy-sous-Bois',chantier:'BCB – Ravalement façade presbytère',commentaire:'Travaux en cours. Réserves émises sur qualité enduit zone humide.' },
+    'ZD-2026-1078': { ref:'ZD-2026-1078',statut:'success',statutLabel:'Validé',nom:'Facture – Couverture de France – Toiture NSM',fichier:'FCT_Couverture_NSM_280326.pdf',fournisseur:'Couverture de France',montant:'28 500,00 €',date:'2026-03-28',up:'Neuilly-sur-Marne',chantier:'NSM – Rénovation toiture Église Saint-Joseph',commentaire:'Facture validée. Travaux conformes au devis. Rapport remis.' },
+    'ZD-2026-0074': { ref:'ZD-2026-0074',statut:'success',statutLabel:'Conformité passée',nom:'Justificatif – Contrôle maintenance sécurité',fichier:'JUST_Securite_200326.pdf',fournisseur:'Sécurité-Services',montant:'7 100,00 €',date:'2026-03-20',up:'Diocèse 93',chantier:'Contrôle annuel multi-sites',commentaire:'Conformité vérifiée. Aucune anomalie. Prochain contrôle mars 2027.' },
+  };
+
   function viewDoc(ref, name) {
-    showToast('Zeendoc - ' + (name || ref) + ' [' + ref + ']', 'primary');
+    const d = DOC_DATA[ref];
+    if (!d) { showToast('Document ' + ref + ' – ' + (name||''), 'primary'); return; }
+    document.getElementById('doc-modal-content').innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div>
+          <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Référence document</div>
+          <div style="font-size:20px;font-weight:700;color:var(--text-primary);">${d.ref}</div>
+        </div>
+        <span class="badge ${d.statut}" style="font-size:12px;padding:4px 12px;">${d.statutLabel}</span>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:4px;">Document</div>
+      <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:4px;">${d.nom}</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:20px;">${d.fichier}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px;">Fournisseur</div><div style="font-size:13px;font-weight:600;color:var(--text-primary);">${d.fournisseur}</div></div>
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px;">Montant HT</div><div style="font-size:13px;font-weight:600;color:var(--text-primary);">${d.montant}</div></div>
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px;">Date</div><div style="font-size:13px;font-weight:600;color:var(--text-primary);">${d.date}</div></div>
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px;">Unité pastorale</div><div style="font-size:13px;font-weight:600;color:var(--text-primary);">${d.up}</div></div>
+      </div>
+      <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;margin-bottom:12px;"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px;">Chantier lié</div><div style="font-size:13px;font-weight:600;color:var(--text-primary);">${d.chantier}</div></div>
+      <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;margin-bottom:20px;"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px;">Commentaire</div><div style="font-size:13px;color:var(--text-secondary);">${d.commentaire}</div></div>
+      <div style="font-size:11px;color:var(--text-muted);"><span style="color:var(--primary);">Archivé via n8n OCR</span> → <span style="color:var(--primary);">Zeendoc</span> · Conservation 10 ans · Signature électronique</div>`;
+    const modal = document.getElementById('doc-modal');
+    modal.style.display = 'flex';
   }
+
+  function closeDoc() {
+    document.getElementById('doc-modal').style.display = 'none';
+  }
+
   function dlPDF(ref, filename) {
     showToast('Téléchargement : ' + filename + '.pdf (' + ref + ')', 'success');
+  }
+
+  // ── Prestataires ─────────────────────────────────────────────
+  const PREST_DATA = {
+    chauffagexp: { name:'SARL Chauffage XP',score:2.2,status:'blackliste',meta:'CVC / Plomberie · 5 avis · 3 sites',badge:'<span style="background:rgba(239,68,68,.15);color:var(--danger);padding:2px 8px;border-radius:3px;font-weight:700;font-size:11px;">BLACKLISTÉ</span>',ia:'Blacklist temporaire 6 mois. Signalement prestataires alternatifs (3 suggestions IA disponibles).',interventions:[{titre:'Remplacement chaudière',desc:'Brûleur 25 ans remplacé. Tuyauterie omise. Photo Zeendoc jointe.',site:'NSM Presbytère 1 · Neuilly-sur-Marne',date:'2026-02-24',montant:'1 800 €',note:'danger',noteLabel:'Litige'},{titre:'Tuyauterie – complément',desc:'Tuyauterie qui aurait dû être incluse dans le premier devis.',site:'NLG Presbytère 2 · Noisy-le-Grand',date:'2026-03-15',montant:'1 200 €',note:'warning',noteLabel:'Contesté'},{titre:'Entretien annuel',desc:'Conforme. Rapport remis.',site:'NSM Presbytère 2 · Neuilly-sur-Marne',date:'2026-01-10',montant:'450 €',note:'success',noteLabel:'Validé'}] },
+    btp: { name:'SAS BTP Rénovation 93',score:2.8,status:'alerte',meta:'Gros œuvre / Façades · 4 avis · 2 sites',badge:'<span class="badge warning">En alerte</span>',ia:'Surveillance renforcée recommandée. Exiger photos avant/après sur chaque intervention. Devis comparatifs obligatoires au-dessus de 2 000 €.',interventions:[{titre:'Ravalement façade – Presbytère Bondy',desc:'Enduit appliqué sur zone humide non traitée. Reprise nécessaire sous 3 mois.',site:'BCB Presbytère 1 · Bondy-Clichy-sous-Bois',date:'2026-02-15',montant:'5 500 €',note:'warning',noteLabel:'Contesté'},{titre:'Réfection toiture annexe – NSM',desc:"Travaux démarrés avec 3 semaines de retard. Qualité d'exécution correcte.",site:'NSM Église Saint-Joseph · Neuilly-sur-Marne',date:'2026-01-20',montant:'8 200 €',note:'warning',noteLabel:'Réserves'},{titre:'Diagnostic façade – NLG Centre',desc:'Rapport fourni. Devis jugé surfacturé de 30% vs marché. Renégociation en cours.',site:'NLG Église centre · Noisy-le-Grand',date:'2025-12-10',montant:'1 800 €',note:'danger',noteLabel:'Litige'},{titre:'Peinture salle paroissiale – Bondy',desc:'Travaux conformes. Délai respecté. Satisfaction bonne.',site:'BCB Salle paroissiale · Bondy-Clichy-sous-Bois',date:'2025-11-05',montant:'2 400 €',note:'success',noteLabel:'Validé'}] },
+    elec: { name:'EURL Électricité 93',score:3.5,status:'surveiller',meta:'Électricité · 3 avis · 1 site',badge:'<span class="badge warning">Surveiller</span>',ia:'Prestataire acceptable mais ponctualité insuffisante. Rappeler les obligations contractuelles de délai. Réévaluation à 6 mois.',interventions:[{titre:'Installation tableau électrique – NLG 2',desc:'Installation conforme aux normes NF C 15-100. Procès-verbal de conformité remis.',site:'NLG Presbytère 2 · Noisy-le-Grand',date:'2026-03-05',montant:'2 200 €',note:'success',noteLabel:'Validé'},{titre:'Mise aux normes éclairage – NLG Centre',desc:'Travaux démarrés avec 3 semaines de retard sur planning. Rapport incomplet à ce jour.',site:'NLG Église centre · Noisy-le-Grand',date:'2026-02-01',montant:'3 400 €',note:'warning',noteLabel:'En cours'},{titre:'Diagnostic électrique général – NLG',desc:'Diagnostic complet réalisé. 4 anomalies identifiées. Devis de reprise transmis.',site:'NLG Presbytère 1 · Noisy-le-Grand',date:'2025-12-15',montant:'850 €',note:'success',noteLabel:'Validé'}] },
+    netpro: { name:'NetPro Nettoyage',score:4.6,status:'bon',meta:'Nettoyage / Entretien · 12 avis · 7 sites',badge:'<span class="badge success">Excellent</span>',ia:'Contrat cadre diocèse recommandé. Tarif groupé négociable –15%. Reconduction annuelle conseillée.',interventions:[{titre:'Nettoyage hebdomadaire – mars',desc:'RAS. Rapport mensuel conforme. Produits écologiques certifiés.',site:'NSM Maison paroissiale · Neuilly-sur-Marne',date:'2026-03-29',montant:'1 200 €',note:'success',noteLabel:'Validé'},{titre:'Nettoyage hebdomadaire – mars',desc:'RAS. Produits écologiques utilisés. Satisfaction équipe pastorale.',site:'NLG Église centre · Noisy-le-Grand',date:'2026-03-29',montant:'980 €',note:'success',noteLabel:'Validé'},{titre:'Nettoyage hebdomadaire – mars',desc:'Conforme. Prestation réalisée dimanche soir après célébration.',site:'BCB Salle paroissiale · Bondy-Clichy-sous-Bois',date:'2026-03-29',montant:'750 €',note:'success',noteLabel:'Validé'},{titre:'Nettoyage post-travaux – NSM',desc:'Intervention spéciale après chantier toiture. Qualité irréprochable.',site:'NSM Église Saint-Joseph · Neuilly-sur-Marne',date:'2026-03-15',montant:'1 800 €',note:'success',noteLabel:'Validé'}] },
+    plomberie: { name:'Plomberie Chrétien & Fils',score:4.3,status:'bon',meta:'Plomberie / Sanitaires · 8 avis · 5 sites',badge:'<span class="badge success">Bon</span>',ia:'Prestataire fiable sur les interventions courantes. Délais respectés. Recommandé pour contrats récurrents de maintenance.',interventions:[{titre:'Réfection sanitaires – NLG Centre',desc:'Remplacement complet robinetterie et WC. Travaux terminés dans les délais.',site:'NLG Église centre · Noisy-le-Grand',date:'2026-03-25',montant:'3 500 €',note:'success',noteLabel:'Validé'},{titre:'Maintenance chaudière – NSM 1',desc:'Entretien annuel réglementaire. Rapport de sécurité conforme. Aucune anomalie.',site:'NSM Presbytère 1 · Neuilly-sur-Marne',date:'2026-02-10',montant:'650 €',note:'success',noteLabel:'Validé'},{titre:'Fuite canalisation – BCB Presbytère',desc:"Intervention d'urgence sous 4h. Réparation définitive effectuée.",site:'BCB Presbytère 1 · Bondy-Clichy-sous-Bois',date:'2026-01-28',montant:'890 €',note:'success',noteLabel:'Validé'},{titre:'Devis installation chaudière biomasse',desc:'Devis transmis. En attente validation économe diocésain.',site:'NSM Presbytère 1 · Neuilly-sur-Marne',date:'2026-03-20',montant:'22 000 €',note:'warning',noteLabel:'En attente'}] },
+    diocesetech: { name:'DioceseTech Informatique',score:4.8,status:'bon',meta:'IT / Réseaux · 6 avis · 3 sites',badge:'<span class="badge success">Excellent</span>',ia:"Prestataire stratégique. Connaissance approfondie du contexte diocésain. Recommandé pour le déploiement des outils numériques à l'échelle du diocèse.",interventions:[{titre:'Déploiement réseau WiFi – NSM',desc:'Installation points d\'accès WiFi 6 dans presbytère et salle paroissiale. Sécurisation WPA3.',site:'NSM Presbytère 1 · Neuilly-sur-Marne',date:'2026-03-15',montant:'2 400 €',note:'success',noteLabel:'Validé'},{titre:'Maintenance serveur – NLG',desc:'Mise à jour système et sauvegardes vérifiées. Rapport technique remis. RAS.',site:'NLG Presbytère 2 · Noisy-le-Grand',date:'2026-02-20',montant:'480 €',note:'success',noteLabel:'Validé'},{titre:'Déploiement postes curie – Diocèse 93',desc:'8 postes configurés et livrés. Formation utilisateurs incluse. Satisfaction totale.',site:'Curie diocésaine · Diocèse 93',date:'2026-01-15',montant:'6 400 €',note:'success',noteLabel:'Validé'},{titre:'Audit sécurité SI – Diocèse 93',desc:'Audit complet réalisé. 3 recommandations critiques transmises. Plan de remédiation en cours.',site:'Curie diocésaine · Diocèse 93',date:'2025-12-01',montant:'1 800 €',note:'success',noteLabel:'Validé'}] },
+  };
+
+  function openPrest(id) {
+    const p = PREST_DATA[id];
+    if (!p) return;
+    const colorClass = p.score >= 4 ? 'good' : p.score >= 3 ? 'warn' : 'bad';
+    let rows = p.interventions.map(i => `
+      <tr>
+        <td><div class="text-bold">${i.titre}</div><div class="text-xs">${i.desc}</div></td>
+        <td class="text-xs">${i.site}</td>
+        <td class="text-xs">${i.date}</td>
+        <td style="font-weight:700;color:var(--${i.note==='success'?'text-secondary':i.note});">${i.montant}</td>
+        <td><span class="badge ${i.note}">${i.noteLabel}</span></td>
+      </tr>`).join('');
+    document.getElementById('prest-modal-content').innerHTML = `
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+        <div class="prest-avatar ${colorClass}" style="font-size:14px;">${p.score}</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--text-primary);">${p.name}</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">${p.meta}</div>
+          <div style="margin-top:6px;">${p.badge}</div>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Historique des interventions</div>
+      <div style="overflow-x:auto;">
+      <table class="data-table" style="min-width:600px;">
+        <thead><tr><th>Intervention</th><th>Site</th><th>Date</th><th>Montant</th><th>Note</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      </div>
+      <div style="margin-top:14px;padding:12px 14px;background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.2);border-radius:var(--radius-sm);">
+        <div style="font-size:12px;font-weight:600;color:var(--primary);">Recommandation IA (Mistral)</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:3px;">${p.ia}</div>
+      </div>`;
+    document.getElementById('prest-modal').style.display = 'flex';
+  }
+
+  function closePrest() { document.getElementById('prest-modal').style.display = 'none'; }
+
+  function filterByStatus(btn, status) {
+    document.querySelectorAll('#prest-status-filters .filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#prest-list .prest-card').forEach(card => {
+      card.style.display = (status === 'tous' || card.dataset.status === status) ? '' : 'none';
+    });
+  }
+
+  function filterPrestataires() {
+    const q = document.getElementById('prest-search').value.toLowerCase();
+    document.querySelectorAll('#prest-list .prest-card').forEach(card => {
+      card.style.display = card.dataset.name.includes(q) ? '' : 'none';
+    });
+  }
+
+  // ── Charts Chart.js ──────────────────────────────────────────
+  const CHART_HISTORY = {
+    labels: ['S48','S49','S50','S51','S52 (Noël)','S01','S02','S03','S04','S11 (Pâques)','S12','S13'],
+    entrants: [58000,57500,60000,72000,95000,48000,52000,55000,61000,88000,63000,65000],
+    sortants: [60000,59000,61000,68000,72000,55000,57000,58000,63000,75000,65000,67000],
+  };
+
+  let lineChart, barChart;
+
+  function initCharts() {
+    const gridColor = 'rgba(148,163,184,.08)';
+    const tickColor = '#64748B';
+    const ctxLine = document.getElementById('fluxLineChart');
+    if (!ctxLine) return;
+    lineChart = new Chart(ctxLine, {
+      type: 'line',
+      data: {
+        labels: CHART_HISTORY.labels,
+        datasets: [
+          { label:'Entrants',data:CHART_HISTORY.entrants,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,.08)',borderWidth:2,pointRadius:3,pointHoverRadius:6,pointBackgroundColor:'#10B981',tension:0.4,fill:true },
+          { label:'Sortants',data:CHART_HISTORY.sortants,borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,.06)',borderWidth:2,pointRadius:3,pointHoverRadius:6,pointBackgroundColor:'#EF4444',tension:0.4,fill:true }
+        ]
+      },
+      options: {
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{position:'bottom',labels:{color:tickColor,font:{size:11},boxWidth:12,padding:16}},
+          tooltip:{backgroundColor:'#1E293B',borderColor:'rgba(148,163,184,.2)',borderWidth:1,titleColor:'#F1F5F9',bodyColor:'#94A3B8',padding:12,callbacks:{label:ctx=>' '+ctx.dataset.label+' : '+ctx.parsed.y.toLocaleString('fr-FR')+' €'}}
+        },
+        scales:{
+          x:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:10}}},
+          y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:10},callback:v=>(v/1000)+'k€'}}
+        }
+      }
+    });
+    updateBarChart('S13');
+  }
+
+  function updateBarChart(week) {
+    const d = WEEKS[week];
+    if (!d) return;
+    const ctxBar = document.getElementById('fluxBarChart');
+    if (!ctxBar) return;
+    if (barChart) barChart.destroy();
+    const gridColor = 'rgba(148,163,184,.08)';
+    const tickColor = '#64748B';
+    barChart = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['NSM','NLG','BCB'],
+        datasets: [
+          { label:'Entrants',data:[d.nsm[0],d.nlg[0],d.bcb[0]],backgroundColor:'rgba(16,185,129,.7)',borderColor:'#10B981',borderWidth:1,borderRadius:4 },
+          { label:'Sortants',data:[d.nsm[1],d.nlg[1],d.bcb[1]],backgroundColor:'rgba(239,68,68,.7)',borderColor:'#EF4444',borderWidth:1,borderRadius:4 }
+        ]
+      },
+      options: {
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{position:'bottom',labels:{color:tickColor,font:{size:11},boxWidth:12,padding:16}},
+          tooltip:{backgroundColor:'#1E293B',borderColor:'rgba(148,163,184,.2)',borderWidth:1,titleColor:'#F1F5F9',bodyColor:'#94A3B8',padding:12,callbacks:{label:ctx=>' '+ctx.dataset.label+' : '+ctx.parsed.y.toLocaleString('fr-FR')+' €'}}
+        },
+        scales:{
+          x:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:11}}},
+          y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:10},callback:v=>(v/1000)+'k€'}}
+        }
+      }
+    });
   }
 
   // ── Filtre documents ─────────────────────────────────────────
@@ -1657,12 +1861,12 @@
   // ── Init ─────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     renderChart('S13');
-    // Ajouter id aux KPI flux (après rendu)
-    // Les KPI sont dans le tab-finances, on les patche via les premiers elements
     const cards = document.querySelectorAll('#tab-finances .kpi-value');
     if (cards[0]) cards[0].id = 'kpi-rec';
     if (cards[1]) cards[1].id = 'kpi-dep';
     if (cards[2]) cards[2].id = 'kpi-ecart';
+    if (typeof Chart !== 'undefined') initCharts();
+    else document.addEventListener('chartjs-ready', initCharts);
   });
 </script>
 </body>
