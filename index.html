@@ -215,6 +215,16 @@
     .eco-card ul{margin-left:14px}
     .eco-card ul li{font-size:12px;color:var(--text-secondary);margin-bottom:3px;line-height:1.4}
 
+    /* STATUT SELECT */
+    .statut-sel{border-radius:20px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid transparent;outline:none;appearance:none;-webkit-appearance:none;min-width:100px;text-align:center;}
+    .statut-sel.warning{background:rgba(245,158,11,.15);color:var(--warning);border-color:rgba(245,158,11,.3);}
+    .statut-sel.success{background:rgba(16,185,129,.15);color:var(--success);border-color:rgba(16,185,129,.3);}
+    .statut-sel.muted{background:var(--surface-2);color:var(--text-muted);border-color:var(--border);}
+    .statut-sel.danger{background:rgba(239,68,68,.15);color:var(--danger);border-color:rgba(239,68,68,.3);}
+    .statut-sel.primary{background:rgba(14,165,233,.15);color:var(--primary);border-color:rgba(14,165,233,.3);}
+    .statut-sel option{background:#1E293B;color:#F1F5F9;}
+    .at-ref{color:var(--primary);font-size:10px;margin-top:2px;cursor:pointer;font-weight:600;}
+    .at-ref:hover{text-decoration:underline;}
     /* BTN */
     .btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:opacity .15s}
     .btn:hover{opacity:.85}
@@ -759,35 +769,41 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg>
           </div>
           <div class="kpi-value">67 000 €</div>
-          <div class="kpi-label">Depenses prevues</div>
+          <div class="kpi-label">Dépenses prévues</div>
         </div>
         <div class="kpi-card danger">
           <div class="kpi-icon danger">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="none"><text x="12" y="18" text-anchor="middle" font-size="20" fill="currentColor">€</text></svg>
           </div>
-          <div class="kpi-value">-2 000 €</div>
-          <div class="kpi-label">Ecart S13</div>
-          <div class="kpi-trend down">Deficit hebdomadaire</div>
+          <div class="kpi-value" id="kpi-ecart">-2 000 €</div>
+          <div class="kpi-label">Écart <span class="week-label">S13</span></div>
+          <div class="kpi-trend down">Déficit hebdomadaire</div>
         </div>
         <div class="kpi-card warning">
           <div class="kpi-icon warning">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
           </div>
           <div class="kpi-value">3</div>
-          <div class="kpi-label">Factures impayees</div>
+          <div class="kpi-label">Factures impayées</div>
         </div>
       </div>
 
       <!-- Sélecteur de semaine -->
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
         <span class="text-xs" style="margin-right:4px;">Semaine :</span>
-        <div id="week-selector" style="display:flex;gap:6px;">
+        <div id="week-selector" style="display:flex;gap:6px;flex-wrap:wrap;">
           <button class="filter-tab" onclick="setWeek('S10')">S10</button>
           <button class="filter-tab" onclick="setWeek('S11')">S11</button>
           <button class="filter-tab" onclick="setWeek('S12')">S12</button>
           <button class="filter-tab active" onclick="setWeek('S13')">S13</button>
           <button class="filter-tab" onclick="setWeek('S14')">S14</button>
           <button class="filter-tab" onclick="setWeek('S15')">S15</button>
+          <button class="filter-tab" onclick="setWeek('S16')">S16</button>
+          <button class="filter-tab" onclick="setWeek('S17')">S17</button>
+          <button class="filter-tab" onclick="setWeek('S18')">S18</button>
+          <button class="filter-tab" onclick="setWeek('S19')">S19</button>
+          <button class="filter-tab" onclick="setWeek('S20')">S20</button>
+          <button class="filter-tab" onclick="setWeek('S21')">S21</button>
         </div>
       </div>
 
@@ -897,72 +913,72 @@
           <tbody>
             <tr>
               <td><div class="text-bold">Rénovation intérieure – Église Saint-Joseph</div><div class="text-xs">Couverture toiture</div></td>
-              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Église Saint-Joseph NSM</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2024-NSM-07</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Église Saint-Joseph NSM</div><div class="at-ref" onclick="openATModal('AT-2024-NSM-07')">AT-2024-NSM-07</div></td>
               <td class="text-xs">Couverture de France</td>
               <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:65%"></div></div><span class="text-xs">65%</span></div></td>
               <td><div class="text-xs">Début : 2026-02-10</div><div class="text-xs">Fin : 2026-04-15</div></td>
               <td class="text-xs"><span style="color:var(--text-muted);">📷 4 &nbsp;📄 3</span></td>
-              <td><span class="badge warning">En cours</span></td>
+              <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="En cours" selected>En cours</option><option value="Terminé">Terminé</option><option value="Planifié">Planifié</option></select></td>
               <td style="font-weight:700;color:var(--warning);">49 000 €</td>
             </tr>
             <tr>
               <td><div class="text-bold">Mise aux normes électriques – Presbytère NLG 2</div><div class="text-xs">Installation tableau électrique</div></td>
-              <td><div class="text-bold" style="font-size:12px;">Noisy-le-Grand</div><div class="text-xs">Presbytère Noisy-le-Grand 2</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-NLG-03</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Noisy-le-Grand</div><div class="text-xs">Presbytère Noisy-le-Grand 2</div><div class="at-ref" onclick="openATModal('AT-2025-NLG-03')">AT-2025-NLG-03</div></td>
               <td class="text-xs">EURL Électricité 93</td>
               <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:40%"></div></div><span class="text-xs">40%</span></div></td>
               <td><div class="text-xs">Début : 2026-04-20</div><div class="text-xs">Fin : 2026-05-10</div></td>
               <td class="text-xs"><span style="color:var(--text-muted);">📄 2</span></td>
-              <td><span class="badge warning">En cours</span></td>
+              <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="En cours" selected>En cours</option><option value="Terminé">Terminé</option><option value="Planifié">Planifié</option></select></td>
               <td style="font-weight:700;">40 000 €</td>
             </tr>
             <tr>
               <td><div class="text-bold">Ravalement – Presbytère Bondy</div><div class="text-xs">Façade extérieure – enduit</div></td>
-              <td><div class="text-bold" style="font-size:12px;">Bondy – Clichy-sous-Bois</div><div class="text-xs">Presbytère Bondy 1</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-BCB-11</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Bondy – Clichy-sous-Bois</div><div class="text-xs">Presbytère Bondy 1</div><div class="at-ref" onclick="openATModal('AT-2025-BCB-11')">AT-2025-BCB-11</div></td>
               <td class="text-xs">SAS BTP Rénovation 93</td>
               <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill warning" style="width:40%"></div></div><span class="text-xs">40%</span></div></td>
               <td><div class="text-xs">Début : 2026-01-15</div><div class="text-xs" style="color:var(--danger);">Fin : 2026-03-15 ⚠</div></td>
               <td class="text-xs"><span style="color:var(--text-muted);">📷 6 &nbsp;📄 4</span></td>
-              <td><span class="badge warning">En cours</span></td>
+              <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="En cours" selected>En cours</option><option value="Terminé">Terminé</option><option value="Planifié">Planifié</option></select></td>
               <td style="font-weight:700;">5 500 €</td>
             </tr>
             <tr>
               <td><div class="text-bold">Plomberie sanitaires – Église NLG Centre</div><div class="text-xs">Plomberie – sanitaires</div></td>
-              <td><div class="text-bold" style="font-size:12px;">Noisy-le-Grand</div><div class="text-xs">Église Noisy Centre</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2026-NSM-01</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Noisy-le-Grand</div><div class="text-xs">Église Noisy Centre</div><div class="at-ref" onclick="openATModal('AT-2026-NSM-01')">AT-2026-NSM-01</div></td>
               <td class="text-xs">Plomberie Chrétien &amp; Fils</td>
               <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div><span class="text-xs">100%</span></div></td>
               <td><div class="text-xs">Début : 2026-05-02</div><div class="text-xs">Fin : 2026-05-30</div></td>
               <td class="text-xs"><span style="color:var(--text-muted);">📄 1</span></td>
-              <td><span class="badge success">Terminé</span></td>
+              <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="En cours">En cours</option><option value="Terminé" selected>Terminé</option><option value="Planifié">Planifié</option></select></td>
               <td style="font-weight:700;color:var(--success);">3 500 €</td>
             </tr>
             <tr>
               <td><div class="text-bold">Rénovation intérieure – Salle paroissiale</div><div class="text-xs">Peinture – sols</div></td>
-              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Presbytère NSM 1</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-NLG-09</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Presbytère NSM 1</div><div class="at-ref" onclick="openATModal('AT-2025-NLG-09')">AT-2025-NLG-09</div></td>
               <td class="text-xs">SAS BTP Rénovation 93</td>
               <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill primary" style="width:25%"></div></div><span class="text-xs">25%</span></div></td>
               <td><div class="text-xs">Début : 2026-02-01</div><div class="text-xs">Fin : 2026-02-28</div></td>
               <td class="text-xs"><span style="color:var(--text-muted);">📷 3 &nbsp;📄 5</span></td>
-              <td><span class="badge muted">Planifié</span></td>
+              <td><select class="statut-sel muted" onchange="updateStatut(this)"><option value="En cours">En cours</option><option value="Terminé">Terminé</option><option value="Planifié" selected>Planifié</option></select></td>
               <td style="font-weight:700;">12 000 €</td>
             </tr>
             <tr>
               <td><div class="text-bold">Diagnostic structurel – Presbytère NSM 3</div><div class="text-xs">Expertise fondations</div></td>
-              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Presbytère NSM 3</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2025-BCB-11</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Neuilly-sur-Marne</div><div class="text-xs">Presbytère NSM 3</div><div class="at-ref" onclick="openATModal('AT-2025-BCB-11')">AT-2025-BCB-11</div></td>
               <td class="text-xs">Cabinet Ingénierie 93</td>
               <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:50%"></div></div><span class="text-xs">50%</span></div></td>
               <td><div class="text-xs">Début : 2026-03-10</div><div class="text-xs">Fin : 2026-04-05</div></td>
               <td class="text-xs"><span style="color:var(--text-muted);">📷 5 &nbsp;📄 2</span></td>
-              <td><span class="badge warning">En cours</span></td>
+              <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="En cours" selected>En cours</option><option value="Terminé">Terminé</option><option value="Planifié">Planifié</option></select></td>
               <td style="font-weight:700;">3 000 €</td>
             </tr>
             <tr>
               <td><div class="text-bold">Contrôle maintenance – Sécurité</div><div class="text-xs">Conformité – vérification annuelle</div></td>
-              <td><div class="text-bold" style="font-size:12px;">Diocèse 93</div><div class="text-xs">Multi-sites</div><div style="font-size:10px;color:var(--primary);margin-top:2px;">AT-2026-DIO-01</div></td>
+              <td><div class="text-bold" style="font-size:12px;">Diocèse 93</div><div class="text-xs">Multi-sites</div><div class="at-ref" onclick="openATModal('AT-2026-DIO-01')">AT-2026-DIO-01</div></td>
               <td class="text-xs">Sécurité-Services</td>
               <td><div style="display:flex;align-items:center;gap:6px;"><div class="progress-bar" style="flex:1;margin-top:0;"><div class="progress-fill success" style="width:100%"></div></div><span class="text-xs">100%</span></div></td>
               <td><div class="text-xs">Début : 2026-03-01</div><div class="text-xs">Fin : 2026-04-30</div></td>
               <td class="text-xs"><span style="color:var(--text-muted);">📷 2 &nbsp;📄 1</span></td>
-              <td><span class="badge success">Terminé</span></td>
+              <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="En cours">En cours</option><option value="Terminé" selected>Terminé</option><option value="Planifié">Planifié</option></select></td>
               <td style="font-weight:700;color:var(--success);">7 000 €</td>
             </tr>
           </tbody>
@@ -1046,13 +1062,13 @@
               <td class="text-xs">Neuilly-sur-Marne</td>
               <td style="font-weight:700;color:var(--danger);">1 800 €</td>
               <td class="text-xs">2026-02-24</td>
-              <td><span class="badge danger" style="gap:3px;"><span>⊕</span> Litige</span></td>
+              <td><select class="statut-sel danger" onchange="updateStatut(this)"><option value="Litige" selected>⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé">Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0847')">ZD-2026-0847</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0847','Facture - SARL Chauffage XP')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
                   Voir</button>
-                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0847','Facture-ChauffageXP')">
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="openPDF('ZD-2026-0847')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   PDF</button>
               </div></td>
@@ -1067,13 +1083,13 @@
               <td class="text-xs">Neuilly-sur-Marne</td>
               <td style="font-weight:700;color:var(--warning);">10 500 €</td>
               <td class="text-xs">2026-02-15</td>
-              <td><span class="badge warning">En alerte</span></td>
+              <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte" selected>En alerte</option><option value="Validé">Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0052')">ZD-2026-0052</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0052','Devis - EURL Électricité 93')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
                   Voir</button>
-                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0052','Devis-Electricite93')">
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="openPDF('ZD-2026-0052')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   PDF</button>
               </div></td>
@@ -1088,13 +1104,13 @@
               <td class="text-xs">Diocèse 93</td>
               <td style="font-weight:700;">2 400 €</td>
               <td class="text-xs">2026-03-01</td>
-              <td><span class="badge success">Validé</span></td>
+              <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé" selected>Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0061')">ZD-2026-0061</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0061','BC - NetPro Nettoyage - Mars')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
                   Voir</button>
-                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0061','BC-NetPro-Mars')">
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="openPDF('ZD-2026-0061')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   PDF</button>
               </div></td>
@@ -1109,13 +1125,13 @@
               <td class="text-xs">Bondy - Clichy</td>
               <td style="font-weight:700;">5 500 €</td>
               <td class="text-xs">2026-03-10</td>
-              <td><span class="badge warning">En cours</span></td>
+              <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé">Validé</option><option value="En cours" selected>En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0068')">ZD-2026-0068</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0068','Facture - SAS BTP - Façade')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
                   Voir</button>
-                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0068','Facture-BTP-Facade')">
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="openPDF('ZD-2026-0068')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   PDF</button>
               </div></td>
@@ -1130,13 +1146,13 @@
               <td class="text-xs">Neuilly-sur-Marne</td>
               <td style="font-weight:700;color:var(--success);">28 500 €</td>
               <td class="text-xs">2026-03-28</td>
-              <td><span class="badge success">Validé</span></td>
+              <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé" selected>Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-1078')">ZD-2026-1078</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-1078','Facture - Couverture IDF - Toiture')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
                   Voir</button>
-                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-1078','Facture-Couverture-NSM')">
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="openPDF('ZD-2026-1078')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   PDF</button>
               </div></td>
@@ -1151,13 +1167,13 @@
               <td class="text-xs">Diocèse 93</td>
               <td style="font-weight:700;">7 100 €</td>
               <td class="text-xs">2026-03-20</td>
-              <td><span class="badge success">Conformité passée</span></td>
+              <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé">Validé</option><option value="En cours">En cours</option><option value="Conformité passée" selected>Conformité passée</option></select></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0074')">ZD-2026-0074</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0074','Contrôle maintenance - Sécurité')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C21.423 11.955 22 12.5 22 12.5S19 18 12 18 2 12.5 2 12.5 5 7 12 7c2.2 0 4.121.728 5.688 1.734"/></svg>
                   Voir</button>
-                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="dlPDF('ZD-2026-0074','Justif-Securite')">
+                <button class="btn primary" style="height:28px;padding:0 10px;font-size:11px;" onclick="openPDF('ZD-2026-0074')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   PDF</button>
               </div></td>
@@ -1577,8 +1593,14 @@
     S13: { rec: 65000, dep: 67000, imp: 3, nsm:[23100,24200], nlg:[25500,25800], bcb:[16400,17000] },
     S14: { rec: 62000, dep: 63000, imp: 2, nsm:[21800,22400], nlg:[24000,24300], bcb:[16200,16300] },
     S15: { rec: 67000, dep: 68500, imp: 2, nsm:[23500,24000], nlg:[26000,26200], bcb:[17500,18300] },
+    S16: { rec: 64000, dep: 65500, imp: 2, nsm:[22200,22800], nlg:[24800,25200], bcb:[17000,17500] },
+    S17: { rec: 70000, dep: 68000, imp: 1, nsm:[24500,23800], nlg:[27000,26500], bcb:[18500,17700] },
+    S18: { rec: 72000, dep: 69500, imp: 1, nsm:[25200,24500], nlg:[28000,27000], bcb:[18800,18000] },
+    S19: { rec: 68000, dep: 70000, imp: 3, nsm:[23800,24500], nlg:[26500,27200], bcb:[17700,18300] },
+    S20: { rec: 65000, dep: 66500, imp: 2, nsm:[22500,23000], nlg:[25200,25800], bcb:[17300,17700] },
+    S21: { rec: 71000, dep: 68500, imp: 1, nsm:[24800,24000], nlg:[27500,26800], bcb:[18700,17700] },
   };
-  const WEEK_ORDER = ['S10','S11','S12','S13','S14','S15'];
+  const WEEK_ORDER = ['S10','S11','S12','S13','S14','S15','S16','S17','S18','S19','S20','S21'];
   const WEEK_DATES = {
     S10: { label: 'S10', date: '08 mars 2026', short: 'S10 · 08/03/2026' },
     S11: { label: 'S11', date: '15 mars 2026', short: 'S11 · 15/03/2026' },
@@ -1586,6 +1608,12 @@
     S13: { label: 'S13', date: '30 mars 2026', short: 'S13 · 30/03/2026' },
     S14: { label: 'S14', date: '06 avril 2026', short: 'S14 · 06/04/2026' },
     S15: { label: 'S15', date: '13 avril 2026', short: 'S15 · 13/04/2026' },
+    S16: { label: 'S16', date: '20 avril 2026', short: 'S16 · 20/04/2026' },
+    S17: { label: 'S17', date: '27 avril 2026', short: 'S17 · 27/04/2026' },
+    S18: { label: 'S18', date: '04 mai 2026', short: 'S18 · 04/05/2026' },
+    S19: { label: 'S19', date: '11 mai 2026', short: 'S19 · 11/05/2026' },
+    S20: { label: 'S20', date: '18 mai 2026', short: 'S20 · 18/05/2026' },
+    S21: { label: 'S21', date: '25 mai 2026', short: 'S21 · 25/05/2026' },
   };
   let currentWeek = 'S13';
 
@@ -1662,7 +1690,7 @@
     const chart = document.getElementById('flux-chart');
     if (!chart) return;
     chart.innerHTML = '';
-    const maxVal = 68500;
+    const maxVal = Math.max(...WEEK_ORDER.map(w => Math.max(WEEKS[w].rec, WEEKS[w].dep)));
     WEEK_ORDER.forEach(w => {
       const d = WEEKS[w];
       const isActive = w === activeWeek;
@@ -1733,6 +1761,145 @@
 
   function dlPDF(ref, filename) {
     showToast('Téléchargement : ' + filename + '.pdf (' + ref + ')', 'success');
+  }
+
+  // ── Statut dropdown ─────────────────────────────────────────
+  function updateStatut(sel) {
+    const map = { 'En cours':'warning', 'Terminé':'success', 'Planifié':'muted', 'Litige':'danger', 'En alerte':'warning', 'Validé':'success', 'Conformité passée':'success' };
+    sel.className = 'statut-sel ' + (map[sel.value] || 'muted');
+  }
+
+  // ── AT Chantiers ─────────────────────────────────────────────
+  const AT_DATA = {
+    'AT-2024-NSM-07': { titre:'Rénovation toiture – Église Saint-Joseph', nature:'Couverture – remplacement tuiles et zinguerie', site:'Église Saint-Joseph NSM', up:'Neuilly-sur-Marne', prestataire:'Couverture de France', contact:'Thomas Raynaud – 06 12 34 56 78', budget:'49 000 €', debut:'10/02/2026', fin:'15/04/2026', avancement:'65 %', statut:'En cours', docs:'FCT_Couverture_NSM_280326.pdf · DEV_Cov_NSM_150125.pdf · PV_Chantier_080326.pdf', photos:4, note:'Reprise étanchéité zone apse retardée suite intempéries mars. Délai estimé : +3 semaines.' },
+    'AT-2025-NLG-03': { titre:'Mise aux normes électriques – Presbytère NLG 2', nature:'Installation tableau électrique – mise en conformité NFC 15-100', site:'Presbytère Noisy-le-Grand 2', up:'Noisy-le-Grand', prestataire:'EURL Électricité 93', contact:'Christophe Bellec – 06 87 65 43 21', budget:'40 000 €', debut:'20/04/2026', fin:'10/05/2026', avancement:'40 %', statut:'En cours', docs:'DEV_Elec93_150226.pdf · BC_Elec93_NLG2.pdf', photos:0, note:'Devis validé le 12/04/2026. Mise en conformité obligatoire avant inspection sécurité de juin 2026.' },
+    'AT-2025-BCB-11': { titre:'Ravalement façade – Presbytère Bondy 1', nature:'Façade extérieure – enduit hydraulique + peinture', site:'Presbytère Bondy 1', up:'Bondy – Clichy-sous-Bois', prestataire:'SAS BTP Rénovation 93', contact:'Robert Delmas – 06 55 44 33 22', budget:'5 500 €', debut:'15/01/2026', fin:'15/03/2026 ⚠ dépassé', avancement:'40 %', statut:'En cours', docs:'FCT_BTP_Facade_100326.pdf · DEV_BTP_BCB_201225.pdf · PV_Visite_250226.pdf · RESERVE_Qualite_010326.pdf', photos:6, note:'Réserves émises sur qualité enduit zone humide pignon nord. Reprise partielle planifiée semaine S18.' },
+    'AT-2026-NSM-01': { titre:'Plomberie sanitaires – Église Noisy-le-Grand Centre', nature:'Remplacement sanitaires + réseau EU', site:'Église Noisy-le-Grand Centre', up:'Noisy-le-Grand', prestataire:'Plomberie Chrétien & Fils', contact:'François Lacoste – 06 23 45 67 89', budget:'3 500 €', debut:'02/05/2026', fin:'30/05/2026', avancement:'100 %', statut:'Terminé', docs:'FCT_Plomberie_NSM01.pdf', photos:3, note:'Travaux terminés et conformes. PV de réception signé le 28/05/2026. RAS.' },
+    'AT-2025-NLG-09': { titre:'Rénovation intérieure – Salle paroissiale NSM 1', nature:'Peinture intérieure – reprise sols', site:'Presbytère NSM 1 – Salle paroissiale', up:'Neuilly-sur-Marne', prestataire:'SAS BTP Rénovation 93', contact:'Robert Delmas – 06 55 44 33 22', budget:'12 000 €', debut:'01/02/2026', fin:'28/02/2026', avancement:'25 %', statut:'Planifié', docs:'DEV_BTP_NSM1_Peinture.pdf · BC_NSM1_Peinture.pdf · PHOTOS_Etat_avant_020226.pdf · PV_Arret_010326.pdf · NOTE_intern_NSM1.pdf', photos:3, note:'Chantier suspendu en attente de validation du budget complémentaire. Reprise prévue S19.' },
+    'AT-2026-DIO-01': { titre:'Contrôle maintenance sécurité – Multi-sites', nature:'Vérification annuelle SSI – conformité réglementaire', site:'Multi-sites – NSM, NLG, BCB (12 bâtiments)', up:'Diocèse 93', prestataire:'Sécurité-Services 93', contact:'Martine Vidal – 01 48 XX XX XX', budget:'7 000 €', debut:'01/03/2026', fin:'30/04/2026', avancement:'100 %', statut:'Terminé', docs:'JUST_Securite_200326.pdf', photos:2, note:'Conformité vérifiée sur l\'ensemble des sites. Rapport remis le 22/04/2026. Prochain contrôle : mars 2027.' },
+  };
+
+  function openATModal(ref) {
+    const d = AT_DATA[ref];
+    if (!d) { showToast('Référence inconnue : ' + ref, 'warning'); return; }
+    const prio = d.statut === 'En cours' ? 'warning' : d.statut === 'Terminé' ? 'success' : 'muted';
+    document.getElementById('info-modal-title').textContent = d.titre;
+    document.getElementById('info-modal-sub').textContent = 'Réf. As-Tech : ' + ref + ' · ' + d.up;
+    document.getElementById('info-modal-body').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+          <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">Avancement</div>
+          <div style="font-size:20px;font-weight:700;">${d.avancement}</div>
+        </div>
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+          <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">Budget</div>
+          <div style="font-size:16px;font-weight:700;">${d.budget}</div>
+        </div>
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+          <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">Statut</div>
+          <div><span class="badge ${prio}">${d.statut}</span></div>
+        </div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;">
+        ${[['Nature',d.nature],['Site',d.site],['UP',d.up],['Prestataire',d.prestataire],['Contact',d.contact],['Début',d.debut],['Fin prévue',d.fin],['Documents',d.docs],['Photos',d.photos+' photo(s) archivée(s)']].map(([k,v])=>`
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:7px 10px;color:var(--text-muted);font-size:11px;text-transform:uppercase;width:130px;">${k}</td>
+          <td style="padding:7px 10px;color:var(--text-secondary);">${v}</td>
+        </tr>`).join('')}
+      </table>
+      ${d.note ? `<div style="padding:10px 14px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:var(--radius-sm);font-size:12px;color:var(--text-secondary);"><strong style="color:var(--warning);">Note :</strong> ${d.note}</div>` : ''}`;
+    const m = document.getElementById('info-modal');
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  // ── Générateur facture / openPDF ─────────────────────────────
+  function openPDF(ref) {
+    const d = DOC_DATA[ref];
+    if (!d) { showToast('PDF non disponible', 'warning'); return; }
+    const types = { 'FCT':'FACTURE', 'DEV':'DEVIS', 'BC':'BON DE COMMANDE', 'JUST':'JUSTIFICATIF' };
+    const docType = types[d.fichier.split('_')[0]] || 'DOCUMENT';
+    const stamping = { 'Litige':'danger', 'En alerte':'warning', 'Validé':'success', 'En cours':'warning', 'Conformité passée':'success' };
+    const stampColor = { danger:'#dc2626', warning:'#d97706', success:'#16a34a' };
+    const sc = stampColor[stamping[d.statutLabel]] || '#1E3A5F';
+    const montantHT = parseFloat(d.montant.replace(/[^\d,]/g,'').replace(',','.'));
+    const tva = Math.round(montantHT * 0.2 * 100) / 100;
+    const ttc = Math.round((montantHT + tva) * 100) / 100;
+    const fmtEur = n => n.toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
+    const isDevis = docType === 'DEVIS';
+    const isBC = docType === 'BON DE COMMANDE';
+    const items = isDevis ? [
+      { desc: d.chantier + ' – Étude et conception', qty: 1, pu: Math.round(montantHT * .15), total: Math.round(montantHT * .15) },
+      { desc: 'Fourniture matériaux et équipements', qty: 1, pu: Math.round(montantHT * .45), total: Math.round(montantHT * .45) },
+      { desc: 'Main-d\'œuvre et pose', qty: 1, pu: Math.round(montantHT * .35), total: Math.round(montantHT * .35) },
+      { desc: 'Frais de déplacement et installation', qty: 1, pu: Math.round(montantHT * .05), total: Math.round(montantHT * .05) },
+    ] : isBC ? [
+      { desc: d.chantier + ' – Prestation mensuelle', qty: 1, pu: Math.round(montantHT * .8), total: Math.round(montantHT * .8) },
+      { desc: 'Produits et consommables', qty: 1, pu: Math.round(montantHT * .15), total: Math.round(montantHT * .15) },
+      { desc: 'Supervision et rapport d\'intervention', qty: 1, pu: Math.round(montantHT * .05), total: Math.round(montantHT * .05) },
+    ] : [
+      { desc: d.chantier + ' – Travaux réalisés selon devis', qty: 1, pu: Math.round(montantHT * .7), total: Math.round(montantHT * .7) },
+      { desc: 'Fournitures et matériaux facturés', qty: 1, pu: Math.round(montantHT * .22), total: Math.round(montantHT * .22) },
+      { desc: 'Déplacements et frais annexes', qty: 1, pu: Math.round(montantHT * .08), total: Math.round(montantHT * .08) },
+    ];
+    const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>${d.ref} — ${d.nom}</title>
+    <style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,Helvetica,sans-serif;background:#e8ecef;color:#333;padding:24px;}
+    .page{background:white;max-width:820px;margin:0 auto;padding:50px;box-shadow:0 4px 24px rgba(0,0,0,.15);border-radius:4px;}
+    .hdr{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1E3A5F;padding-bottom:20px;margin-bottom:28px;}
+    .org-name{font-size:22px;font-weight:900;color:#1E3A5F;letter-spacing:.5px;}
+    .org-addr{font-size:11px;color:#666;margin-top:6px;line-height:1.7;}
+    .doc-box{background:#1E3A5F;color:white;padding:12px 22px;border-radius:4px;text-align:right;}
+    .doc-type{font-size:16px;font-weight:700;letter-spacing:2px;}
+    .doc-ref{font-size:12px;margin-top:4px;opacity:.75;}
+    .doc-date{font-size:11px;margin-top:2px;opacity:.65;}
+    .parties{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:24px;}
+    .party h3{font-size:9px;text-transform:uppercase;color:#999;letter-spacing:1px;border-bottom:1px solid #eee;padding-bottom:4px;margin-bottom:8px;}
+    .party .name{font-size:14px;font-weight:700;color:#1a1a1a;}
+    .party p{font-size:12px;color:#555;line-height:1.8;margin-top:2px;}
+    .obj{background:#f8f9fa;border-left:4px solid #1E3A5F;padding:10px 16px;margin-bottom:24px;font-size:13px;color:#444;}
+    .obj strong{color:#1E3A5F;}
+    table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+    thead tr{background:#1E3A5F;color:white;}
+    thead th{padding:9px 12px;font-size:11px;font-weight:600;text-align:left;}
+    thead th:last-child{text-align:right;}
+    tbody tr{border-bottom:1px solid #f0f0f0;}
+    tbody td{padding:9px 12px;font-size:12px;}
+    tbody td:last-child{text-align:right;font-weight:600;}
+    .totals{display:flex;justify-content:flex-end;margin-bottom:28px;}
+    .tot-box{border:2px solid #1E3A5F;border-radius:4px;padding:14px 22px;min-width:240px;}
+    .tot-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;color:#555;}
+    .tot-row.main{font-size:15px;font-weight:700;color:#1E3A5F;border-top:2px solid #1E3A5F;padding-top:8px;margin-top:6px;}
+    .conditions{font-size:11px;color:#888;line-height:1.6;border-top:1px solid #eee;padding-top:14px;margin-bottom:20px;}
+    .sig{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:10px;}
+    .sig-box{border:1px solid #ddd;border-radius:4px;padding:14px;height:80px;position:relative;}
+    .sig-label{font-size:10px;color:#999;text-transform:uppercase;position:absolute;top:-8px;background:white;padding:0 6px;}
+    .stamp{display:inline-block;border:2px solid ${sc};border-radius:3px;padding:5px 12px;font-size:12px;font-weight:700;letter-spacing:1px;color:${sc};transform:rotate(-8deg);position:absolute;bottom:16px;right:20px;}</style>
+    </head><body><div class="page">
+    <div class="hdr">
+      <div><div class="org-name">DIOCÈSE DE SAINT-DENIS</div><div class="org-addr">Économat diocésain<br>1 rue de la Légion d'Honneur – 93200 Saint-Denis<br>SIRET 775 664 048 00018 · APE 9491Z · TVA FR21775664048</div></div>
+      <div class="doc-box"><div class="doc-type">${docType}</div><div class="doc-ref">Réf. ${d.ref}</div><div class="doc-date">Émis le ${d.date}</div></div>
+    </div>
+    <div class="parties">
+      <div class="party"><h3>Émetteur / Fournisseur</h3><div class="name">${d.fournisseur}</div><p>Service : Interventions diocésaines<br>Réf. contrat : CTR-${ref.replace('ZD-','')}<br>Contact facturation : comptabilite@${d.fournisseur.toLowerCase().replace(/[^a-z]/g,'')}.fr</p></div>
+      <div class="party"><h3>Destinataire</h3><div class="name">Économat du Diocèse de Saint-Denis</div><p>À l'attention de : N. Boisard, Économe adjoint<br>Adresse : 1 rue de la Légion d'Honneur, 93200 Saint-Denis<br>Référence commande : ${d.chantier.substring(0,30)}...</p></div>
+    </div>
+    <div class="obj"><strong>Objet :</strong> ${d.nom} — ${d.chantier} — UP : ${d.up}</div>
+    <table><thead><tr><th style="width:50%;">Désignation</th><th>Qté</th><th>PU HT</th><th>Total HT</th></tr></thead>
+    <tbody>${items.map(i=>`<tr><td>${i.desc}</td><td>1</td><td>${fmtEur(i.pu)}</td><td>${fmtEur(i.total)}</td></tr>`).join('')}</tbody>
+    </table>
+    <div class="totals"><div class="tot-box">
+      <div class="tot-row"><span>Sous-total HT</span><span>${fmtEur(montantHT)}</span></div>
+      <div class="tot-row"><span>TVA 20 %</span><span>${fmtEur(tva)}</span></div>
+      <div class="tot-row main"><span>TOTAL TTC</span><span>${fmtEur(ttc)}</span></div>
+    </div></div>
+    <div class="conditions">Conditions de paiement : 30 jours fin de mois · Pénalités de retard : 3× taux légal · Escompte : néant<br>
+    En cas de litige : Tribunal de Commerce de Bobigny – N° de TVA intracommunautaire : FR21775664048<br>
+    ${d.commentaire}</div>
+    <div class="sig"><div class="sig-box" style="position:relative;"><span class="sig-label">Cachet fournisseur</span><span class="stamp">${d.statutLabel.toUpperCase()}</span></div><div class="sig-box" style="position:relative;"><span class="sig-label">Visa économe diocésain</span></div></div>
+    </div></body></html>`;
+    const w = window.open('', '_blank');
+    if (w) { w.document.write(html); w.document.close(); }
+    else showToast('Veuillez autoriser les pop-ups pour afficher le PDF', 'warning');
   }
 
   // ── Prestataires ─────────────────────────────────────────────
