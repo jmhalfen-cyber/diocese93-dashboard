@@ -1464,34 +1464,6 @@
       </div>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-</div><!-- /app -->
-
-<!-- Modale document Zeendoc -->
-<div id="doc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;">
-  <div style="background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);width:min(580px,95vw);max-height:85vh;overflow-y:auto;padding:28px;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:700;color:var(--primary);">Zeendoc</div>
-      <div style="width:1px;height:14px;background:var(--border-2);"></div>
-      <div style="font-size:13px;color:var(--text-muted);">Diocèse de Saint-Denis</div>
-      <button onclick="closeDoc()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:18px;">×</button>
-    </div>
-    <div id="doc-modal-content"></div>
-    <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
-      <button class="btn ghost" onclick="closeDoc()">Fermer</button>
-      <button class="btn ghost" onclick="showToast('Ouverture dans Zeendoc...','primary')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        Ouvrir dans Zeendoc
-      </button>
-      <button class="btn primary" onclick="showToast('Téléchargement en cours...','success')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Télécharger PDF
-      </button>
-    </div>
-  </div>
-</div>
-
     <!-- ════ TAB: CONTRÔLE COMPTABLE ════════════════════════════ -->
     <div class="tab-panel" id="tab-comptabilite">
 
@@ -1555,6 +1527,34 @@
       </div>
 
     </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
+
+<!-- Modale document Zeendoc -->
+<div id="doc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);width:min(580px,95vw);max-height:85vh;overflow-y:auto;padding:28px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--primary);">Zeendoc</div>
+      <div style="width:1px;height:14px;background:var(--border-2);"></div>
+      <div style="font-size:13px;color:var(--text-muted);">Diocèse de Saint-Denis</div>
+      <button onclick="closeDoc()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:18px;">×</button>
+    </div>
+    <div id="doc-modal-content"></div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn ghost" onclick="closeDoc()">Fermer</button>
+      <button class="btn ghost" onclick="showToast('Ouverture dans Zeendoc...','primary')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Ouvrir dans Zeendoc
+      </button>
+      <button class="btn primary" onclick="showToast('Téléchargement en cours...','success')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Télécharger PDF
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ════ MODAL GÉNÉRIQUE INFO ═══════════════════════════════════ -->
 <div id="info-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;" onclick="closeInfoModal(event)">
