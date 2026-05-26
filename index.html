@@ -409,7 +409,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="none"><text x="12" y="18" text-anchor="middle" font-size="20" fill="currentColor">€</text></svg>
           </div>
           <div class="kpi-value">65 000 €</div>
-          <div class="kpi-label">Flux entrants - S13</div>
+          <div class="kpi-label">Flux entrants - S21</div>
           <div class="kpi-trend up">Flux Financiers semaine</div>
         </div>
         <div class="kpi-card primary">
@@ -817,7 +817,7 @@
           <button class="filter-tab" onclick="setWeek('S10')">S10</button>
           <button class="filter-tab" onclick="setWeek('S11')">S11</button>
           <button class="filter-tab" onclick="setWeek('S12')">S12</button>
-          <button class="filter-tab active" onclick="setWeek('S13')">S13</button>
+          <button class="filter-tab" onclick="setWeek('S13')">S13</button>
           <button class="filter-tab" onclick="setWeek('S14')">S14</button>
           <button class="filter-tab" onclick="setWeek('S15')">S15</button>
           <button class="filter-tab" onclick="setWeek('S16')">S16</button>
@@ -825,7 +825,7 @@
           <button class="filter-tab" onclick="setWeek('S18')">S18</button>
           <button class="filter-tab" onclick="setWeek('S19')">S19</button>
           <button class="filter-tab" onclick="setWeek('S20')">S20</button>
-          <button class="filter-tab" onclick="setWeek('S21')">S21</button>
+          <button class="filter-tab active" onclick="setWeek('S21')">S21</button>
         </div>
       </div>
 
@@ -1706,7 +1706,7 @@
     S20: { label: 'S20', date: '18 mai 2026', short: 'S20 · 18/05/2026' },
     S21: { label: 'S21', date: '25 mai 2026', short: 'S21 · 25/05/2026' },
   };
-  let currentWeek = 'S13';
+  let currentWeek = 'S21';
 
   function fmt(n) { return n.toLocaleString('fr-FR') + ' €'; }
   function ecart(a,b) { const e=a-b; return (e>=0?'+':'')+e.toLocaleString('fr-FR')+' €'; }
