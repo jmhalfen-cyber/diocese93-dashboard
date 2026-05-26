@@ -1851,8 +1851,9 @@
     // Chart
     renderChart(w);
     if (el('chart-ecart-label')) el('chart-ecart-label').textContent = '■ '+w+' - Écart : '+ecart(d.rec,d.dep);
-    // Chart.js bar
+    // Chart.js bar + highlight semaine active sur graphique ligne
     updateBarChart(w);
+    highlightLineChartWeek(w);
     // Bandeau dynamique
     const wd = WEEK_DATES[w];
     if (wd) {
@@ -2158,7 +2159,42 @@
     sortants: [60000,59000,61000,68000,72000,55000,57000,58000,63000,75000,65000,67000,63000,68500,65500,68000,69500,70000,66500,68500],
   };
 
+  // Index de chaque semaine sélectionnable dans CHART_HISTORY.labels
+  const CHART_HISTORY_INDEX = { S11:9, S12:10, S13:11, S14:12, S15:13, S16:14, S17:15, S18:16, S19:17, S20:18, S21:19 };
+
   let lineChart, barChart;
+
+  function highlightLineChartWeek(w) {
+    if (!lineChart) return;
+    const idx = CHART_HISTORY_INDEX[w];
+    const n = CHART_HISTORY.labels.length;
+    const radii      = Array(n).fill(3);
+    const borders    = Array(n).fill(0);
+    const bgEnt      = Array(n).fill('#10B981');
+    const bgSor      = Array(n).fill('#EF4444');
+    if (idx !== undefined) {
+      radii[idx]   = 9;
+      borders[idx] = 2;
+      bgEnt[idx]   = '#F8FAFC';
+      bgSor[idx]   = '#F8FAFC';
+    }
+    lineChart.data.datasets[0].pointRadius          = radii;
+    lineChart.data.datasets[0].pointBorderWidth      = borders;
+    lineChart.data.datasets[0].pointBorderColor      = bgEnt;
+    lineChart.data.datasets[0].pointBackgroundColor  = bgEnt.map((c,i) => i === idx ? '#10B981' : '#10B981');
+    lineChart.data.datasets[1].pointRadius          = radii;
+    lineChart.data.datasets[1].pointBorderWidth      = borders;
+    lineChart.data.datasets[1].pointBorderColor      = bgSor;
+    lineChart.data.datasets[1].pointBackgroundColor  = bgSor.map((c,i) => i === idx ? '#EF4444' : '#EF4444');
+    // Point actif : fond blanc, bordure couleur serie
+    if (idx !== undefined) {
+      lineChart.data.datasets[0].pointBackgroundColor[idx] = '#F8FAFC';
+      lineChart.data.datasets[0].pointBorderColor[idx]     = '#10B981';
+      lineChart.data.datasets[1].pointBackgroundColor[idx] = '#F8FAFC';
+      lineChart.data.datasets[1].pointBorderColor[idx]     = '#EF4444';
+    }
+    lineChart.update('none');
+  }
 
   function initCharts() {
     const gridColor = 'rgba(148,163,184,.08)';
@@ -2188,6 +2224,7 @@
       }
     });
     updateBarChart('S21');
+    highlightLineChartWeek('S21');
   }
 
   function updateBarChart(week) {
