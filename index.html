@@ -236,10 +236,19 @@
     .up-table{width:100%;border-collapse:collapse}
     .up-table th{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;padding:6px 10px 8px;border-bottom:1px solid var(--border);text-align:right}
     .up-table th:first-child{text-align:left}
+    .up-table th:last-child{text-align:left}
     .up-table td{padding:9px 10px;font-size:13px;border-bottom:1px solid var(--border);text-align:right;color:var(--text-secondary)}
     .up-table td:first-child{text-align:left;font-weight:600;color:var(--text-primary)}
+    .up-table td:last-child{text-align:left}
     .up-table tr:last-child td{border-bottom:none;font-weight:700;color:var(--text-primary)}
     .up-table tr:hover td{background:rgba(255,255,255,.02)}
+    .analyse-cell{display:flex;flex-direction:column;gap:3px}
+    .analyse-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;width:fit-content}
+    .analyse-badge.surplus{background:rgba(16,185,129,.15);color:var(--success)}
+    .analyse-badge.ok{background:rgba(148,163,184,.12);color:var(--text-muted)}
+    .analyse-badge.pending{background:rgba(245,158,11,.15);color:var(--warning)}
+    .analyse-badge.anomaly{background:rgba(239,68,68,.15);color:var(--danger)}
+    .analyse-detail{font-size:11px;color:var(--text-muted);font-style:italic;line-height:1.4}
 
     /* FILTER TABS */
     .filter-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
@@ -853,12 +862,12 @@
         <div class="card">
           <div class="card-header"><h3>Détail financier par UP – <span class="week-label">S13</span></h3></div>
           <table class="up-table">
-            <thead><tr><th>UP</th><th>Entrant</th><th>Sortant</th><th>Écart</th></tr></thead>
+            <thead><tr><th>UP</th><th>Entrant</th><th>Sortant</th><th>Écart</th><th>Analyse</th></tr></thead>
             <tbody>
-              <tr><td>Neuilly-sur-Marne</td><td id="t-nsm-r" style="color:var(--success);">23 100 €</td><td id="t-nsm-d">24 200 €</td><td id="t-nsm-e" style="color:var(--danger);">-1 100 €</td></tr>
-              <tr><td>Noisy-le-Grand</td><td id="t-nlg-r" style="color:var(--success);">25 500 €</td><td id="t-nlg-d">25 800 €</td><td id="t-nlg-e" style="color:var(--danger);">-300 €</td></tr>
-              <tr><td>Bondy – Clichy</td><td id="t-bcb-r" style="color:var(--success);">16 400 €</td><td id="t-bcb-d">17 000 €</td><td id="t-bcb-e" style="color:var(--danger);">-600 €</td></tr>
-              <tr><td>Total diocèse</td><td id="t-tot-r" style="color:var(--success);">65 000 €</td><td id="t-tot-d">67 000 €</td><td id="t-tot-e" style="color:var(--danger);">-2 000 €</td></tr>
+              <tr><td>Neuilly-sur-Marne</td><td id="t-nsm-r" style="color:var(--success);">23 100 €</td><td id="t-nsm-d">24 200 €</td><td id="t-nsm-e" style="color:var(--danger);">-1 100 €</td><td id="t-nsm-a"></td></tr>
+              <tr><td>Noisy-le-Grand</td><td id="t-nlg-r" style="color:var(--success);">25 500 €</td><td id="t-nlg-d">25 800 €</td><td id="t-nlg-e" style="color:var(--danger);">-300 €</td><td id="t-nlg-a"></td></tr>
+              <tr><td>Bondy – Clichy</td><td id="t-bcb-r" style="color:var(--success);">16 400 €</td><td id="t-bcb-d">17 000 €</td><td id="t-bcb-e" style="color:var(--danger);">-600 €</td><td id="t-bcb-a"></td></tr>
+              <tr><td>Total diocèse</td><td id="t-tot-r" style="color:var(--success);">65 000 €</td><td id="t-tot-d">67 000 €</td><td id="t-tot-e" style="color:var(--danger);">-2 000 €</td><td id="t-tot-a"></td></tr>
             </tbody>
           </table>
         </div>
@@ -1708,6 +1717,81 @@
   };
   let currentWeek = 'S21';
 
+  const ECART_ANALYSE = {
+    S10: {
+      nsm: { type:'anomaly', label:'Facture impayée',   detail:'Facture EDF NSM1 — 1 200 € en suspens depuis S08' },
+      nlg: { type:'pending', label:'Relevé manquant',  detail:'Relevé bancaire compte secondaire NLG non reçu' },
+      bcb: { type:'anomaly', label:'Retard saisie',    detail:'Saisie Enoria BCB incomplète — 3 messes non enregistrées' },
+      tot: { type:'anomaly', label:'3 anomalies',      detail:'Cumul : facture EDF + relevé manquant + saisie incomplète' }
+    },
+    S11: {
+      nsm: { type:'pending', label:'En vérification',  detail:'Virement inter-comptes NSM en attente de confirmation' },
+      nlg: { type:'anomaly', label:'Quête non déposée',detail:'Quête NLG2 du 15/03 — 780 € non portés en banque' },
+      bcb: { type:'pending', label:'Délai bancaire',   detail:'Délai de traitement Crédit Mutuel — dépôt en cours' },
+      tot: { type:'anomaly', label:'2 anomalies',      detail:'Quête NLG non déposée + virement NSM en attente' }
+    },
+    S12: {
+      nsm: { type:'anomaly', label:'Doublon assurance',detail:'Doublon MAIF/AXA — 420 €/mois, résiliation en cours' },
+      nlg: { type:'pending', label:'Rapprochement',    detail:'Rapprochement bancaire NLG non encore effectué' },
+      bcb: { type:'anomaly', label:'Facture impayée',  detail:'Facture maintenance BCB — 580 € non réglée' },
+      tot: { type:'anomaly', label:'2 anomalies',      detail:'Doublon assurance NSM + facture BCB impayée' }
+    },
+    S13: {
+      nsm: { type:'anomaly', label:'Chaudière NSM',    detail:'Acompte AT-2026-NSM-01 — devis ZD-2026-0091 à valider' },
+      nlg: { type:'anomaly', label:'Quête non déposée',detail:'Quête NLG2 du 05/04 — anomalie confirmée, dépôt manquant' },
+      bcb: { type:'anomaly', label:'Doublon assurance',detail:'MAIF/AXA — double prélèvement en cours de résiliation' },
+      tot: { type:'anomaly', label:'3 anomalies',      detail:'Chaudière NSM + quête NLG + doublon assurance BCB' }
+    },
+    S14: {
+      nsm: { type:'pending', label:'Subvention att.',  detail:'Remboursement subvention diocésaine S14 attendu' },
+      nlg: { type:'ok',      label:'Équilibré',        detail:'Légère tension charges courantes — aucune anomalie' },
+      bcb: { type:'ok',      label:'Équilibré',        detail:'BCB stable — résiliation assurance finalisée' },
+      tot: { type:'pending', label:'Subvention att.',  detail:'Remboursement NSM attendu — solde provisoire' }
+    },
+    S15: {
+      nsm: { type:'pending', label:'Règlement att.',   detail:'Règlement entreprise travaux — délai contractuel 30j' },
+      nlg: { type:'ok',      label:'Normal',           detail:'Charges saisonnières légèrement supérieures' },
+      bcb: { type:'ok',      label:'Normal',           detail:'BCB équilibré — recettes légèrement sous budget' },
+      tot: { type:'pending', label:'Règlement att.',   detail:'Règlement travaux NSM en attente de validation' }
+    },
+    S16: {
+      nsm: { type:'ok',      label:'Normal',           detail:'Légère tension charges — aucune anomalie' },
+      nlg: { type:'pending', label:'Quête Pâques',     detail:'Traitement retardé quêtes Pâques — dépôt en cours' },
+      bcb: { type:'ok',      label:'Normal',           detail:'BCB stable' },
+      tot: { type:'pending', label:'Traitement att.',  detail:'Quêtes Pâques NLG en attente de dépôt bancaire' }
+    },
+    S17: {
+      nsm: { type:'surplus', label:'Excédent',         detail:'Subvention travaux perçue — virement Conseil Général' },
+      nlg: { type:'surplus', label:'Excédent',         detail:'Recettes Pâques supérieures aux prévisions' },
+      bcb: { type:'surplus', label:'Excédent',         detail:'Loyers perçus + quête exceptionnelle' },
+      tot: { type:'surplus', label:'Semaine positive', detail:'Subvention travaux + quêtes Pâques — semaine excédentaire' }
+    },
+    S18: {
+      nsm: { type:'surplus', label:'Excédent',         detail:'2e versement subvention diocésaine reçu' },
+      nlg: { type:'surplus', label:'Excédent',         detail:'Recettes supérieures — aucune charge exceptionnelle' },
+      bcb: { type:'surplus', label:'Excédent',         detail:'Loyers réguliers + pas de dépense imprévue' },
+      tot: { type:'surplus', label:'Meilleure semaine',detail:'S18 — meilleur solde depuis Noël. Subvention + quêtes' }
+    },
+    S19: {
+      nsm: { type:'pending', label:'Virement en cours',detail:'Virement NSM→DIO en attente de validation économe' },
+      nlg: { type:'anomaly', label:'Facture doublon',  detail:'Facture maintenance en doublon — instruction en cours' },
+      bcb: { type:'pending', label:'Relevé manquant',  detail:'Relevé Crédit Agricole BCB non reçu S19' },
+      tot: { type:'anomaly', label:'2 points ouverts', detail:'Doublon NLG + relevé BCB manquant — données provisoires' }
+    },
+    S20: {
+      nsm: { type:'pending', label:'Clôture att.',     detail:'Clôture comptable S20 NSM non finalisée' },
+      nlg: { type:'pending', label:'Saisie retardée',  detail:'Chargé de mission NLG absent — saisie en retard' },
+      bcb: { type:'ok',      label:'Normal',           detail:'BCB légèrement déficitaire — charges saisonnières' },
+      tot: { type:'pending', label:'Données prov.',    detail:'S20 : clôtures NSM et NLG en attente — données provisoires' }
+    },
+    S21: {
+      nsm: { type:'surplus', label:'Excédent',         detail:'Avance subvention diocésaine comptabilisée S21' },
+      nlg: { type:'surplus', label:'Excédent',         detail:'Dépenses inférieures au budget prévisionnel' },
+      bcb: { type:'surplus', label:'Excédent',         detail:'Loyers maison de retraite + quête du 25/05 déposée' },
+      tot: { type:'surplus', label:'Semaine positive', detail:'S21 excédentaire — aucune anomalie. Toutes UP positives.' }
+    },
+  };
+
   function fmt(n) { return n.toLocaleString('fr-FR') + ' €'; }
   function ecart(a,b) { const e=a-b; return (e>=0?'+':'')+e.toLocaleString('fr-FR')+' €'; }
 
@@ -1747,10 +1831,22 @@
     el('up-bcb-detail').textContent = 'Dépenses: '+fmt(bcbD)+' - Écart: '+ecart(bcbR,bcbD);
     el('bar-bcb').style.width = Math.round(bcbR/maxR*90)+'%';
 
-    el('t-nsm-r').textContent = fmt(nsmR); el('t-nsm-d').textContent = fmt(nsmD); el('t-nsm-e').textContent = ecart(nsmR,nsmD);
-    el('t-nlg-r').textContent = fmt(nlgR); el('t-nlg-d').textContent = fmt(nlgD); el('t-nlg-e').textContent = ecart(nlgR,nlgD);
-    el('t-bcb-r').textContent = fmt(bcbR); el('t-bcb-d').textContent = fmt(bcbD); el('t-bcb-e').textContent = ecart(bcbR,bcbD);
-    el('t-tot-r').textContent = fmt(totR); el('t-tot-d').textContent = fmt(totD); el('t-tot-e').textContent = ecart(totR,totD);
+    const ec = (r,d) => r >= d ? 'var(--success)' : 'var(--danger)';
+    el('t-nsm-r').textContent = fmt(nsmR); el('t-nsm-d').textContent = fmt(nsmD); el('t-nsm-e').textContent = ecart(nsmR,nsmD); el('t-nsm-e').style.color = ec(nsmR,nsmD);
+    el('t-nlg-r').textContent = fmt(nlgR); el('t-nlg-d').textContent = fmt(nlgD); el('t-nlg-e').textContent = ecart(nlgR,nlgD); el('t-nlg-e').style.color = ec(nlgR,nlgD);
+    el('t-bcb-r').textContent = fmt(bcbR); el('t-bcb-d').textContent = fmt(bcbD); el('t-bcb-e').textContent = ecart(bcbR,bcbD); el('t-bcb-e').style.color = ec(bcbR,bcbD);
+    el('t-tot-r').textContent = fmt(totR); el('t-tot-d').textContent = fmt(totD); el('t-tot-e').textContent = ecart(totR,totD); el('t-tot-e').style.color = ec(totR,totD);
+
+    // Colonne Analyse
+    const A = ECART_ANALYSE[w] || {};
+    const renderA = k => {
+      const a = A[k] || { type:'ok', label:'N/A', detail:'' };
+      return `<div class="analyse-cell"><span class="analyse-badge ${a.type}">${a.label}</span>${a.detail ? `<span class="analyse-detail">${a.detail}</span>` : ''}</div>`;
+    };
+    el('t-nsm-a').innerHTML = renderA('nsm');
+    el('t-nlg-a').innerHTML = renderA('nlg');
+    el('t-bcb-a').innerHTML = renderA('bcb');
+    el('t-tot-a').innerHTML = renderA('tot');
 
     // Chart
     renderChart(w);
