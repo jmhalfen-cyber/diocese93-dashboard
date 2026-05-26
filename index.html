@@ -264,6 +264,27 @@
     .media-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin:14px 0 10px;display:flex;align-items:center;gap:6px}
     .media-btn{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;background:rgba(148,163,184,.1);border:1px solid var(--border-2);color:var(--text-secondary);transition:all .15s;margin-right:4px;line-height:1.6}
     .media-btn:hover{background:var(--primary-dim);color:var(--primary);border-color:rgba(14,165,233,.3)}
+    /* CONTACT COLUMN */
+    .contact-cell{display:flex;flex-direction:column;gap:5px;min-width:140px}
+    .contact-chip{display:flex;align-items:center;gap:7px}
+    .contact-avatar{width:26px;height:26px;min-width:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:.3px}
+    .contact-avatar.danger{background:rgba(239,68,68,.2);color:var(--danger)}
+    .contact-avatar.warning{background:rgba(245,158,11,.2);color:var(--warning)}
+    .contact-avatar.primary{background:rgba(14,165,233,.15);color:var(--primary)}
+    .contact-name{font-size:12px;font-weight:600;color:var(--text-primary);line-height:1.2}
+    .contact-role{font-size:10px;color:var(--text-muted);line-height:1.3}
+    .btn-contact{align-self:flex-start;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;border:none;transition:all .15s;letter-spacing:.2px}
+    .btn-contact.danger{background:rgba(239,68,68,.12);color:var(--danger)}
+    .btn-contact.danger:hover{background:rgba(239,68,68,.25)}
+    .btn-contact.warning{background:rgba(245,158,11,.12);color:var(--warning)}
+    .btn-contact.warning:hover{background:rgba(245,158,11,.25)}
+    .btn-contact.primary{background:rgba(14,165,233,.12);color:var(--primary)}
+    .btn-contact.primary:hover{background:rgba(14,165,233,.25)}
+    /* Contact modal */
+    .contact-modal-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
+    .contact-info-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);background:var(--surface-2);margin-bottom:8px}
+    .contact-info-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);width:60px;flex-shrink:0}
+    .contact-info-value{font-size:13px;color:var(--text-primary)}
 
     /* FILTER TABS */
     .filter-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
@@ -1092,6 +1113,7 @@
               <th>Montant</th>
               <th>Date</th>
               <th>Statut</th>
+              <th>Contact</th>
               <th>Zeendoc réf.</th>
               <th>Actions</th>
             </tr>
@@ -1109,6 +1131,7 @@
               <td style="font-weight:700;color:var(--danger);">1 800 €</td>
               <td class="text-xs">2026-02-24</td>
               <td><select class="statut-sel danger" onchange="updateStatut(this)"><option value="Litige" selected>⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé">Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
+              <td><div class="contact-cell"><div class="contact-chip"><div class="contact-avatar danger">ML</div><div><div class="contact-name">Marie Leclercq</div><div class="contact-role">Coordonnatrice NSM</div></div></div><button class="btn-contact danger" onclick="openContactModal('ml-nsm')">Contacter →</button></div></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0847')">ZD-2026-0847</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0847','Facture - SARL Chauffage XP')">
@@ -1130,6 +1153,7 @@
               <td style="font-weight:700;color:var(--warning);">10 500 €</td>
               <td class="text-xs">2026-02-15</td>
               <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte" selected>En alerte</option><option value="Validé">Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
+              <td><div class="contact-cell"><div class="contact-chip"><div class="contact-avatar warning">NB</div><div><div class="contact-name">Nicolas Boisard</div><div class="contact-role">Économe adjoint</div></div></div><button class="btn-contact warning" onclick="openContactModal('nb-eco')">Contacter →</button></div></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0052')">ZD-2026-0052</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0052','Devis - EURL Électricité 93')">
@@ -1151,6 +1175,7 @@
               <td style="font-weight:700;">2 400 €</td>
               <td class="text-xs">2026-03-01</td>
               <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé" selected>Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
+              <td><span style="color:var(--text-muted);font-size:12px;">—</span></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0061')">ZD-2026-0061</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0061','BC - NetPro Nettoyage - Mars')">
@@ -1172,6 +1197,7 @@
               <td style="font-weight:700;">5 500 €</td>
               <td class="text-xs">2026-03-10</td>
               <td><select class="statut-sel warning" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé">Validé</option><option value="En cours" selected>En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
+              <td><div class="contact-cell"><div class="contact-chip"><div class="contact-avatar primary">PM</div><div><div class="contact-name">Pierre Morel</div><div class="contact-role">Responsable BCB</div></div></div><button class="btn-contact primary" onclick="openContactModal('pm-bcb')">Contacter →</button></div></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0068')">ZD-2026-0068</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0068','Facture - SAS BTP - Façade')">
@@ -1193,6 +1219,7 @@
               <td style="font-weight:700;color:var(--success);">28 500 €</td>
               <td class="text-xs">2026-03-28</td>
               <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé" selected>Validé</option><option value="En cours">En cours</option><option value="Conformité passée">Conformité passée</option></select></td>
+              <td><span style="color:var(--text-muted);font-size:12px;">—</span></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-1078')">ZD-2026-1078</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-1078','Facture - Couverture IDF - Toiture')">
@@ -1214,6 +1241,7 @@
               <td style="font-weight:700;">7 100 €</td>
               <td class="text-xs">2026-03-20</td>
               <td><select class="statut-sel success" onchange="updateStatut(this)"><option value="Litige">⊕ Litige</option><option value="En alerte">En alerte</option><option value="Validé">Validé</option><option value="En cours">En cours</option><option value="Conformité passée" selected>Conformité passée</option></select></td>
+              <td><span style="color:var(--text-muted);font-size:12px;">—</span></td>
               <td><span style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;" onclick="viewDoc('ZD-2026-0074')">ZD-2026-0074</span></td>
               <td><div style="display:flex;gap:6px;">
                 <button class="btn ghost" style="height:28px;padding:0 10px;font-size:11px;" onclick="viewDoc('ZD-2026-0074','Contrôle maintenance - Sécurité')">
@@ -1919,6 +1947,64 @@
     t.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ── Contacts documents ───────────────────────────────────────
+  const CONTACT_DATA = {
+    'ml-nsm': {
+      initiales: 'ML', couleur: 'danger',
+      nom: 'Marie Leclercq', role: 'Coordonnatrice NSM', up: 'Neuilly-sur-Marne',
+      email: 'm.leclercq@diocese93.fr', tel: '06 12 34 56 78',
+      mission: 'Responsable résolution litige Chauffage XP',
+      contexte: 'En attente du RAR envoyé le 15/02/2026 — relance prévue S22 si absence de réponse.',
+      disponibilite: 'Lun – Ven, 9h – 18h'
+    },
+    'nb-eco': {
+      initiales: 'NB', couleur: 'warning',
+      nom: 'Nicolas Boisard', role: 'Économe adjoint', up: 'Diocèse 93',
+      email: 'n.boisard@diocese93.fr', tel: '01 48 22 33 44',
+      mission: 'Validation devis électricité NSM (> 5 000 €)',
+      contexte: 'Délai de validation dépassé de 15 jours. Devis bloqué en attente de signature économe.',
+      disponibilite: 'Lun – Jeu, 9h – 17h30 · Réunion diocésaine le vendredi'
+    },
+    'pm-bcb': {
+      initiales: 'PM', couleur: 'primary',
+      nom: 'Pierre Morel', role: 'Responsable BCB', up: 'Bondy – Clichy-sous-Bois',
+      email: 'p.morel@diocese93.fr', tel: '06 87 65 43 21',
+      mission: 'Suivi réserves qualité enduit — façade Presbytère Bondy',
+      contexte: 'Réserves émises sur zone humide le 10/03/2026. Réponse entreprise attendue avant le 30/05/2026.',
+      disponibilite: 'Mar – Sam, 8h30 – 17h'
+    }
+  };
+
+  function openContactModal(key) {
+    const c = CONTACT_DATA[key];
+    if (!c) return;
+    const couleurVar = c.couleur === 'danger' ? 'var(--danger)' : c.couleur === 'warning' ? 'var(--warning)' : 'var(--primary)';
+    const bgVar = c.couleur === 'danger' ? 'rgba(239,68,68,.15)' : c.couleur === 'warning' ? 'rgba(245,158,11,.15)' : 'rgba(14,165,233,.15)';
+    document.getElementById('info-modal-title').textContent = c.nom;
+    document.getElementById('info-modal-sub').textContent = c.role + ' · ' + c.up;
+    document.getElementById('info-modal-body').innerHTML = `
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:16px;background:var(--surface-2);border-radius:var(--radius);">
+        <div class="contact-modal-avatar" style="background:${bgVar};color:${couleurVar};">${c.initiales}</div>
+        <div>
+          <div style="font-size:17px;font-weight:700;color:var(--text-primary);">${c.nom}</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px;">${c.role} · ${c.up}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">⏱ ${c.disponibilite}</div>
+        </div>
+      </div>
+      <div class="contact-info-row"><span class="contact-info-label">Email</span><a href="mailto:${c.email}" style="color:var(--primary);font-size:13px;font-weight:500;">${c.email}</a></div>
+      <div class="contact-info-row"><span class="contact-info-label">Téléphone</span><span class="contact-info-value">${c.tel}</span></div>
+      <div style="margin-top:14px;margin-bottom:8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);">Mission en cours</div>
+      <div style="padding:12px 14px;background:${bgVar};border-radius:var(--radius-sm);border-left:3px solid ${couleurVar};margin-bottom:10px;">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">${c.mission}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${c.contexte}</div>
+      </div>
+      <button onclick="showToast('Message envoyé à ${c.nom}','success');closeInfoModal();" style="margin-top:8px;width:100%;padding:10px;background:${couleurVar};color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        ✉ Envoyer un message à ${c.nom}
+      </button>`;
+    document.getElementById('info-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
   }
 
   // ── Actions documents — Modales Zeendoc ─────────────────────
