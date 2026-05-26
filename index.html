@@ -598,7 +598,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><text x="4" y="18" font-size="16" fill="currentColor" stroke="none">€</text></svg>
       </div>
       <div class="kpi-value">39 400 €</div>
-      <div class="kpi-label">Montant facturé S13</div>
+      <div class="kpi-label">Montant facturé S21</div>
     </div>
     <div class="kpi-card primary">
       <div class="kpi-icon primary">
@@ -766,7 +766,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
           </div>
           <div class="kpi-value">65 000 €</div>
-          <div class="kpi-label">Recettes - S13</div>
+          <div class="kpi-label">Recettes - <span class="week-label">S21</span></div>
           <div class="kpi-trend up">Flux entrants semaine</div>
         </div>
         <div class="kpi-card warning">
@@ -2057,9 +2057,9 @@
 
   // ── Charts Chart.js ──────────────────────────────────────────
   const CHART_HISTORY = {
-    labels: ['S48','S49','S50','S51','S52 (Noël)','S01','S02','S03','S04','S11 (Pâques)','S12','S13'],
-    entrants: [58000,57500,60000,72000,95000,48000,52000,55000,61000,88000,63000,65000],
-    sortants: [60000,59000,61000,68000,72000,55000,57000,58000,63000,75000,65000,67000],
+    labels: ['S48','S49','S50','S51','S52 (Noël)','S01','S02','S03','S04','S11 (Pâques)','S12','S13','S14','S15','S16','S17','S18','S19','S20','S21'],
+    entrants: [58000,57500,60000,72000,95000,48000,52000,55000,61000,88000,63000,65000,62000,67000,64000,70000,72000,68000,65000,71000],
+    sortants: [60000,59000,61000,68000,72000,55000,57000,58000,63000,75000,65000,67000,63000,68500,65500,68000,69500,70000,66500,68500],
   };
 
   let lineChart, barChart;
@@ -2091,7 +2091,7 @@
         }
       }
     });
-    updateBarChart('S13');
+    updateBarChart('S21');
   }
 
   function updateBarChart(week) {
@@ -2172,11 +2172,11 @@
 
   // ── Init ─────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
-    renderChart('S13');
     const cards = document.querySelectorAll('#tab-finances .kpi-value');
     if (cards[0]) cards[0].id = 'kpi-rec';
     if (cards[1]) cards[1].id = 'kpi-dep';
     if (cards[2]) cards[2].id = 'kpi-ecart';
+    setWeek('S21');
     if (typeof Chart !== 'undefined') initCharts();
     else document.addEventListener('chartjs-ready', initCharts);
   });
