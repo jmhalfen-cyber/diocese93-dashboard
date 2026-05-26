@@ -2181,6 +2181,74 @@
     else document.addEventListener('chartjs-ready', initCharts);
   });
 
+  // ── Fiche contrat Renouvellement ─────────────────────────────
+  function openContratDetail() {
+    const data = {
+      title: 'Nettoyage locaux — Net & Propre 93',
+      sub: 'Contrat à renouveler · Échéance : 15 juin 2026 · 8 400 €/an',
+      html: `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:8px;">Prestataire</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Net & Propre 93</div>
+            <div style="font-size:12px;color:var(--text-secondary);">SIRET : 482 156 789 00023</div>
+            <div style="font-size:12px;color:var(--text-secondary);">Gérant : Karim Mansouri</div>
+            <div style="font-size:12px;color:var(--text-secondary);">Tél : 01 48 72 33 91</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:8px;">Calendrier contractuel</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:3px;">Signature initiale : <strong style="color:var(--text-primary);">15 juin 2021</strong></div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:3px;">1er renouvellement : <strong style="color:var(--text-primary);">15 juin 2023</strong></div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:3px;">Échéance actuelle : <strong style="color:var(--warning);">15 juin 2026</strong></div>
+            <div style="font-size:12px;color:var(--text-secondary);">Durée : 3 ans · Tacite reconduction</div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;margin-bottom:12px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:8px;">Ce que le contrat couvre</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            ${[
+              'Nettoyage hebdomadaire des nefs et sacristies',
+              'Nettoyage hebdomadaire des salles paroissiales',
+              'Nettoyage mensuel des façades et parvis',
+              'Fourniture des produits d\'entretien incluse',
+              '2 passages par semaine et par site',
+              'Intervention ponctuelle sur demande (hors contrat)',
+            ].map(item => `<div style="font-size:12px;color:var(--text-secondary);display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--success);flex-shrink:0;">✓</span>${item}</div>`).join('')}
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:8px;">Sites couverts (5)</div>
+            ${['NSM1 — Église Saint-Joseph','NSM2 — Presbytère principal','NSM3 — Salle paroissiale','NLG1 — Église Notre-Dame','NLG2 — Salle communautaire']
+              .map(s => `<div style="font-size:12px;color:var(--text-secondary);margin-bottom:2px;">· ${s}</div>`).join('')}
+          </div>
+          <div style="background:var(--surface-2);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:8px;">Financier</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:3px;">Montant annuel : <strong style="color:var(--text-primary);">8 400 €</strong></div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:3px;">Mensualité : <strong style="color:var(--text-primary);">700 €/mois</strong></div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:3px;">Référent diocèse : Agnès Bertrand</div>
+            <div style="font-size:12px;color:var(--text-secondary);">Paiement : virement mensuel · 30 j</div>
+          </div>
+        </div>
+
+        <div style="padding:12px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius-sm);margin-bottom:12px;">
+          <div style="font-size:12px;font-weight:600;color:var(--danger);margin-bottom:4px;">⚠ Point de vigilance</div>
+          <div style="font-size:12px;color:var(--text-secondary);">Facture nettoyage mars 2026 en litige (700 €) — voir Base documentaire. À résoudre avant toute décision de renouvellement.</div>
+        </div>
+
+        <div style="padding:12px;background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.2);border-radius:var(--radius-sm);">
+          <div style="font-size:12px;font-weight:600;color:var(--primary);margin-bottom:4px;">Recommandation — avant le 20 mai 2026</div>
+          <div style="font-size:12px;color:var(--text-secondary);">Mise en concurrence recommandée. 2 prestataires alternatifs identifiés : <strong>Clean Île-de-France</strong> (devis demandé) et <strong>ProNet 93</strong> (référencé diocèse). Décision à soumettre à Nicolas Boisard avant le 20 mai pour éviter la tacite reconduction.</div>
+        </div>`
+    };
+    document.getElementById('info-modal-title').textContent = data.title;
+    document.getElementById('info-modal-sub').textContent = data.sub;
+    document.getElementById('info-modal-body').innerHTML = data.html;
+    document.getElementById('info-modal').style.display = 'flex';
+  }
+
   // ── Modal générique ─────────────────────────────────────────
   function openInfoModal(key) {
     const d = MODAL_DATA[key];
@@ -2295,7 +2363,10 @@
                 <td style="padding:7px 10px;text-align:right;font-weight:600;">${mnt}</td>
                 <td style="padding:7px 10px;"><span style="font-size:11px;background:var(--surface-2);padding:2px 7px;border-radius:10px;">${up}</span></td>
                 <td style="padding:7px 10px;color:var(--text-secondary);">${ech}</td>
-                <td style="padding:7px 10px;text-align:center;"><span class="badge ${prio}">${statut}</span></td>
+                <td style="padding:7px 10px;text-align:center;">${statut === 'Renouvellement'
+                  ? `<span class="badge warning" style="cursor:pointer;" onclick="event.stopPropagation();openContratDetail()">Renouvellement →</span>`
+                  : `<span class="badge ${prio}">${statut}</span>`
+                }</td>
               </tr>`).join('')}
           </tbody>
         </table>`
